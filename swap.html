@@ -1,0 +1,1544 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Swap | Credora</title>
+
+<style>
+:root {
+  --bg: #000;
+  --surface: #000000;
+  --panel: #0b0d0c;
+  --panel-hover: #101512;
+  --green: #40c4a5;
+  --text: #f5f7f6;
+  --muted: #929d97;
+  --border: #252c28;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+/* NAVBAR */
+.navbar {
+  position: relative;
+  z-index: 100;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 78px;
+  padding: 14px 5%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.brand-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.mobile-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 22px;
+}
+
+.nav-links > a {
+  color: #a8afab;
+  font-size: 13px;
+  white-space: nowrap;
+  transition: color .2s ease;
+}
+
+.nav-links > a:hover,
+.nav-links > a.active {
+  color: var(--green);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ca-button {
+  color: var(--green);
+  background: #10231d;
+  border: 1px solid #245044;
+  border-radius: 8px;
+  padding: 9px 12px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.x-link {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 18px;
+  transition: .2s;
+}
+
+.x-link:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.connect {
+  padding: 10px 16px;
+  color: #06120e;
+  background: var(--green);
+  border: 1px solid var(--green);
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.connect:hover { background: #54d7b6; }
+
+/* MORE DROPDOWN */
+.more-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: #a8afab;
+  font-size: 13px;
+}
+
+.more-toggle:hover { color: var(--green); }
+
+.more-arrow {
+  display: inline-block;
+  transition: transform .2s ease;
+}
+
+.more-dropdown.open .more-arrow {
+  transform: rotate(180deg);
+}
+
+.more-menu[hidden] { display: none !important; }
+
+.more-dropdown .more-menu:not([hidden]) {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 9999;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  min-width: 180px;
+  padding: 7px;
+  background: #1a1918;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.5);
+}
+
+.more-menu a {
+  display: block !important;
+  width: 100%;
+  padding: 11px 12px;
+  color: var(--text);
+  font-size: 13px;
+  white-space: nowrap;
+  border-radius: 6px;
+}
+
+.more-menu a:hover {
+  color: var(--green);
+  background: var(--panel-hover);
+}
+
+/* TWO-LINE MOBILE MENU BUTTON */
+.menu-toggle {
+  display: none;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 19px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform .2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* PAGE INTRO */
+.page-intro {
+  padding: 66px 24px 38px;
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: 12px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.page-intro h1 {
+  margin-bottom: 16px;
+  font-size: clamp(32px, 4.5vw, 52px);
+  line-height: 1.15;
+  letter-spacing: -1.7px;
+}
+
+.page-intro p {
+  max-width: 720px;
+  margin: auto;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+/* SWAP */
+.swap-area {
+  width: 100%;
+  max-width: 1120px;
+  padding: 0 24px 70px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, .85fr);
+  gap: 26px;
+  align-items: start;
+}
+
+.swap-card {
+  min-width: 0;
+  padding: 26px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.swap-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.swap-heading h2 {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.preview-badge {
+  padding: 5px 9px;
+  color: var(--green);
+  background: #10271f;
+  border: 1px solid #245342;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.field-label {
+  display: block;
+  margin-bottom: 9px;
+  color: #c5cec9;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.token-box {
+  padding: 16px;
+  background: #050706;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color .2s ease;
+}
+
+.token-box:focus-within { border-color: #397b66; }
+
+.token-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.token-amount {
+  width: 100%;
+  min-width: 0;
+  padding: 5px 0;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: clamp(23px, 3vw, 30px);
+  font-weight: 600;
+}
+
+.token-amount::placeholder { color: #59635d; }
+
+.token-select {
+  width: 130px;
+  min-width: 112px;
+  padding: 10px 9px;
+  color: var(--text);
+  background: #171a18;
+  border: 1px solid #303832;
+  border-radius: 9px;
+  outline: none;
+  font-weight: 700;
+}
+
+.token-select:focus { border-color: var(--green); }
+
+.token-note {
+  margin-top: 8px;
+  color: #78837c;
+  font-size: 11px;
+}
+
+.swap-direction {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  margin: -1px 0;
+}
+
+.direction-button {
+  width: 42px;
+  height: 42px;
+  color: var(--green);
+  background: #13221c;
+  border: 4px solid var(--panel);
+  border-radius: 12px;
+  font-size: 21px;
+  line-height: 1;
+  transition: transform .2s ease, background .2s ease;
+}
+
+.direction-button:hover {
+  background: #1d382e;
+  transform: rotate(180deg);
+}
+
+.slippage-area { margin-top: 23px; }
+
+.slippage-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.slippage-heading label {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.slippage-options {
+  display: flex;
+  gap: 8px;
+}
+
+.slippage-option {
+  flex: 1;
+  padding: 9px 8px;
+  color: #a8afab;
+  background: #080a09;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 12px;
+  transition: .2s;
+}
+
+.slippage-option:hover { border-color: #397b66; }
+
+.slippage-option.selected {
+  color: var(--green);
+  background: #10271f;
+  border-color: #245342;
+}
+
+.quote-info {
+  margin-top: 19px;
+  padding: 13px;
+  color: var(--muted);
+  background: #080a09;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.quote-info[hidden] {
+  display: none !important;
+}
+
+.quote-info > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.quote-info > div + div {
+  margin-top: 5px;
+}
+
+.quote-info span {
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.quote-info strong {
+  color: #dce3de;
+  font-weight: 600;
+}
+
+.swap-submit {
+  width: 100%;
+  margin-top: 18px;
+  padding: 14px 18px;
+  color: #06120e;
+  background: var(--green);
+  border: 1px solid var(--green);
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.swap-submit:hover { background: #54d7b6; }
+
+/* EXPLANATION PANEL */
+.info-panel {
+  padding: 25px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.info-panel h2 {
+  margin-bottom: 13px;
+  font-size: 19px;
+}
+
+.info-panel > p {
+  margin-bottom: 23px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+.info-item {
+  padding: 17px 0;
+  border-top: 1px solid var(--border);
+}
+
+.info-item h3 {
+  margin-bottom: 6px;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.info-item p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.info-item span { color: var(--green); }
+
+/* LOWER CONTENT */
+.lower-content {
+  max-width: 1072px;
+  margin: 0 auto;
+  padding: 0 24px 70px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.lower-card {
+  padding: 24px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+.lower-card h2 {
+  margin-bottom: 12px;
+  font-size: 17px;
+}
+
+.lower-card p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* FOOTER */
+footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: auto;
+  padding: 48px 5%;
+  display: grid;
+  grid-template-columns: minmax(240px, 2fr) repeat(2, minmax(130px, 1fr));
+  gap: 50px;
+}
+
+.footer-about { max-width: 410px; }
+
+.footer-description {
+  margin: 18px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-size: 12px;
+}
+
+.social:hover { color: #72e5c8; }
+
+.footer-label {
+  margin-bottom: 17px;
+  color: #e0e6e2;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.footer-links a {
+  width: fit-content;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.footer-links a:hover { color: var(--green); }
+
+.footer-bottom {
+  padding: 17px 5%;
+  border-top: 1px solid var(--border);
+  color: #77817a;
+  text-align: center;
+  font-size: 11px;
+}
+
+/* TABLET */
+@media (max-width: 1100px) {
+  .nav-inner { gap: 18px; }
+  .mobile-panel { gap: 18px; }
+  .nav-links { gap: 15px; }
+  .nav-links > a { font-size: 12px; }
+  .nav-right { gap: 8px; }
+  .ca-button { padding: 8px 9px; }
+  .connect { padding: 9px 11px; }
+}
+
+/* MOBILE: ALL NAVIGATION INSIDE TWO-LINE MENU */
+@media (max-width: 850px) {
+  .nav-inner {
+    min-height: 70px;
+    padding: 12px 5%;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .brand { font-size: 18px; }
+  .brand-logo { width: 33px; height: 33px; }
+
+  .menu-toggle { display: flex; }
+
+  .mobile-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    padding: 17px 5% 22px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 15px 25px rgba(0,0,0,.35);
+    align-items: stretch;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .mobile-panel.open { display: flex; }
+
+  .nav-links {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-links > a,
+  .nav-links .more-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 3px;
+    border-bottom: 1px solid #292e2a;
+    font-size: 15px;
+  }
+
+  .nav-links .more-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .more-dropdown .more-menu:not([hidden]) {
+    position: static;
+    width: 100%;
+    margin: 5px 0 10px;
+    box-shadow: none;
+    border-radius: 8px;
+  }
+
+  
+  .nav-right {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .nav-right .ca-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 0 12px;
+    color: var(--muted);
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .nav-right .x-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 0;
+    color: var(--text);
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 19px;
+  }
+
+  .nav-right .connect {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  color: #06110d;
+  background: #40c4a5;
+  border: 1px solid #40c4a5;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
+  .page-intro { padding-top: 48px; }
+
+  .swap-area {
+    max-width: 620px;
+    grid-template-columns: 1fr;
+    gap: 18px;
+    padding-bottom: 48px;
+  }
+
+  .lower-content {
+    max-width: 620px;
+    grid-template-columns: 1fr;
+    padding-bottom: 48px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 22px;
+  }
+
+  .footer-about { grid-column: 1 / -1; }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 420px) {
+  .page-intro { padding: 40px 5% 30px; }
+  .page-intro h1 { font-size: 32px; }
+  .page-intro p { font-size: 13px; }
+
+  .swap-area { padding: 0 4% 42px; }
+  .swap-card { padding: 17px; border-radius: 14px; }
+  .info-panel { padding: 20px; }
+
+  .token-box { padding: 12px; }
+  .token-row { gap: 7px; }
+  .token-select { width: 112px; min-width: 100px; font-size: 12px; }
+  .token-amount { font-size: 23px; }
+
+  .lower-content { padding: 0 4% 42px; }
+  .lower-card { padding: 20px; }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    padding: 36px 5%;
+  }
+
+  .footer-about { grid-column: 1 / -1; }
+  .footer-bottom { line-height: 1.8; }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+
+    <a class="brand" href="index.html">
+      <img src="images/Logo.jpg" alt="Credora Logo" class="brand-logo">
+      <span>Credora</span>
+    </a>
+
+    <button
+      class="menu-toggle"
+      id="menuToggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-controls="mobilePanel"
+      aria-expanded="false"
+    >
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="mobile-panel" id="mobilePanel">
+
+      <nav class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a class="active" href="swap.html">Swap</a>
+        <a href="stake.html">Stake</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="token.html">Token <span style="color:#40c4a5;font-size:10px">SOON</span></a>
+        <a href="docs.html">Docs</a>
+
+        <div class="more-dropdown">
+          <button
+            type="button"
+            class="more-toggle"
+            aria-expanded="false"
+            onclick="toggleMoreMenu(this)"
+          >
+            More <span class="more-arrow">⌄</span>
+          </button>
+
+          <div class="more-menu" hidden>
+            <a href="stats.html">Stats</a>
+            <a href="activity.html">Activity</a>
+            <a href="builders.html">Builders</a>
+            <a href="launchpad.html">Launchpad</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-right">
+        <button class="ca-button" type="button">CA: soon</button>
+        <a class="x-link" href="https://x.com/credora"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Credora on X">𝕏</a>
+        <button class="connect" type="button" onclick="connectWalletNotice()">
+          Connect wallet
+        </button>
+      </div>
+
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page-intro">
+    <h1><br>You cannot post collateral you do not hold.</h1>
+    <p>
+      Every position here starts with owning the right asset and ends with owning a different one. To borrow against NVDA you need NVDA. To repay in USDG you need USDG. Until now both of those errands happened somewhere else, and the round trip was the most tedious part of using this protocol.
+
+So the errand moved here. Prices come from the pools themselves, across every venue on this chain, and the transaction is unsigned until your own wallet signs it.
+
+
+    </p>
+  </section>
+
+  <section class="swap-area">
+
+    <div class="swap-card">
+      <div class="swap-heading">
+        <h2>Swap assets</h2>
+        <span class="preview-badge">PREVIEW</span>
+      </div>
+
+      <label class="field-label" for="payAmount">You pay</label>
+      <div class="token-box">
+        <div class="token-row">
+          <input
+            class="token-amount"
+            id="payAmount"
+            type="number"
+            min="0"
+            step="any"
+            placeholder="0.0"
+            inputmode="decimal"
+            aria-label="Amount to pay"
+          >
+
+    
+
+          <select class="token-select" id="payToken" aria-label="Pay token">
+            <option value="NVDA">NVDA</option>
+            <option value="USDG" selected>USDG</option>
+            <option value="AAPL">AAPL</option>
+            <option value="SPY">SPY</option>
+            <option value="TSLA">TSLA</option>
+            <option value="TSM">TSM</option>
+            <option value="WETH">WETH</option>
+            <option value="MSTR">MSTR</option>
+            <option value="GOOGL">GOOGL</option>
+            <option value="COIN">COIN</option>
+            <option value="MU">MU</option>
+            <option value="MSFT">MSFT</option>
+            <option value="META">META</option>
+            <option value="PLTR">PLTR</option>
+            <option value="QQQ">QQQ</option>
+            <option value="AMD">AMD</option>
+            <option value="NFLX">NFLX</option>
+            <option value="AMZN">AMZN</option>
+            <option value="GLD">GLD</option>
+            <option value="SPCX">SPCX</option>
+            <option value="SGOV">SGOV</option>
+            <option value="AMC">AMC</option>
+            <option value="HIMS">HIMS</option>
+            <option value="RDDT">RDDT</option>
+            <option value="GME">GME</option>
+            <option value="LLY">LLY</option>
+            <option value="DJT">DJT</option>
+            <option value="COST">COST</option>
+            <option value="CRCL">CRCL</option>
+            <option value="USO">USO</option>
+            <option value="INTC">INTC</option>
+            <option value="IBM">IBM</option>
+            <option value="RBLX">RBLX</option>
+            <option value="SLV">SLV</option>
+            <option value="TTWO">TTWO</option>
+            <option value="SNDK">SNDK</option>
+            <option value="DELL">DELL</option>
+            <option value="RIVN">RIVN</option>
+            <option value="SNAP">SNAP</option>
+            <option value="BABA">BABA</option>
+            <option value="NET">NET</option>
+            <option value="LULU">LULU</option>
+            <option value="SHOP">SHOP</option>
+            <option value="MRNA">MRNA</option>
+            <option value="FIG">FIG</option>
+            <option value="QUBT">QUBT</option>
+            <option value="SNOW">SNOW</option>
+            <option value="INDA">INDA</option>
+            <option value="BE">BE</option>
+            <option value="GLXY">GLXY</option>
+            <option value="NU">NU</option>
+            <option value="DFE">DFE</option>
+            <option value="RCAT">RCAT</option>
+            <option value="LMT">LMT</option>
+            <option value="JNJ">JNJ</option>
+            <option value="BA">BA</option>
+            <option value="USAR">USAR</option>
+            <option value="BB">BB</option>
+            <option value="FLY">FLY</option>
+            <option value="WYFI">WYFI</option>
+            <option value="VOXEL">VOXEL</option>
+          </select>
+        </div>
+        <div class="token-note">Balance: —</div>
+      </div>
+
+      <div class="swap-direction">
+        <button
+          type="button"
+          class="direction-button"
+          id="reverseSwap"
+          aria-label="Reverse swap direction"
+          title="Reverse swap direction"
+        >↕</button>
+      </div>
+
+      <label class="field-label" for="receiveAmount">You receive</label>
+      <div class="token-box">
+        <div class="token-row">
+          <input
+            class="token-amount"
+            id="receiveAmount"
+            type="text"
+            placeholder="0.0"
+            readonly
+            aria-label="Estimated amount to receive"
+          >
+
+          <select class="token-select" id="receiveToken" aria-label="Receive token">
+            <option value="USDG">USDG</option>
+            <option value="NVDA" selected >NVDA</option>
+            <option value="AAPL">AAPL</option>
+            <option value="SPY">SPY</option>
+            <option value="TSLA">TSLA</option>
+            <option value="TSM">TSM</option>
+            <option value="WETH">WETH</option>
+            <option value="MSTR">MSTR</option>
+            <option value="GOOGL">GOOGL</option>
+            <option value="COIN">COIN</option>
+            <option value="MU">MU</option>
+            <option value="MSFT">MSFT</option>
+            <option value="META">META</option>
+            <option value="PLTR">PLTR</option>
+            <option value="QQQ">QQQ</option>
+            <option value="AMD">AMD</option>
+            <option value="NFLX">NFLX</option>
+            <option value="AMZN">AMZN</option>
+            <option value="GLD">GLD</option>
+            <option value="SPCX">SPCX</option>
+            <option value="SGOV">SGOV</option>
+            <option value="AMC">AMC</option>
+            <option value="HIMS">HIMS</option>
+            <option value="RDDT">RDDT</option>
+            <option value="GME">GME</option>
+            <option value="LLY">LLY</option>
+            <option value="DJT">DJT</option>
+            <option value="COST">COST</option>
+            <option value="CRCL">CRCL</option>
+            <option value="USO">USO</option>
+            <option value="INTC">INTC</option>
+            <option value="IBM">IBM</option>
+            <option value="RBLX">RBLX</option>
+            <option value="SLV">SLV</option>
+            <option value="TTWO">TTWO</option>
+            <option value="SNDK">SNDK</option>
+            <option value="DELL">DELL</option>
+            <option value="RIVN">RIVN</option>
+            <option value="SNAP">SNAP</option>
+            <option value="BABA">BABA</option>
+            <option value="NET">NET</option>
+            <option value="LULU">LULU</option>
+            <option value="SHOP">SHOP</option>
+            <option value="MRNA">MRNA</option>
+            <option value="FIG">FIG</option>
+            <option value="QUBT">QUBT</option>
+            <option value="SNOW">SNOW</option>
+            <option value="INDA">INDA</option>
+            <option value="BE">BE</option>
+            <option value="GLXY">GLXY</option>
+            <option value="NU">NU</option>
+            <option value="DFE">DFE</option>
+            <option value="RCAT">RCAT</option>
+            <option value="LMT">LMT</option>
+            <option value="JNJ">JNJ</option>
+            <option value="BA">BA</option>
+            <option value="USAR">USAR</option>
+            <option value="BB">BB</option>
+            <option value="FLY">FLY</option>
+            <option value="WYFI">WYFI</option>
+            <option value="VOXEL">VOXEL</option>
+          </select>
+        </div>
+        <div class="token-note" id="receiveNote">Quote unavailable</div>
+      </div>
+
+      <div class="slippage-area">
+        <div class="slippage-heading">
+          <label>Slippage tolerance</label>
+          <label id="slippageLabel">0.5%</label>
+        </div>
+
+        <div class="slippage-options">
+          <button type="button" class="slippage-option selected" data-slippage="0.5">0.5%</button>
+          <button type="button" class="slippage-option" data-slippage="1">1%</button>
+          <button type="button" class="slippage-option" data-slippage="3">3%</button>
+        </div>
+      </div>
+
+      <div class="quote-info" id="quoteInfo" hidden>
+  <div>
+    <strong>Exchange rate:</strong>
+    <span id="exchangeRate">—</span>
+  </div>
+
+  <div>
+    <strong>Least you can receive:</strong>
+    <span id="minimumReceived">—</span>
+  </div>
+
+  <div>
+    <strong>Price impact:</strong>
+    <span id="priceImpact">—</span>
+  </div>
+
+  <div>
+    <strong>Route:</strong>
+    <span id="swapRoute">Belum tersedia</span>
+  </div>
+
+  <div>
+    <strong>Pools that could fill this:</strong>
+    <span id="poolsAvailable">Belum tersedia</span>
+  </div>
+</div>
+
+      <button class="swap-submit" type="button" onclick="connectWalletNotice()">
+        Connect wallet
+      </button>
+
+      <h2></h2>
+      <p>
+        Routed by Voxelithic across six venues on this chain. The transaction is unsigned until your wallet signs it, and the router reverts rather than filling below the minimum above.
+
+
+      </p>
+    </article>
+    </div>
+
+    <aside class="info-panel">
+      <h2>What this is for</h2>
+
+      <div class="info-item">
+        <h3><span>01</span> Before borrowing</h3>
+        <p>
+          The 43 markets each want a specific collateral. Holding USDG and wanting to borrow against SPY is two steps, and this is the first one.
+        </p>
+      </div>
+
+      <div class="info-item">
+        <h3><span>02</span> After borrowing</h3>
+        <p>
+          A loan pays out in USDG. Turning that into more of the same stock is how you add
+        </p>
+      </div>
+
+      <div class="info-item">
+        <h3><span>03</span> Before repaying</h3>
+        <p>
+          Debt is denominated in USDG. If what you hold is the stock, you need the other side of this page first.
+
+        </p>
+      </div>
+    </aside>
+
+    <aside class="info-panel">
+      <h2>Why the routing is not ours</h2>
+
+      <div class="info-item">
+      <p>Why the routing is not ours
+Cluby already swaps, inside the leverage router and inside the liquidator — but both go through one Uniswap v3 pool at a fee tier the caller names. That is right when the pool is known in advance and wrong for a plain swap, where the better price is often on one of the other venues.
+
+So this page asks Voxelithic , which routes across 6 venues on this chain — Uniswap v3, Up, Ramses, Uniswap v4, Giga, Alandale — and reports how many pools could actually take the size. Pools that could not fill the order are excluded rather than estimated, which is why the number that answered and the number that could fill are shown separately above.
+
+</p>
+    </aside>
+
+    <aside class="info-panel">
+
+      <h2>What can go wrong</h2>
+
+      <h3><span></span>The price moves before you sign.</h3>
+      <p>The router enforces the minimum shown and reverts rather than filling below it. A reverted swap costs gas and leaves your balance where it was.
+</p>
+
+<h3><span></span>Your order is bigger than the pool.</h3>
+  <p>Price impact is measured against the route the order would actually execute against. Above 1% the page says so, because at that size the quote describes the depth it consumed rather than the market.</p>
+
+  <h3><span></span>This is a third party.</h3>
+  <p>Cluby holds none of these funds and signs none of these transactions — the quote and the calldata come from Voxelithic, and your wallet is what approves both. A bad quote is visible before you sign; that is the whole protection.
+</p>
+    </aside>
+
+  </section>
+</main>
+
+<footer>
+  <div class="footer-inner">
+
+    <div class="footer-about">
+      <a class="brand" href="index.html">
+        <img src="images/Logo.jpg" alt="Credora Logo" class="brand-logo">
+        <span>Credora</span>
+      </a>
+
+      <p class="footer-description">
+        Credora provides an interface for curated markets and supported
+        digital assets. Review market conditions and transaction details
+        before interacting with a wallet.
+      </p>
+
+      <a class="social" href="https://x.com/credora"
+         target="_blank" rel="noopener noreferrer">
+        <span style="font-size:17px">𝕏</span>
+        <span>@credora</span>
+      </a>
+    </div>
+
+    <div>
+      <div class="footer-label">PROTOCOL</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="swap.html">Swap</a>
+        <a href="stake.html">Stake</a>
+        <a href="portfolio.html">Portfolio</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-label">LEARN</div>
+      <div class="footer-links">
+        <a href="docs.html">Overview</a>
+        <a href="docs.html">Risk framework</a>
+        <a href="docs.html">Withdrawals</a>
+        <a href="builders.html">Builders</a>
+        <a href="launchpad.html">Launchpad</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    Credora · Review all transaction details before signing.
+  </div>
+</footer>
+
+<script>
+/* MOBILE HAMBURGER */
+const menuToggle = document.getElementById("menuToggle");
+const mobilePanel = document.getElementById("mobilePanel");
+
+menuToggle.addEventListener("click", function () {
+  const isOpen = mobilePanel.classList.toggle("open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute(
+    "aria-label",
+    isOpen ? "Close navigation menu" : "Open navigation menu"
+  );
+});
+
+/* CLOSE MOBILE MENU WHEN CLICKING OUTSIDE */
+document.addEventListener("click", function (event) {
+  if (
+    !event.target.closest(".navbar")
+  ) {
+    mobilePanel.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+    menuToggle.setAttribute("aria-label", "Open navigation menu");
+  }
+});
+
+/* MORE DROPDOWN */
+function toggleMoreMenu(button) {
+  const dropdown = button.closest(".more-dropdown");
+  const menu = dropdown.querySelector(".more-menu");
+  const willOpen = menu.hidden;
+
+  document.querySelectorAll(".more-dropdown").forEach(function (item) {
+    const itemMenu = item.querySelector(".more-menu");
+    const itemButton = item.querySelector(".more-toggle");
+
+    if (itemMenu) itemMenu.hidden = true;
+    if (itemButton) itemButton.setAttribute("aria-expanded", "false");
+
+    item.classList.remove("open");
+  });
+
+  if (willOpen) {
+    menu.hidden = false;
+    dropdown.classList.add("open");
+    button.setAttribute("aria-expanded", "true");
+  }
+}
+
+/* CLOSE MORE WHEN CLICKING OUTSIDE */
+document.addEventListener("click", function (event) {
+  if (!event.target.closest(".more-dropdown")) {
+    document.querySelectorAll(".more-dropdown").forEach(function (item) {
+      const menu = item.querySelector(".more-menu");
+      const button = item.querySelector(".more-toggle");
+
+      if (menu) menu.hidden = true;
+      if (button) button.setAttribute("aria-expanded", "false");
+
+      item.classList.remove("open");
+    });
+  }
+});
+
+/* ESCAPE CLOSES MENUS */
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".more-dropdown").forEach(function (item) {
+      const menu = item.querySelector(".more-menu");
+      const button = item.querySelector(".more-toggle");
+
+      if (menu) menu.hidden = true;
+      if (button) button.setAttribute("aria-expanded", "false");
+
+      item.classList.remove("open");
+    });
+
+    mobilePanel.classList.remove("open");
+    menuToggle.setAttribute("aria-expanded", "false");
+  }
+});
+
+
+
+/* LIVE MARKET PRICE ESTIMATE — DIRECT ROBINHOOD RPC */
+
+const RPC_URL = "https://rpc.mainnet.chain.robinhood.com";
+
+const REGISTRY_URL =
+  "https://raw.githubusercontent.com/nirholas/robinhood-chain-sdk/main/src/registry/stock-tokens.json";
+
+const PRICE_CACHE_MS = 15000;
+const PRICE_MAX_AGE_SECONDS = 86400;
+
+const marketPriceCache = {};
+let estimateRequestId = 0;
+let feedRegistryPromise = null;
+
+async function loadFeedRegistry() {
+  if (!feedRegistryPromise) {
+    feedRegistryPromise = fetch(REGISTRY_URL)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Gagal mengambil daftar feed");
+        }
+        return response.json();
+      })
+      .then(data => {
+        const registry = {};
+
+        for (const token of data.tokens || []) {
+          if (token.symbol && token.feed) {
+            registry[token.symbol.toUpperCase()] = {
+              address: token.feed,
+              decimals: token.feedDecimals ?? 8
+            };
+          }
+        }
+
+        return registry;
+      })
+      .catch(error => {
+        feedRegistryPromise = null;
+        throw error;
+      });
+  }
+
+  return feedRegistryPromise;
+}
+
+async function rpcCall(method, params) {
+  const response = await fetch(RPC_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      jsonrpc: "2.0",
+      id: 1,
+      method,
+      params
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error("RPC tidak merespons");
+  }
+
+  const data = await response.json();
+
+  if (data.error || !data.result) {
+    throw new Error(data.error?.message || "Data RPC tidak tersedia");
+  }
+
+  return data.result;
+}
+
+
+async function fetchMarketPrice(symbol, side = "ask") {
+  symbol = symbol.toUpperCase();
+
+  if (symbol === "USDG") return 1;
+
+  const response = await fetch(
+    `http://localhost/swap-project/price.php?symbol=${encodeURIComponent(symbol)}`
+  );
+
+  if (!response.ok) {
+    throw new Error("Gagal mengambil harga " + symbol);
+  }
+
+  const data = await response.json();
+
+  if (data.error) {
+    throw new Error(data.error);
+  }
+
+  const price = side === "bid" ? data.tokenBid : data.tokenAsk;
+
+  if (!Number.isFinite(price) || price <= 0) {
+    throw new Error("Harga " + symbol + " tidak valid");
+  }
+
+  return price;
+}
+
+
+
+async function updateSwapEstimate() {
+  const requestId = ++estimateRequestId;
+
+  const amount = Number(payAmount.value);
+  const fromSymbol = payToken.value;
+  const toSymbol = receiveToken.value;
+
+  const receiveAmount = document.getElementById("receiveAmount");
+  const quoteInfo = document.getElementById("quoteInfo");
+
+  const exchangeRate = document.getElementById("exchangeRate");
+  const minimumReceived = document.getElementById("minimumReceived");
+
+  if (!receiveAmount || !quoteInfo) return;
+
+  // Sembunyikan detail saat jumlah kosong, nol, atau token sama.
+  if (
+    payAmount.value.trim() === "" ||
+    !Number.isFinite(amount) ||
+    amount <= 0 ||
+    fromSymbol === toSymbol
+  ) {
+    receiveAmount.value = "0.0";
+    quoteInfo.hidden = true;
+    return;
+  }
+
+  receiveAmount.value = "Calculating...";
+  quoteInfo.hidden = true;
+
+  try {
+    const [fromPrice, toPrice] = await Promise.all([
+      fetchMarketPrice(fromSymbol, "bid"),
+      fetchMarketPrice(toSymbol, "ask")
+    ]);
+
+    if (requestId !== estimateRequestId) return;
+
+    const estimatedAmount = amount * fromPrice / toPrice;
+
+    if (!Number.isFinite(estimatedAmount) || estimatedAmount <= 0) {
+      throw new Error("Estimasi tidak valid");
+    }
+
+    receiveAmount.value = estimatedAmount.toLocaleString("en-US", {
+      maximumFractionDigits: 8
+    });
+
+    exchangeRate.textContent =
+      `1 ${fromSymbol} ≈ ${(fromPrice / toPrice).toLocaleString("en-US", {
+        maximumFractionDigits: 8
+      })} ${toSymbol}`;
+
+    // Gunakan toleransi slippage yang dipilih.
+    const slippage = Number(
+      document.querySelector(".slippage-option.selected")?.dataset.slippage || 0.5
+    );
+
+    const minimumAmount = estimatedAmount * (1 - slippage / 100);
+
+    minimumReceived.textContent =
+      `${minimumAmount.toLocaleString("en-US", {
+        maximumFractionDigits: 8
+      })} ${toSymbol}`;
+
+    document.getElementById("priceImpact").textContent = "Not Available";
+    document.getElementById("swapRoute").textContent = "Waiting for Live Quote";
+    document.getElementById("poolsAvailable").textContent = "Waiting for Live Quote";
+
+    quoteInfo.hidden = false;
+
+  } catch (error) {
+    if (requestId !== estimateRequestId) return;
+
+    receiveAmount.value = "Price Not Available";
+    quoteInfo.hidden = true;
+
+    console.warn("Swap estimate:", error.message);
+  }
+}
+
+/* Reverse selected tokens */
+document.getElementById("reverseSwap").addEventListener("click", () => {
+  const oldPayToken = payToken.value;
+  payToken.value = receiveToken.value;
+  receiveToken.value = oldPayToken;
+  updateTokenOptions();
+});
+
+/* Refresh estimates */
+payAmount.addEventListener("input", updateSwapEstimate);
+payToken.addEventListener("change", updateTokenOptions);
+receiveToken.addEventListener("change", updateTokenOptions);
+
+updateTokenOptions();
+
+
+/* SLIPPAGE SELECTOR */
+const slippageLabel = document.getElementById("slippageLabel");
+
+document.querySelectorAll(".slippage-option").forEach(function (button) {
+  button.addEventListener("click", function () {
+    document.querySelectorAll(".slippage-option").forEach(function (item) {
+      item.classList.remove("selected");
+    });
+
+    button.classList.add("selected");
+    slippageLabel.textContent = button.dataset.slippage + "%";
+  });
+});
+
+/* WALLET PLACEHOLDER */
+function connectWalletNotice() {
+  alert(
+    "Credora Swap preview: wallet connection and live swap routing have not been implemented yet."
+  );
+}
+</script>
+
+</body>
+</html>

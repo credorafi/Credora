@@ -1,0 +1,1318 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <title>Builders — Credora</title>
+  <meta name="description" content="Build on Credora markets and explore builder attribution, flash loans, and MCP integrations.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --hero-footer: #000000;
+      --panel: #0b0d0c;
+      --panel-hover: #101512;
+      --green: #40c4a5;
+      --green-dark: #002b20;
+      --text: #f5f7f6;
+      --muted: #929d97;
+      --border: #252c28;
+      --danger: #d5a078;
+      --content-width: 1120px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", sans-serif;
+      font-size: 14px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.menu-open {
+      overflow: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button, a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(var(--content-width), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    /* Navigation */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.94);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: -0.7px;
+    }
+
+    .brand img {
+      width: 34px;
+      height: 34px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .nav-link,
+    .more-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      cursor: pointer;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .nav-link:hover,
+    .more-toggle:hover,
+    .nav-link.active {
+      color: var(--text);
+      background: var(--panel-hover);
+    }
+
+    .soon-label {
+      margin-left: 2px;
+      padding: 1px 5px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 0.4px;
+    }
+
+    .more-dropdown {
+      position: relative;
+    }
+
+    .more-toggle i {
+      font-size: 10px;
+      transition: transform 0.2s;
+    }
+
+    .more-toggle[aria-expanded="true"] i {
+      transform: rotate(180deg);
+    }
+
+    .more-menu {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 0;
+      width: 175px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #090b0a;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .more-menu[hidden] {
+      display: none;
+    }
+
+    .more-menu a {
+      display: block;
+      padding: 9px 11px;
+      border-radius: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .more-menu a:hover,
+    .more-menu a.active {
+      color: var(--text);
+      background: var(--panel-hover);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .ca-button,
+    .connect-button {
+      min-height: 37px;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text);
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .mobile-actions .connect-button {
+    background: #14f3b0;
+    color: #0e0d0d;
+    border-color: #00e5a0;
+}
+
+
+    .ca-button {
+      color: var(--muted);
+    }
+
+    .ca-button:hover,
+    .connect-button:hover {
+      border-color: var(--green);
+      background: var(--panel-hover);
+    }
+
+    .x-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      height: 34px;
+      color: var(--muted);
+      font-size: 15px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .x-link:hover {
+      color: var(--text);
+      background: var(--panel-hover);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      padding: 9px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 6px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: transparent;
+      cursor: pointer;
+      position: relative;
+      z-index: 102;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 19px;
+      height: 2px;
+      border-radius: 2px;
+      background: var(--text);
+      transition: transform 0.25s ease, opacity 0.2s ease;
+    }
+
+    .menu-toggle.active span:first-child {
+      transform: translateY(4px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:last-child {
+      transform: translateY(-4px) rotate(-45deg);
+    }
+
+    .mobile-panel {
+      display: none;
+    }
+
+    /* Main content */
+
+    main {
+      min-height: 450px;
+    }
+
+    .page-content {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 82px 0 100px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 22px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 12px rgba(64, 196, 165, 0.5);
+    }
+
+    h1, h2, h3, p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 20px;
+      font-size: clamp(34px, 5.4vw, 56px);
+      line-height: 1.09;
+      font-weight: 600;
+      letter-spacing: -2.5px;
+    }
+
+    .hero-description {
+      max-width: 660px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 48px;
+    }
+
+    .step-card {
+      min-height: 168px;
+      padding: 21px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .step-card:hover {
+      background: var(--panel-hover);
+      border-color: #35453d;
+      transform: translateY(-2px);
+    }
+
+    .step-number {
+      margin-bottom: 21px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
+    .step-card h3 {
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    .step-card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.75;
+    }
+
+    .content-section {
+      margin-top: 78px;
+    }
+
+    .section-heading {
+      margin-bottom: 16px;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.8px;
+      line-height: 1.3;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.95;
+    }
+
+    .section-copy p {
+      margin-bottom: 14px;
+    }
+
+    .section-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    .inline-code {
+      display: inline;
+      padding: 3px 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--panel);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.92em;
+      overflow-wrap: anywhere;
+    }
+
+    .status-panel {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-top: 23px;
+      padding: 16px 18px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .status-panel i {
+      margin-top: 4px;
+      color: var(--danger);
+    }
+
+    .status-panel strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .status-panel p {
+      margin: 0;
+    }
+
+    .resource-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .resource-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-size: 12px;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .resource-link:hover {
+      border-color: var(--green);
+      background: var(--panel-hover);
+    }
+
+    .resource-link i {
+      color: var(--green);
+      font-size: 11px;
+    }
+
+    /* Footer */
+
+    .site-footer {
+      background: var(--hero-footer);
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-main {
+      display: grid;
+      grid-template-columns: minmax(220px, 1.7fr) repeat(2, minmax(120px, 0.7fr));
+      gap: 48px;
+      padding-top: 48px;
+      padding-bottom: 42px;
+    }
+
+    .footer-brand .brand {
+      margin-bottom: 18px;
+    }
+
+    .footer-description {
+      max-width: 300px;
+      margin-bottom: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.85;
+    }
+
+    .footer-heading {
+      margin-bottom: 15px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .footer-links {
+      display: grid;
+      gap: 9px;
+    }
+
+    .footer-links a {
+      width: fit-content;
+      color: var(--muted);
+      font-size: 12px;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover {
+      color: var(--green);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding-top: 19px;
+      padding-bottom: 21px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .footer-bottom p {
+      margin: 0;
+    }
+
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 18px;
+    }
+
+    .footer-warning {
+      text-align: right;
+    }
+
+    /* Responsive */
+
+    @media (max-width: 1120px) {
+      .navbar {
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 0;
+      }
+
+      .nav-link,
+      .more-toggle {
+        padding-inline: 7px;
+        font-size: 11px;
+      }
+
+      .nav-actions {
+        gap: 6px;
+      }
+
+      .ca-button,
+      .connect-button {
+        padding-inline: 9px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .nav-links,
+      .navbar > .nav-actions {
+        display: none;
+      }
+
+      .navbar {
+        min-height: 70px;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .mobile-panel {
+        position: fixed;
+        inset: 68px 0 0;
+        z-index: 101;
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+        padding: 22px 24px 36px;
+        overflow-y: auto;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease,
+                    visibility 0.2s ease;
+      }
+
+      .mobile-panel.open {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateY(0);
+      }
+
+      .mobile-nav-links {
+        display: grid;
+        gap: 5px;
+      }
+
+      .mobile-nav-links > a,
+      .mobile-nav-links > .more-dropdown > .more-toggle {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 12px 10px;
+        color: var(--muted);
+        font-size: 14px;
+        text-align: left;
+      }
+
+      .mobile-nav-links > a:hover,
+      .mobile-nav-links > a.active {
+        color: var(--text);
+        background: var(--panel);
+      }
+
+      .mobile-nav-links .more-dropdown {
+        width: 100%;
+      }
+
+      .mobile-nav-links .more-menu {
+        position: static;
+        width: 100%;
+        margin-top: 4px;
+        border: 0;
+        border-left: 1px solid var(--border);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .mobile-nav-links .more-menu a {
+        padding: 10px 18px;
+        font-size: 13px;
+      }
+
+      .mobile-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+      }
+
+      .mobile-actions .ca-button,
+      .mobile-actions .connect-button {
+        min-height: 42px;
+        font-size: 12px;
+      }
+
+      .mobile-actions .x-link {
+        width: 40px;
+        height: 40px;
+        border: 1px solid var(--border);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .page-content {
+        padding-top: 58px;
+        padding-bottom: 76px;
+      }
+
+      h1 {
+        font-size: clamp(35px, 10vw, 46px);
+        letter-spacing: -1.7px;
+      }
+
+      .hero-description {
+        font-size: 14px;
+        line-height: 1.85;
+      }
+
+      .steps {
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-top: 34px;
+      }
+
+      .step-card {
+        min-height: 0;
+        padding: 18px;
+      }
+
+      .step-number {
+        margin-bottom: 12px;
+      }
+
+      .content-section {
+        margin-top: 56px;
+      }
+
+      .section-heading {
+        font-size: 22px;
+      }
+
+      .footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 32px 22px;
+        padding-top: 35px;
+        padding-bottom: 32px;
+      }
+
+      .footer-brand {
+        grid-column: 1 / -1;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+        font-size: 10px;
+      }
+
+      .footer-warning {
+        text-align: left;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+/* RESTORE MOBILE MENU */
+@media (max-width: 900px) {
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    overflow: visible;
+  }
+
+  .menu-toggle {
+    position: relative;
+    z-index: 1002;
+    flex-shrink: 0;
+  }
+
+  .mobile-panel {
+    position: fixed;
+    top: 68px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1001;
+
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    padding: 22px 24px 36px;
+    overflow-y: auto;
+
+    background: #000;
+    border-top: 1px solid var(--border);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(-8px);
+
+    transition: opacity .2s ease,
+                transform .2s ease,
+                visibility .2s ease;
+  }
+
+  .mobile-panel.open {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 900px) {
+  .site-header {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    z-index: 9999;
+  }
+
+  .mobile-panel {
+    position: fixed;
+    top: 68px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10000;
+    display: flex;
+    background: #000;
+  }
+
+  .mobile-panel:not(.open) {
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-8px);
+  }
+
+  .mobile-panel.open {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+}
+
+.soon-label {
+    color: #00e5a0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+
+/* MOBILE CTA — MATCH PORTFOLIO */
+@media (max-width: 900px) {
+  .mobile-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  .mobile-actions .ca-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 0 12px;
+    color: var(--muted);
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .mobile-actions .x-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 0;
+    color: var(--text);
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  .mobile-actions .connect-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    height: 45px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    color: #06110d;
+    background: #40c4a5;
+    border: 1px solid #40c4a5;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .mobile-actions .ca-button:hover,
+  .mobile-actions .x-link:hover {
+    background: var(--panel-hover);
+    border-color: var(--border);
+  }
+
+  .mobile-actions .connect-button:hover {
+    background: #5bd6b8;
+    border-color: #5bd6b8;
+  }
+}
+
+
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="Credora home">
+        <img src="images/Logo.jpg" alt="Credora logo">
+        <span>Credora</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="earn.html">Earn</a>
+        <a class="nav-link" href="borrow.html">Borrow</a>
+        <a class="nav-link" href="swap.html">Swap</a>
+        <a class="nav-link" href="stake.html">Stake</a>
+        <a class="nav-link" href="portfolio.html">Portfolio</a>
+        <a class="nav-link" href="token.html">Token <span class="soon-label">SOON</span></a>
+        <a class="nav-link" href="docs.html">Docs</a>
+
+        <div class="more-dropdown">
+          <button class="more-toggle" type="button"
+            aria-expanded="false" aria-haspopup="true">
+            More <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="more-menu" hidden>
+            <a href="stats.html">Stats</a>
+            <a href="activity.html">Activity</a>
+            <a href="builders.html" class="active" aria-current="page">Builders</a>
+            <a href="launchpad.html">Launchpad</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="ca-button" id="caButton" type="button">CA: soon</button>
+        <a class="x-link" href="https://x.com" target="_blank" rel="noreferrer" aria-label="Credora on X">𝕏</a>
+        <button class="connect-button" id="connectTop" type="button">Connect wallet</button>
+        </a>
+      </div>
+
+      <button
+  class="menu-toggle"
+  id="menuToggle"
+  type="button"
+  aria-label="Open navigation"
+  aria-expanded="false"
+  aria-controls="mobilePanel"
+>
+  <span></span>
+  <span></span>
+</button>
+    </div>
+
+    <div class="mobile-panel" id="mobilePanel" aria-label="Mobile navigation">
+      <nav class="mobile-nav-links" aria-label="Mobile main navigation">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link" href="earn.html">Earn</a>
+        <a class="nav-link" href="borrow.html">Borrow</a>
+        <a class="nav-link" href="swap.html">Swap</a>
+        <a class="nav-link" href="stake.html">Stake</a>
+        <a class="nav-link" href="portfolio.html">Portfolio</a>
+        <a class="nav-link" href="token.html">Token <span class="soon-label">SOON</span></a>
+        <a class="nav-link" href="docs.html">Docs</a>
+
+        <div class="more-dropdown">
+          <button class="more-toggle" type="button"
+            aria-expanded="false" aria-haspopup="true">
+            More <i class="fa-solid fa-chevron-down" aria-hidden="true"></i>
+          </button>
+          <div class="more-menu" hidden>
+            <a href="stats.html">Stats</a>
+            <a href="activity.html">Activity</a>
+            <a href="builders.html" class="active" aria-current="page">Builders</a>
+            <a href="launchpad.html">Launchpad</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="mobile-actions">
+        <button class="ca-button" id="caButtonMobile" type="button">CA: soon</button>
+        <a class="x-link" href="https://x.com" target="_blank" rel="noreferrer" aria-label="Credora on X">𝕏</a>
+        <button class="connect-button" id="connectMobile" type="button">Connect wallet</button>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <div class="page-content">
+        <section class="hero" aria-labelledby="pageTitle">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            Credora builders
+          </div>
+
+          <h1 id="pageTitle">Build on the markets, keep half the fee.</h1>
+
+          <p class="hero-description">
+            An app that routes deposits or loans through Credora can earn a
+            share of the performance fee on the volume it brings. Attribution
+            is designed to be recorded on chain, with public accounting rather
+            than invoices to chase.
+          </p>
+
+          <div class="steps">
+            <article class="step-card">
+              <div class="step-number">1 — Take an address</div>
+              <h3>Register your address</h3>
+              <p>Register a payout address to identify your integration when it routes transactions.</p>
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">2 — Route volume</div>
+              <h3>Integrate the markets</h3>
+              <p>Use the SDK or supported contract calls to route supply and borrow activity with attribution.</p>
+            </article>
+
+            <article class="step-card">
+              <div class="step-number">3 — Get paid</div>
+              <h3>Claim eligible fees</h3>
+              <p>Eligible rewards require a configured accounting and distribution system before claims can work.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="content-section" id="attribution" aria-labelledby="attributionTitle">
+          <h2 class="section-heading" id="attributionTitle">Attribution</h2>
+
+          <div class="section-copy">
+            <p>
+              A builder attribution tag can be carried alongside a transaction
+              so an indexer can identify the address associated with routed
+              volume. The exact encoding must match Credora's deployed
+              contracts and transaction integration.
+            </p>
+
+            <p>
+              An attribution tag by itself is not proof that a reward is owed.
+              Eligibility, registered addresses, accounting rules and payouts
+              must be verified against the actual protocol implementation.
+            </p>
+          </div>
+
+          <div class="status-panel" role="status">
+            <i class="fa-solid fa-circle-exclamation" aria-hidden="true"></i>
+            <div>
+              <strong>Attribution data unavailable</strong>
+              <p>
+                The live indexer has not been connected to this page.
+                No builder volume or reward figures are being fabricated.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="content-section" id="flash-loans" aria-labelledby="flashTitle">
+          <h2 class="section-heading" id="flashTitle">Free flash loans</h2>
+
+          <div class="section-copy">
+            <p>
+              Flash loans allow an asset to be borrowed and returned within
+              the same transaction, subject to the lending protocol's rules.
+              They can be used by liquidators, arbitrage strategies and
+              transaction routers.
+            </p>
+
+            <p>
+              To enable this feature, integrate the verified lending
+              contract and its actual <code class="inline-code">flashLoan(token, assets, data)</code>
+              interface. Do not submit transactions until the network,
+              contract address and callback requirements have been verified.
+            </p>
+          </div>
+
+          <div class="resource-row">
+            <a class="resource-link" href="docs.html">
+              Read the docs <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+          </div>
+        </section>
+
+        <section class="content-section" id="mcp" aria-labelledby="mcpTitle">
+          <h2 class="section-heading" id="mcpTitle">An MCP server</h2>
+
+          <div class="section-copy">
+            <p>
+              Model Context Protocol (MCP) can expose approved market data
+              and protocol actions to compatible AI agents. A production
+              integration needs a configured MCP endpoint and documented
+              tools, permissions and transaction-signing flow.
+            </p>
+
+            <p>
+              This page does not claim that a live Credora MCP server is
+              available until the endpoint has been deployed and verified.
+            </p>
+          </div>
+
+          <div class="resource-row">
+            <a class="resource-link" href="docs.html">
+              Explore documentation <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+            </a>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <img src="images/Logo.jpg" alt="Credora logo">
+          <span>Credora</span>
+        </a>
+
+        <p class="footer-description">
+          A market interface for decentralized finance. Review protocol
+          details, understand the risks and verify integrations before
+          interacting with on-chain markets.
+        </p>
+
+        <a class="x-link" href="https://x.com" target="_blank"
+          rel="noopener noreferrer" aria-label="Credora on X">
+          <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+        </a>
+      </div>
+
+      <div>
+        <h3 class="footer-heading">Protocol</h3>
+        <nav class="footer-links" aria-label="Protocol links">
+          <a href="index.html">Home</a>
+          <a href="earn.html">Earn</a>
+          <a href="borrow.html">Borrow</a>
+          <a href="stake.html">Stake</a>
+          <a href="stats.html">Stats</a>
+          <a href="portfolio.html">Portfolio</a>
+        </nav>
+      </div>
+
+      <div>
+        <h3 class="footer-heading">Learn</h3>
+        <nav class="footer-links" aria-label="Learning links">
+          <a href="docs.html">Overview</a>
+          <a href="docs.html#risk">Risk framework</a>
+          <a href="docs.html#withdrawals">Withdrawals</a>
+          <a href="builders.html#flash-loans">Flash loans</a>
+          <a href="builders.html" aria-current="page">Builders</a>
+          <a href="launchpad.html">Launchpad</a>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <div class="footer-meta">
+        <p>Credora</p>
+        <p>Protocol network details: verify before use.</p>
+      </div>
+      <p class="footer-warning">
+        Not investment advice. Positions can be liquidated.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    
+"use strict";
+
+const menuToggle = document.getElementById("menuToggle");
+const mobilePanel = document.getElementById("mobilePanel");
+
+function closeMobileMenu() {
+  if (!menuToggle || !mobilePanel) return;
+
+  mobilePanel.classList.remove("open");
+  menuToggle.classList.remove("active");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open navigation");
+  document.body.classList.remove("menu-open");
+}
+
+if (menuToggle && mobilePanel) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mobilePanel.classList.toggle("open");
+
+    menuToggle.classList.toggle("active", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Close navigation" : "Open navigation"
+    );
+
+    document.body.classList.toggle("menu-open", isOpen);
+  });
+}
+
+// Dropdown More
+function closeMoreMenus(except = null) {
+  document.querySelectorAll(".more-dropdown").forEach(dropdown => {
+    if (dropdown === except) return;
+
+    const button = dropdown.querySelector(".more-toggle");
+    const menu = dropdown.querySelector(".more-menu");
+
+    if (!button || !menu) return;
+
+    button.setAttribute("aria-expanded", "false");
+    menu.hidden = true;
+  });
+}
+
+document.querySelectorAll(".more-toggle").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+
+    const dropdown = button.closest(".more-dropdown");
+    const menu = button.nextElementSibling;
+
+    if (!menu) return;
+
+    const isOpen = button.getAttribute("aria-expanded") === "true";
+
+    closeMoreMenus(dropdown);
+    button.setAttribute("aria-expanded", String(!isOpen));
+    menu.hidden = isOpen;
+  });
+});
+
+document.addEventListener("click", event => {
+  if (!event.target.closest(".more-dropdown")) {
+    closeMoreMenus();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeMoreMenus();
+    closeMobileMenu();
+  }
+});
+
+document.querySelectorAll("#mobilePanel a").forEach(link => {
+  link.addEventListener("click", closeMobileMenu);
+});
+
+["caButton", "caButtonMobile"].forEach(id => {
+  const button = document.getElementById(id);
+
+  if (button) {
+    button.addEventListener("click", () => {
+      alert("Credora contract address has not been published yet.");
+    });
+  }
+});
+
+function connectWallet() {
+  if (!window.ethereum) {
+    alert("No compatible browser wallet was detected.");
+    return;
+  }
+
+  alert(
+    "Wallet connector must be configured with Credora's verified network and contracts."
+  );
+}
+
+["connectTop", "connectMobile"].forEach(id => {
+  const button = document.getElementById(id);
+
+  if (button) {
+    button.addEventListener("click", connectWallet);
+  }
+});
+
+  </script>
+</body>
+</html>

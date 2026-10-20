@@ -1,0 +1,1118 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Explore Credora protocol activity and verify on-chain transactions.">
+  <title>Activity | Credora</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #000000;
+      --hero-footer: #000000;
+      --panel: #0b0d0c;
+      --panel-hover: #101512;
+      --green: #40c4a5;
+      --green-dark: #002b20;
+      --text: #f5f7f6;
+      --muted: #929d97;
+      --border: #252c28;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 4px;
+    }
+
+    .container {
+      width: min(1180px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+    /* NAVIGATION */
+
+    .site-header {
+      position: relative;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .navbar {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand img {
+      display: block;
+      width: 37px;
+      height: 37px;
+      object-fit: contain;
+      border-radius: 8px;
+    }
+
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.7px;
+    }
+
+    .mobile-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex: 1;
+      gap: 20px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .nav-links > a,
+    .more-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 40px;
+      padding: 9px 10px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: color .18s, background .18s;
+    }
+
+    .nav-links > a:hover,
+    .more-toggle:hover {
+      color: var(--text);
+      background: var(--panel-hover);
+    }
+
+    .nav-links > a.active {
+      color: var(--green);
+    }
+
+    .more-dropdown {
+      position: relative;
+    }
+
+    .more-arrow {
+      font-size: 14px;
+      transition: transform .2s;
+    }
+
+    .more-toggle[aria-expanded="true"] .more-arrow {
+      transform: rotate(180deg);
+    }
+
+    .more-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      min-width: 165px;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--panel);
+      box-shadow: 0 18px 40px #0009;
+    }
+
+    .more-menu[hidden] {
+      display: none;
+    }
+
+    .more-menu a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      transition: color .18s, background .18s;
+    }
+
+    .more-menu a:hover,
+    .more-menu a.active {
+      color: var(--green);
+      background: var(--panel-hover);
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
+    .ca-button,
+    .connect-button {
+      min-height: 38px;
+      padding: 0 13px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background .18s, border-color .18s;
+    }
+
+    .ca-button {
+      color: var(--green);
+      border: 1px solid var(--border);
+      background: transparent;
+    }
+
+    .ca-button:hover {
+      border-color: var(--green);
+      background: var(--panel-hover);
+    }
+
+    .connect-button {
+      color: var(--bg);
+      border: 1px solid var(--green);
+      background: var(--green);
+    }
+
+    .connect-button:hover {
+      background: #5bd6b8;
+      border-color: #5bd6b8;
+    }
+
+    .x-link {
+      display: grid;
+      place-items: center;
+      width: 35px;
+      height: 35px;
+      border-radius: 8px;
+      font-size: 21px;
+      transition: background .18s;
+    }
+
+    .x-link:hover {
+      background: var(--panel-hover);
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      background: var(--panel);
+    }
+
+    /* MAIN CONTENT */
+
+    main {
+      flex: 1;
+    }
+
+    .activity-hero {
+      padding: 100px 0 90px;
+      background:
+        radial-gradient(ellipse at 50% 0%, #40c4a50b, transparent 62%),
+        var(--bg);
+    }
+
+    .activity-content {
+      max-width: 790px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 25px;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-mark {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 25px;
+      font-size: clamp(38px, 5.2vw, 64px);
+      font-weight: 700;
+      line-height: 1.12;
+      letter-spacing: -2.8px;
+    }
+
+    h1 span {
+      color: var(--green);
+    }
+
+    .intro {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 2;
+    }
+
+    .intro strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .indexer-notice {
+      margin-top: 34px;
+      padding: 19px 21px;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--green);
+      border-radius: 0 10px 10px 0;
+      background: var(--panel);
+    }
+
+    .notice-heading {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 7px;
+      color: var(--text);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .notice-heading i {
+      color: var(--green);
+    }
+
+    .indexer-notice p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .text-link {
+      color: var(--green);
+      text-decoration: underline;
+      text-decoration-color: #40c4a555;
+      text-underline-offset: 4px;
+    }
+
+    .text-link:hover {
+      color: #75e5ca;
+    }
+
+    .section-divider {
+      height: 1px;
+      border: 0;
+      background: var(--border);
+    }
+
+    .why-section {
+      padding: 64px 0 76px;
+      background: var(--hero-footer);
+    }
+
+    .why-content {
+      max-width: 790px;
+      margin: 0 auto;
+    }
+
+    .why-content h2 {
+      margin-bottom: 20px;
+      font-size: clamp(23px, 3vw, 31px);
+      font-weight: 700;
+      letter-spacing: -.9px;
+    }
+
+    .why-content p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 2;
+    }
+
+    .why-content p + p {
+      margin-top: 15px;
+    }
+
+    .principle {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-top: 30px;
+      padding-top: 22px;
+      border-top: 1px solid var(--border);
+    }
+
+    .principle-icon {
+      display: grid;
+      place-items: center;
+      width: 39px;
+      height: 39px;
+      flex-shrink: 0;
+      border: 1px solid #40c4a533;
+      border-radius: 10px;
+      color: var(--green);
+      background: #40c4a50b;
+    }
+
+    .principle h3 {
+      margin-bottom: 5px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .principle p {
+      font-size: 12px;
+    }
+
+    /* FOOTER */
+
+    .site-footer {
+      padding: 52px 0 24px;
+      border-top: 1px solid var(--border);
+      background: var(--hero-footer);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 38px;
+    }
+
+    .footer-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .footer-brand img {
+      width: 33px;
+      height: 33px;
+      object-fit: contain;
+      border-radius: 7px;
+    }
+
+    .footer-description {
+      max-width: 330px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .footer-column h3 {
+      margin-bottom: 15px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .footer-column a {
+      display: block;
+      width: fit-content;
+      margin: 10px 0;
+      color: var(--muted);
+      font-size: 12px;
+      transition: color .18s;
+    }
+
+    .footer-column a:hover {
+      color: var(--green);
+    }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 21px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--green);
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 1100px) {
+      .navbar {
+        gap: 14px;
+      }
+
+      .mobile-panel {
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 0;
+      }
+
+      .nav-links > a,
+      .more-toggle {
+        padding-right: 7px;
+        padding-left: 7px;
+        font-size: 11px;
+      }
+
+      .nav-actions {
+        gap: 7px;
+      }
+    }
+
+    @media (max-width: 850px) {
+      .navbar {
+        min-height: 70px;
+      }
+
+      
+      .brand {
+        font-size: 19px;
+      }
+
+      .menu-toggle {
+        display: grid;
+        place-items: center;
+        margin-left: auto;
+      }
+
+      .mobile-panel {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        max-height: calc(100vh - 72px);
+        overflow-y: auto;
+        padding: 16px 24px 22px;
+        border-bottom: 1px solid var(--border);
+        background: var(--bg);
+      }
+
+      .mobile-panel.open {
+        display: flex;
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      
+.nav-links > a,
+.more-toggle {
+  display: flex;
+  width: 100%;
+  min-height: 46px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Garis pemisah menu More */
+.more-dropdown {
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+}
+
+.more-dropdown .more-toggle {
+  border-bottom: none;
+}
+
+@media (max-width: 850px) {
+  .mobile-panel .nav-links > a {
+    border-bottom: 1px solid #252c28 !important;
+  }
+
+  .mobile-panel .nav-links > a:last-of-type {
+    border-bottom: 1px solid #252c28 !important;
+  }
+}
+
+      .more-menu {
+        position: static;
+        margin: 4px 0 8px 12px;
+        box-shadow: none;
+      }
+
+      
+.nav-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-actions .ca-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  height: 42px;
+  padding: 0 12px;
+  color: var(--muted);
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nav-actions .x-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  height: 42px;
+  padding: 0;
+  color: var(--text);
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.nav-actions .connect-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-width: 0;
+  min-height: 45px;
+  height: 45px;
+  padding: 0 20px;
+  box-sizing: border-box;
+  color: #06110d;
+  background: #40c4a5;
+  border: 1px solid #40c4a5;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.4;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+
+      .activity-hero {
+        padding: 75px 0 65px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1.3fr 1fr;
+        gap: 32px;
+      }
+
+      .footer-about {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .brand-name {
+        font-size: 19px;
+      }
+
+      .activity-hero {
+        padding: 58px 0 54px;
+      }
+
+      .eyebrow {
+        margin-bottom: 20px;
+        font-size: 10px;
+      }
+
+      h1 {
+        margin-bottom: 20px;
+        font-size: 42px;
+        letter-spacing: -1.8px;
+      }
+
+      .intro {
+        font-size: 13px;
+        line-height: 1.95;
+      }
+
+      .indexer-notice {
+        margin-top: 27px;
+        padding: 16px;
+      }
+
+      .indexer-notice p {
+        font-size: 11px;
+      }
+
+      .why-section {
+        padding: 48px 0 54px;
+      }
+
+      .why-content h2 {
+        font-size: 25px;
+      }
+
+      .why-content p {
+        font-size: 12px;
+      }
+
+      .site-footer {
+        padding-top: 40px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 25px 18px;
+      }
+
+      .footer-about {
+        grid-column: 1 / -1;
+      }
+
+      .footer-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .footer-bottom-links {
+        gap: 15px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
+    }
+
+    .menu-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 9px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1001;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 20px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+}
+
+.menu-toggle.active span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-toggle.active span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: flex;
+  }
+}
+
+
+  </style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <div class="container navbar">
+
+    <a href="index.html" class="brand" aria-label="Credora home">
+      <img src="images/Logo.jpg" alt="Credora logo">
+      <span class="brand-name">Credora</span>
+    </a>
+
+      <button
+    class="menu-toggle"
+    id="menuToggle"
+    type="button"
+    aria-label="Buka menu"
+    aria-expanded="false"
+    aria-controls="mobilePanel"
+  >
+    <span></span>
+    <span></span>
+  </button>
+
+
+    <div class="mobile-panel" id="mobilePanel">
+      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="swap.html">Swap</a>
+        <a href="stake.html">Stake</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="token.html">Token <small style="color:#40c4a5">SOON</small></a>
+        <a href="docs.html">Docs</a>
+
+        <div class="more-dropdown">
+          <button
+            type="button"
+            class="more-toggle"
+            aria-expanded="false"
+            aria-controls="moreMenu"
+            onclick="toggleMoreMenu(this)"
+          >
+            More <span class="more-arrow">⌄</span>
+          </button>
+
+          <div class="more-menu" id="moreMenu" hidden>
+            <a href="stats.html">Stats</a>
+            <a href="activity.html" class="active" aria-current="page">Activity</a>
+            <a href="builders.html">Builders</a>
+            <a href="launchpad.html">Launchpad</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="ca-button" id="caButton" type="button">CA: soon</button>
+
+        <a
+          class="x-link"
+          href="https://x.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Credora on X"
+        >𝕏</a>
+
+        <button class="connect-button" id="connectTop" type="button">
+          Connect wallet
+        </button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="activity-hero">
+    <div class="container">
+      <div class="activity-content">
+
+        <div class="eyebrow">
+          <span class="eyebrow-mark"></span>
+          CREDORA · ON-CHAIN TRANSPARENCY
+        </div>
+
+        <h1>Every position,<br>as it <span>happened.</span></h1>
+
+        <p class="intro">
+          Not a dashboard of our own numbers — a log of protocol events,
+          read back from the chain. Deposits, borrows, repayments,
+          withdrawals and liquidations, newest first, each one linked to
+          a transaction you can open in the explorer and verify independently.
+        </p>
+
+        <div class="indexer-notice" role="status">
+          <div class="notice-heading">
+            <i class="fa-solid fa-circle-info"></i>
+            <span id="indexerHeading">Activity data source not connected</span>
+          </div>
+
+          <p id="indexerMessage">
+            This page is a reader, not a source of transaction data.
+            Activity will appear here after the Credora indexer or a compatible
+            on-chain event source has been configured. Until then, no fabricated
+            transaction records are displayed.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <section class="why-section">
+    <div class="container">
+      <div class="why-content">
+
+        <h2>Why this page exists</h2>
+
+        <p>
+          A protocol should not ask users to trust numbers it prints about
+          itself without a way to verify them. This page is intended to make
+          activity independently auditable: individual events, transaction
+          hashes, and links to the relevant blockchain explorer.
+        </p>
+
+        <p>
+          The blockchain explorer remains the independent source of truth.
+          If an activity record shown here disagrees with the corresponding
+          on-chain transaction, the transaction on the explorer takes
+          precedence and the indexing issue must be investigated.
+        </p>
+
+        <div class="principle">
+          <div class="principle-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+
+          <div>
+            <h3>Verifiable by design</h3>
+            <p>
+              Credora activity should be traceable to public blockchain
+              records wherever the underlying protocol and network expose
+              those events.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div class="footer-about">
+        <a href="index.html" class="footer-brand">
+          <img src="images/Logo.jpg" alt="Credora logo">
+          <span>Credora</span>
+        </a>
+
+        <p class="footer-description">
+          A protocol interface designed around transparent activity,
+          verifiable transactions, and clear access to on-chain information.
+        </p>
+
+        <a
+          class="x-link"
+          href="https://x.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Credora on X"
+          style="margin-top:14px"
+        >𝕏</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Protocol</h3>
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="stake.html">Stake</a>
+        <a href="stats.html">Stats</a>
+        <a href="portfolio.html">Portfolio</a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Learn</h3>
+        <a href="docs.html">Overview</a>
+        <a href="docs.html#risk-framework">Risk framework</a>
+        <a href="docs.html#withdrawals">Withdrawals</a>
+        <a href="builders.html">Builders</a>
+        <a href="launchpad.html">Launchpad</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="currentYear"></span> Credora. All rights reserved.</span>
+
+      <div class="footer-bottom-links">
+        <a href="docs.html">Documentation</a>
+        <a href="activity.html">Activity</a>
+        <a href="https://x.com" target="_blank" rel="noopener noreferrer">X / Twitter</a>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<script>
+  "use strict";
+
+  const menuToggle = document.getElementById("menuToggle");
+  const mobilePanel = document.getElementById("mobilePanel");
+  const caButton = document.getElementById("caButton");
+  const connectButton = document.getElementById("connectTop");
+
+  function toggleMoreMenu(button) {
+    const menu = button.nextElementSibling;
+    const expanded = button.getAttribute("aria-expanded") === "true";
+
+    button.setAttribute("aria-expanded", String(!expanded));
+    menu.hidden = expanded;
+  }
+
+  function closeMoreMenu() {
+    document.querySelectorAll(".more-dropdown").forEach(dropdown => {
+      const button = dropdown.querySelector(".more-toggle");
+      const menu = dropdown.querySelector(".more-menu");
+
+      button.setAttribute("aria-expanded", "false");
+      menu.hidden = true;
+    });
+  }
+
+  menuToggle.addEventListener("click", () => {
+    const open = mobilePanel.classList.toggle("open");
+
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute(
+      "aria-label",
+      open ? "Close navigation" : "Open navigation"
+    );
+
+    menuToggle.classList.toggle("active", open);
+  });
+
+  document.addEventListener("click", event => {
+    if (!event.target.closest(".more-dropdown")) {
+      closeMoreMenu();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeMoreMenu();
+      mobilePanel.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.classList.remove("active");
+    }
+  });
+
+  document.querySelectorAll("#navLinks a").forEach(link => {
+    link.addEventListener("click", () => {
+      mobilePanel.classList.remove("open");
+      menuToggle.setAttribute("aria-expanded", "false");
+      menuToggle.classList.remove("active");
+    });
+  });
+
+  caButton.addEventListener("click", () => {
+    // Replace this notification after the real contract address is published.
+    alert("Credora contract address has not been published yet.");
+  });
+
+  connectButton.addEventListener("click", async () => {
+    /*
+     * Wallet connection is intentionally not simulated.
+     * Integrate the project's actual wallet connector here.
+     */
+    if (!window.ethereum) {
+      alert("No compatible browser wallet was detected.");
+      return;
+    }
+
+    alert("A wallet connector must be configured before connecting to Credora.");
+  });
+
+  document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+</script>
+
+</body>
+</html>

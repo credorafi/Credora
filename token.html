@@ -1,0 +1,617 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>Token | Credora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --bg:#000;
+  --panel:#000000;
+  --panel2:#111512;
+  --mint:#40c4a5;
+  --text:#f4f7f5;
+  --muted:#929d97;
+  --border:#252c28;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--text);font-family:Inter,sans-serif;font-size:13px;line-height:1.75}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+.page{width:min(1120px,90%);margin:auto}
+.navbar{min-height:78px;padding:0 5%;display:flex;align-items:center;justify-content:space-between;gap:25px;border-bottom:1px solid var(--border);position:relative;z-index:20;background:#000}
+.brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;white-space:nowrap}
+.brand img{width:35px;height:35px;object-fit:contain;border-radius:8px}
+.nav-right{display:flex;align-items:center;gap:22px}
+.nav-links{display:flex;align-items:center;gap:17px}
+.nav-links>a,.more-button{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap}
+.nav-links>a:hover,.nav-links>a.active,.more-button:hover{color:var(--text)}
+.soon{font-size:8px;color:var(--mint);border:1px solid #31584d;border-radius:4px;padding:1px 4px}
+.more-wrap{position:relative}
+.more-button{background:none;border:0}
+.more-menu{display:none;position:absolute;top:25px;right:0;width:150px;padding:8px;background:var(--panel2);border:1px solid var(--border);border-radius:9px}
+.more-menu a{display:block;padding:8px;color:var(--muted);font-size:11px}
+.more-menu a:hover{color:var(--mint)}
+.more-wrap:hover .more-menu,.more-wrap:focus-within .more-menu{display:block}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.ca-button,.x-link,.wallet-button{min-height:38px;border:1px solid var(--border);border-radius:9px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap}
+.ca-button{background:var(--panel);color:var(--muted);padding:0 11px;font-size:10px}
+.x-link{width:38px;background:var(--panel);font-size:18px}
+.x-link:hover{color:var(--mint);border-color:var(--mint)}
+.wallet-button{background:var(--mint);color:#06110d;border-color:var(--mint);padding:0 15px;font-size:11px;font-weight:800}
+.menu-toggle{display:none;width:39px;height:39px;background:var(--panel);border:1px solid var(--border);border-radius:9px;flex-direction:column;justify-content:center;align-items:center;gap:6px}
+.menu-toggle span{display:block;width:17px;height:2px;background:var(--text);border-radius:2px;transition:transform .25s}
+.menu-toggle.is-open span:first-child{transform:translateY(4px) rotate(45deg)}
+.menu-toggle.is-open span:last-child{transform:translateY(-4px) rotate(-45deg)}
+
+.hero{padding:75px 0 55px;border-bottom:1px solid var(--border)}
+.eyebrow{color:var(--mint);font-size:10px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;margin-bottom:14px}
+h1{font-size:clamp(43px,7vw,78px);line-height:1.04;letter-spacing:-3.5px;font-weight:800}
+h1 span{color:var(--mint)}
+.hero-tag{display:inline-flex;margin-top:20px;padding:5px 10px;border:1px solid #31584d;border-radius:6px;color:var(--mint);font-size:10px;font-weight:700}
+.hero-description{max-width:720px;margin-top:23px;color:#a2aba6;font-size:14px;line-height:2}
+.notice{margin-top:27px;max-width:800px;padding:20px 22px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+.notice strong{display:block;margin-bottom:5px;font-size:14px}
+.notice p{color:var(--muted);font-size:12px}
+.section{padding:58px 0;border-bottom:1px solid var(--border)}
+.section-heading{margin-bottom:25px}
+.section-heading h2{font-size:clamp(25px,4vw,35px);letter-spacing:-1.2px;line-height:1.25}
+.section-heading p{max-width:720px;margin-top:12px;color:var(--muted);font-size:12px;line-height:1.9}
+.grid{display:grid;gap:14px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{min-width:0;padding:22px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+.card-label{color:var(--muted);font-size:11px;font-weight:600}
+.card-value{font-size:clamp(23px,3vw,34px);line-height:1.3;font-weight:800;letter-spacing:-1px;margin:14px 0 8px;overflow-wrap:anywhere}
+.card p{color:var(--muted);font-size:11px;line-height:1.9}
+.mint{color:var(--mint)}
+.small-note{margin-top:20px;color:var(--muted);font-size:11px;line-height:1.9}
+.split-row{display:grid;grid-template-columns:1fr auto;gap:15px;align-items:center;padding:19px 0;border-bottom:1px solid var(--border)}
+.split-row:last-child{border-bottom:0}
+.split-row h3{font-size:13px}
+.split-row p{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.8}
+.percent{font-size:28px;font-weight:800;color:var(--mint);white-space:nowrap}
+.icon-card{display:flex;align-items:flex-start;gap:14px}
+.icon-box{width:38px;height:38px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#102019;border:1px solid #244338;border-radius:10px;color:var(--mint)}
+.icon-card h3{font-size:13px;margin-bottom:7px}
+.icon-card p{font-size:11px;color:var(--muted);line-height:1.9}
+.token-address{display:flex;gap:10px;align-items:center;margin-top:15px;padding:13px;background:#050605;border:1px solid var(--border);border-radius:8px}
+.token-address code{font-size:11px;color:var(--muted);overflow-wrap:anywhere;min-width:0;flex:1}
+.copy-button{flex-shrink:0;background:var(--panel2);border:1px solid var(--border);border-radius:7px;color:var(--text);padding:8px 10px;font-size:10px}
+.copy-button:hover{border-color:var(--mint);color:var(--mint)}
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.step{padding:20px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+.step-number{color:var(--mint);font-size:22px;font-weight:800}
+.step-status{display:inline-block;margin:12px 0;padding:3px 7px;background:#111512;border:1px solid var(--border);border-radius:5px;color:var(--muted);font-size:9px}
+.step h3{font-size:13px}
+.step p{margin-top:8px;color:var(--muted);font-size:11px;line-height:1.9}
+.list{list-style:none}
+.list li{padding:17px 0;border-bottom:1px solid var(--border)}
+.list li:last-child{border-bottom:0}
+.list strong{display:block;font-size:12px;margin-bottom:5px}
+.list span{display:block;color:var(--muted);font-size:11px;line-height:1.9}
+.footer{background:#050605}
+.footer-inner{width:min(1120px,90%);margin:auto;padding:38px 0 22px}
+.footer-top{display:flex;justify-content:space-between;gap:40px;padding-bottom:30px}
+.footer-description{max-width:330px;margin-top:13px;color:var(--muted);font-size:11px;line-height:1.9}
+.footer-x{display:inline-flex;margin-top:14px;width:35px;height:35px;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:8px}
+.footer-links{display:grid;grid-template-columns:repeat(2,minmax(100px,1fr));gap:45px}
+.footer-links h3{font-size:12px;margin-bottom:12px}
+.footer-links a{display:block;margin-top:8px;color:var(--muted);font-size:11px}
+.footer-links a:hover,.footer-x:hover{color:var(--mint)}
+.footer-bottom{padding-top:18px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:15px;color:#69736c;font-size:10px}
+
+@media(max-width:1100px){
+  .nav-right{gap:14px}.nav-links{gap:11px}
+  .nav-links>a,.more-button{font-size:10px}
+  .ca-button{display:none}
+}
+@media(max-width:850px){
+  .navbar{min-height:70px;padding:0 5%}
+  .menu-toggle{display:flex}
+  .nav-right{display:none;position:absolute;top:70px;left:0;right:0;padding:17px 5% 22px;background:#080a08;border-bottom:1px solid var(--border);align-items:stretch;flex-direction:column;gap:15px;max-height:calc(100dvh - 70px);overflow-y:auto}
+  .nav-right.open{display:flex}
+  .nav-links{flex-direction:column;align-items:stretch;gap:0}
+  .nav-links>a,.more-button{display:flex;align-items:center;min-height:43px;padding:10px 0;border-bottom:1px solid #171c19;font-size:15px}
+  .more-button{width:100%;justify-content:space-between}
+  .more-wrap{width:100%}
+  .more-menu{position:static;width:100%;margin-top:5px}
+  .nav-links>a.active{color:var(--mint)}
+  .nav-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding-top:14px;border-top:1px solid var(--border)}
+  .ca-button{display:flex;width:100%;min-height:42px}
+  .x-link{width:100%;min-height:42px}
+  .wallet-button{width:100%;min-height:45px}
+  .grid-4{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:600px){
+  .hero{padding:52px 0 38px}
+  h1{font-size:clamp(40px,11vw,55px);letter-spacing:-2px}
+  .hero-description{font-size:13px}
+  .section{padding:43px 0}
+  .grid-2,.grid-3,.grid-4,.steps{grid-template-columns:1fr}
+  .card{padding:19px}
+  .card-value{font-size:29px}
+  .split-row{gap:10px}
+  .percent{font-size:25px}
+  .token-address{align-items:flex-start}
+  .footer-top{flex-direction:column;gap:28px}
+  .footer-links{gap:25px}
+  .footer-bottom{flex-direction:column}
+}
+</style>
+</head>
+
+<body>
+<header class="navbar">
+  <a href="index.html" class="brand">
+    <img src="images/Logo.jpg" alt="Credora logo">
+    <span>Credora</span>
+  </a>
+
+  <button class="menu-toggle" id="menuToggle" type="button"
+    aria-label="Open navigation menu" aria-expanded="false" aria-controls="navRight">
+    <span></span><span></span>
+  </button>
+
+  <div class="nav-right" id="navRight">
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="earn.html">Earn</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="swap.html">Swap</a>
+      <a href="stake.html">Stake</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="token.html" class="active">Token <span class="soon">SOON</span></a>
+      <a href="docs.html">Docs</a>
+      <div class="more-wrap">
+        <button class="more-button" id="moreButton" type="button" aria-expanded="false">
+          More <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="more-menu" id="moreMenu">
+          <a href="stats.html">Stats</a>
+          <a href="activity.html">Activity</a>
+          <a href="builders.html">Builders</a>
+          <a href="launchpad.html">Launchpad</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="ca-button" type="button">CA: Coming Soon</button>
+      <a href="https://x.com/" class="x-link" target="_blank"
+        rel="noopener noreferrer" aria-label="Credora on X">𝕏</a>
+      <button class="wallet-button" id="connectWallet" type="button">Connect Wallet</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page hero">
+    <div class="eyebrow">CREDORA · PROTOCOL TOKEN</div>
+    <h1>The Credora<br><span>Token.</span></h1>
+    <span class="hero-tag">COMING SOON</span>
+
+    <p class="hero-description">
+      The Credora token is planned as part of the protocol ecosystem.
+      Official token details will be published here when they are confirmed.
+      We will not publish an unverified contract address, token supply,
+      launch date or allocation as if it were final.
+    </p>
+
+    <div class="notice">
+      <strong>There is no confirmed token information yet.</strong>
+      <p>
+        Supply, contract address, launch venue and allocation have not been
+        confirmed for publication. Check this page for official updates and
+        never rely on an address sent through an unsolicited message.
+      </p>
+    </div>
+  </section>
+
+  <section class="page section" id="fees">
+    <div class="section-heading">
+      <div class="eyebrow">PROTOCOL ECONOMICS</div>
+      <h2>Where the fees go</h2>
+      <p>
+        A sustainable protocol needs transparent economics. These sections
+        describe the areas Credora may disclose as its fee model is finalized.
+        No percentages or rewards are being promised here.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="card">
+        <div class="card-label">Protocol fees</div>
+        <div class="card-value mint">Not announced</div>
+        <p>
+          Any protocol fee rate and its calculation basis will be published
+          after the official model has been confirmed.
+        </p>
+      </article>
+      <article class="card">
+        <div class="card-label">Fee distribution</div>
+        <div class="card-value mint">Not announced</div>
+        <p>
+          Any allocation to staking, treasury or other protocol functions
+          will be documented when approved.
+        </p>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="eyebrow">POTENTIAL DISTRIBUTION AREAS</div>
+      <div class="split-row">
+        <div><h3>Stakers</h3><p>Any reward mechanism will depend on confirmed protocol rules and available revenue.</p></div>
+        <div class="percent">—</div>
+      </div>
+      <div class="split-row">
+        <div><h3>Treasury</h3><p>Protocol maintenance, security and operational needs, subject to the final model.</p></div>
+        <div class="percent">—</div>
+      </div>
+      <div class="split-row">
+        <div><h3>Users and builders</h3><p>Potential user rebates or builder incentives will be announced only if adopted.</p></div>
+        <div class="percent">—</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page section" id="why">
+    <div class="section-heading">
+      <div class="eyebrow">THE PURPOSE</div>
+      <h2>Why a protocol token?</h2>
+      <p>
+        A token should have a clearly defined role, transparent limitations
+        and a reason to exist beyond speculation.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card icon-card">
+        <div class="icon-box"><i class="fa-solid fa-layer-group"></i></div>
+        <div>
+          <h3>Support the ecosystem</h3>
+          <p>Token utility, if introduced, should support clearly defined protocol functions.</p>
+        </div>
+      </article>
+      <article class="card icon-card">
+        <div class="icon-box"><i class="fa-solid fa-shield-halved"></i></div>
+        <div>
+          <h3>Transparent rules</h3>
+          <p>Official parameters and changes should be documented and independently verifiable.</p>
+        </div>
+      </article>
+      <article class="card icon-card">
+        <div class="icon-box"><i class="fa-solid fa-users"></i></div>
+        <div>
+          <h3>Protocol participation</h3>
+          <p>Any future participation rights will be explained before they become available.</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="page section" id="utility">
+    <div class="section-heading">
+      <div class="eyebrow">TOKEN UTILITY</div>
+      <h2>What the token may do</h2>
+      <p>
+        The following are areas for future disclosure, not promises of
+        features, returns or benefits.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="icon-box"><i class="fa-solid fa-coins"></i></div>
+        <h3 style="margin-top:16px">Staking</h3>
+        <p style="margin-top:8px">
+          Any staking feature, reward source, withdrawal rule and applicable
+          risk will be explained if the feature is launched.
+        </p>
+      </article>
+      <article class="card">
+        <div class="icon-box"><i class="fa-solid fa-scale-balanced"></i></div>
+        <h3 style="margin-top:16px">Protocol governance</h3>
+        <p style="margin-top:8px">
+          Governance rights and limitations, if any, will be defined before
+          users are asked to participate.
+        </p>
+      </article>
+      <article class="card">
+        <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
+        <h3 style="margin-top:16px">Ecosystem incentives</h3>
+        <p style="margin-top:8px">
+          Any incentives will depend on the finalized token model and will
+          not represent a guaranteed return.
+        </p>
+      </article>
+    </div>
+    <p class="small-note">
+      Nothing in this section constitutes an offer to sell a token or a
+      promise of future utility.
+    </p>
+  </section>
+
+  <section class="page section" id="token-details">
+    <div class="section-heading">
+      <div class="eyebrow">TOKEN DETAILS</div>
+      <h2>The token itself</h2>
+      <p>
+        Official details will be added when confirmed. Until then, the
+        information below remains explicitly unannounced.
+      </p>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="card">
+        <div class="card-label">Contract address</div>
+        <div class="card-value">Not yet</div>
+        <p>No verified Credora token address has been provided for this page.</p>
+      </article>
+      <article class="card">
+        <div class="card-label">Total supply</div>
+        <div class="card-value">Not decided</div>
+        <p>The total supply will be shown after the official token parameters are finalized.</p>
+      </article>
+      <article class="card">
+        <div class="card-label">Launch venue</div>
+        <div class="card-value">Not announced</div>
+        <p>No trading venue or liquidity pool is confirmed here.</p>
+      </article>
+      <article class="card">
+        <div class="card-label">Token allocation</div>
+        <div class="card-value">Not announced</div>
+        <p>Team, community, treasury and vesting details require official confirmation.</p>
+      </article>
+    </div>
+
+    <div class="notice" style="margin-top:16px">
+      <strong><i class="fa-solid fa-circle-info mint"></i> Verify before interacting</strong>
+      <p>
+        Do not send funds to an address claimed to be Credora's token contract
+        unless the official address has been published and verified.
+      </p>
+    </div>
+  </section>
+
+  <section class="page section" id="protocol">
+    <div class="section-heading">
+      <div class="eyebrow">PROTOCOL STATUS</div>
+      <h2>What is verified today</h2>
+      <p>
+        This page is a frontend presentation. It does not read contract
+        state or live protocol metrics yet.
+      </p>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="card">
+        <div class="card-label">Token contract</div>
+        <div class="card-value">—</div>
+        <p>No verified contract connection configured.</p>
+      </article>
+      <article class="card">
+        <div class="card-label">On-chain fee data</div>
+        <div class="card-value">—</div>
+        <p>Live contract reads have not been integrated.</p>
+      </article>
+      <article class="card">
+        <div class="card-label">Token distribution</div>
+        <div class="card-value">—</div>
+        <p>No verified token distribution data configured.</p>
+      </article>
+    </div>
+
+    <div class="card" style="margin-top:14px">
+      <div class="card-label">Contract address</div>
+      <div class="token-address">
+        <code id="contractAddress">Not published</code>
+        <button class="copy-button" id="copyAddress" type="button">Copy</button>
+      </div>
+      <p class="small-note" id="copyMessage">No contract address is configured.</p>
+    </div>
+  </section>
+
+  <section class="page section" id="roadmap">
+    <div class="section-heading">
+      <div class="eyebrow">ROADMAP</div>
+      <h2>The order it happens in</h2>
+      <p>
+        A transparent sequence for future token announcements. These steps
+        are not a claim that a launch date or deployment has been scheduled.
+      </p>
+    </div>
+
+    <div class="steps">
+      <article class="step">
+        <div class="step-number">01</div>
+        <span class="step-status">In preparation</span>
+        <h3>Define the token</h3>
+        <p>Finalize its purpose, design and relationship with the protocol.</p>
+      </article>
+      <article class="step">
+        <div class="step-number">02</div>
+        <span class="step-status">Pending</span>
+        <h3>Publish tokenomics</h3>
+        <p>Disclose supply, allocations, vesting and fee rules after confirmation.</p>
+      </article>
+      <article class="step">
+        <div class="step-number">03</div>
+        <span class="step-status">Pending</span>
+        <h3>Verify deployment</h3>
+        <p>Publish verified contract details and relevant security information if deployed.</p>
+      </article>
+      <article class="step">
+        <div class="step-number">04</div>
+        <span class="step-status">Pending</span>
+        <h3>Announce availability</h3>
+        <p>Publish official access instructions only after the relevant features are ready.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="page section" id="limits">
+    <div class="section-heading">
+      <div class="eyebrow">IMPORTANT LIMITS</div>
+      <h2>What a token should not control</h2>
+      <p>
+        The final scope of any Credora token must be documented clearly.
+        No control rights should be assumed from this draft page.
+      </p>
+    </div>
+
+    <ul class="list">
+      <li>
+        <strong>Deposits and user assets</strong>
+        <span>Any authority over user assets must be explicitly documented. This page does not establish such authority.</span>
+      </li>
+      <li>
+        <strong>Protocol risk parameters</strong>
+        <span>Any governance rights and restrictions must be confirmed in the official protocol documentation.</span>
+      </li>
+      <li>
+        <strong>Liquidations and withdrawals</strong>
+        <span>Rules depend on the deployed protocol and its contracts, not on assumptions made by this frontend.</span>
+      </li>
+      <li>
+        <strong>Returns and token price</strong>
+        <span>No token utility or participation feature guarantees profits, rewards or appreciation.</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="page section" id="risk">
+    <div class="notice" style="margin-top:0">
+      <strong>Risk disclosure</strong>
+      <p>
+        Digital assets and decentralized finance involve risk, including
+        volatility, smart contract vulnerabilities, liquidity constraints
+        and possible loss of funds. This page is informational and does not
+        constitute financial or investment advice.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="brand">
+          <img src="images/Logo.jpg" alt="Credora logo">
+          <span>Credora</span>
+        </a>
+        <p class="footer-description">
+          Credora is building its protocol experience with transparent
+          information and a focus on clarity.
+        </p>
+        <a href="https://x.com/" target="_blank" rel="noopener noreferrer"
+          class="footer-x" aria-label="Credora on X">𝕏</a>
+      </div>
+
+      <div class="footer-links">
+        <div>
+          <h3>Protocol</h3>
+          <a href="index.html">Home</a>
+          <a href="earn.html">Earn</a>
+          <a href="borrow.html">Borrow</a>
+          <a href="swap.html">Swap</a>
+          <a href="stake.html">Stake</a>
+          <a href="portfolio.html">Portfolio</a>
+        </div>
+        <div>
+          <h3>Learn</h3>
+          <a href="docs.html">Documentation</a>
+          <a href="#Stats">Stats</a>
+          <a href="#Activity">Activity</a>
+          <a href="Builders">Builders</a>
+          <a href="Launchpad">Launchpad</a>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span id="year"></span> Credora. All rights reserved.</span>
+      <span>Not investment advice. Digital assets involve risk.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+const menuToggle = document.getElementById('menuToggle');
+const navRight = document.getElementById('navRight');
+const moreButton = document.getElementById('moreButton');
+const moreMenu = document.getElementById('moreMenu');
+
+menuToggle.addEventListener('click', function () {
+  const isOpen = navRight.classList.toggle('open');
+  menuToggle.classList.toggle('is-open', isOpen);
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.setAttribute(
+    'aria-label',
+    isOpen ? 'Close navigation menu' : 'Open navigation menu'
+  );
+});
+
+moreButton.addEventListener('click', function () {
+  const isOpen = moreMenu.style.display === 'block';
+  moreMenu.style.display = isOpen ? 'none' : 'block';
+  moreButton.setAttribute('aria-expanded', String(!isOpen));
+});
+
+document.addEventListener('click', function (event) {
+  if (window.innerWidth <= 850 &&
+      !navRight.contains(event.target) &&
+      !menuToggle.contains(event.target)) {
+    navRight.classList.remove('open');
+    menuToggle.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation menu');
+  }
+});
+
+document.addEventListener('keydown', function (event) {
+  if (event.key === 'Escape') {
+    navRight.classList.remove('open');
+    menuToggle.classList.remove('is-open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    menuToggle.setAttribute('aria-label', 'Open navigation menu');
+  }
+});
+
+document.getElementById('connectWallet').addEventListener('click', function () {
+  alert('Wallet connection has not been integrated yet.');
+});
+
+document.getElementById('copyAddress').addEventListener('click', async function () {
+  const address = document.getElementById('contractAddress').textContent.trim();
+  const message = document.getElementById('copyMessage');
+
+  if (!address || address === 'Not published') {
+    message.textContent = 'The contract address has not been published.';
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(address);
+    message.textContent = 'Address copied.';
+  } catch (error) {
+    message.textContent = 'Copy is unavailable in this browser context.';
+  }
+});
+
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

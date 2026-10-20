@@ -1,0 +1,3044 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>Launch a Coin | Credora</title>
+
+<style>
+:root {
+  --bg: #000;
+  --surface: #0b0d0c;
+  --hero: #1a1918;
+  --green: #40c4a5;
+  --green-dark: #002b20;
+  --text: #f4f7f5;
+  --muted: #929d97;
+  --border: #252c28;
+  --radius: 18px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+body, button, input, select {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button, a, input, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 4px;
+}
+
+.container {
+  width: min(1160px, calc(100% - 48px));
+  margin: 0 auto;
+}
+
+/* NAVIGATION */
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+  min-height: 82px;
+  padding: 14px 5%;
+  background: rgba(0, 0, 0, .96);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(18px);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -.7px;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.mobile-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex: 1;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 21px;
+  font-size: 13px;
+  color: #b6beb9;
+}
+
+.nav-links > a {
+  white-space: nowrap;
+  transition: color .2s ease;
+}
+
+.nav-links > a:hover,
+.nav-links > a.active {
+  color: var(--green);
+}
+
+.nav-links small {
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.more-dropdown {
+  position: relative;
+}
+
+.more-toggle {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 0;
+  border: 0;
+  color: #b6beb9;
+  background: transparent;
+  font-size: 13px;
+}
+
+.more-toggle:hover {
+  color: var(--green);
+}
+
+.more-arrow {
+  font-size: 15px;
+  transition: transform .2s ease;
+}
+
+.more-dropdown.is-open .more-arrow {
+  transform: rotate(180deg);
+}
+
+.more-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: -18px;
+  z-index: 20;
+  min-width: 170px;
+  padding: 8px;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  background: #101311;
+  box-shadow: 0 18px 45px rgba(0,0,0,.45);
+}
+
+.more-menu[hidden] {
+  display: none;
+}
+
+.more-menu a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #c1c9c4;
+  font-size: 13px;
+}
+
+.more-menu a:hover {
+  background: #19221e;
+  color: var(--green);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.ca-button,
+.connect-button {
+  min-height: 39px;
+  padding: 0 15px;
+  border-radius: 9px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.ca-button {
+  border: 1px solid #303833;
+  background: #101311;
+  color: #c7d0ca;
+}
+
+.x-link {
+  display: flex;
+  width: 39px;
+  height: 39px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #303833;
+  border-radius: 9px;
+  color: #fff;
+  font-size: 21px;
+}
+
+.x-link:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.connect-button {
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: #03120d;
+  transition: background .2s ease, transform .2s ease;
+}
+
+.connect-button:hover {
+  background: #69d9bd;
+  transform: translateY(-1px);
+}
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  flex-shrink: 0;
+  z-index: 1003;
+}
+.menu-toggle span {
+  display: block;
+  width: 19px;
+  height: 2px;
+  border-radius: 2px;
+  background: white;
+  transition: transform .2s ease;
+}
+
+.menu-toggle.active span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-toggle.active span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* HERO */
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 82px 0 72px;
+  background:
+    radial-gradient(ellipse at 85% 10%, rgba(64,196,165,.12), transparent 38%),
+    var(--hero);
+  border-bottom: 1px solid var(--border);
+}
+
+.hero::after {
+  position: absolute;
+  right: -120px;
+  bottom: -260px;
+  width: 520px;
+  height: 520px;
+  border: 1px solid rgba(64,196,165,.12);
+  border-radius: 50%;
+  content: "";
+  pointer-events: none;
+}
+
+.hero-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .65fr);
+  align-items: center;
+  gap: 70px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 21px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 13px rgba(64,196,165,.6);
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  max-width: 700px;
+  margin-bottom: 22px;
+  font-size: clamp(42px, 6vw, 75px);
+  line-height: 1.02;
+  letter-spacing: -3.8px;
+}
+
+h1 span {
+  color: var(--green);
+}
+
+.hero-copy {
+  max-width: 600px;
+  margin-bottom: 28px;
+  color: #b1b9b4;
+  font-size: 16px;
+  line-height: 1.85;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.hero-tag {
+  padding: 7px 11px;
+  border: 1px solid #343b36;
+  border-radius: 7px;
+  color: #c4cdc7;
+  background: rgba(0,0,0,.2);
+  font-size: 11px;
+}
+
+.hero-tag span {
+  color: var(--green);
+}
+
+.hero-visual {
+  position: relative;
+  padding: 25px;
+  border: 1px solid #333a35;
+  border-radius: 22px;
+  background: linear-gradient(145deg, #171d19, #080a09);
+  box-shadow: 0 30px 90px rgba(0,0,0,.3);
+}
+
+.visual-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #2b322d;
+}
+
+.visual-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.visual-icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 13px;
+  background: var(--green-dark);
+  color: var(--green);
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.visual-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: inherit;
+}
+
+.visual-brand strong {
+  display: block;
+  font-size: 15px;
+}
+
+.visual-brand small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.soon-pill {
+  padding: 6px 9px;
+  border: 1px solid rgba(64,196,165,.25);
+  border-radius: 6px;
+  background: rgba(64,196,165,.08);
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.visual-stat {
+  padding: 24px 0 18px;
+}
+
+.visual-stat small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.visual-stat strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 34px;
+  letter-spacing: -1px;
+}
+
+.visual-stat strong span {
+  color: var(--green);
+}
+
+.visual-lines {
+  display: grid;
+  gap: 10px;
+}
+
+.visual-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #242c27;
+  border-radius: 10px;
+  background: #0b0f0c;
+  font-size: 11px;
+}
+
+.visual-line span {
+  color: var(--muted);
+}
+
+.visual-line strong {
+  color: #e3e9e5;
+  text-align: right;
+}
+
+/* SHARED SECTIONS */
+
+.section {
+  padding: 84px 0;
+}
+
+.section-heading {
+  max-width: 750px;
+  margin-bottom: 38px;
+}
+
+.section-kicker {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+}
+
+.section-heading h2 {
+  margin-bottom: 16px;
+  font-size: clamp(30px, 4vw, 45px);
+  line-height: 1.12;
+  letter-spacing: -1.7px;
+}
+
+.section-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.panel {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.panel-heading {
+  padding: 23px 25px;
+  border-bottom: 1px solid var(--border);
+}
+
+.panel-heading h3 {
+  margin-bottom: 5px;
+  font-size: 17px;
+}
+
+.panel-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* LAUNCH FORM */
+
+.launch-section {
+  background: #050605;
+}
+
+.launch-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(300px, .75fr);
+  align-items: start;
+  gap: 25px;
+}
+
+.form-panel {
+  overflow: hidden;
+}
+
+.form-body {
+  display: grid;
+  gap: 25px;
+  padding: 27px;
+}
+
+.form-field {
+  display: grid;
+  gap: 9px;
+}
+
+.form-field label,
+.field-label {
+  color: #e6ece8;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.field-hint {
+  margin: -3px 0 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.75;
+}
+
+.text-input,
+.select-input {
+  width: 100%;
+  min-height: 49px;
+  padding: 0 14px;
+  border: 1px solid #303832;
+  border-radius: 10px;
+  outline: none;
+  background: #080a09;
+  color: var(--text);
+  font-size: 13px;
+  transition: border-color .2s ease;
+}
+
+.text-input::placeholder {
+  color: #626c65;
+}
+
+.text-input:focus,
+.select-input:focus {
+  border-color: var(--green);
+}
+
+.text-input:disabled,
+.select-input:disabled {
+  opacity: .65;
+  cursor: not-allowed;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 17px;
+}
+
+.upload-box {
+  display: flex;
+  min-height: 145px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 9px;
+  padding: 20px;
+  border: 1px dashed #45544a;
+  border-radius: 12px;
+  background: #090d0a;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease;
+}
+
+.upload-box:hover,
+.upload-box.dragging {
+  border-color: var(--green);
+  background: #0c1711;
+}
+
+.upload-symbol {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid #34463a;
+  border-radius: 12px;
+  color: var(--green);
+  font-size: 22px;
+}
+
+.upload-box strong {
+  font-size: 12px;
+}
+
+.upload-box small {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.upload-preview {
+  display: none;
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid #34463a;
+  border-radius: 14px;
+}
+
+.upload-preview.visible {
+  display: block;
+}
+
+.upload-box.has-image .upload-symbol {
+  display: none;
+}
+
+.upload-box.has-image .upload-default {
+  display: none;
+}
+
+.upload-box input {
+  display: none;
+}
+
+.upload-file-name {
+  overflow-wrap: anywhere;
+  color: var(--green);
+  font-size: 11px;
+}
+
+.tax-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.tax-value {
+  padding: 5px 9px;
+  border: 1px solid rgba(64,196,165,.3);
+  border-radius: 7px;
+  background: rgba(64,196,165,.08);
+  color: var(--green);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.tax-slider {
+  width: 100%;
+  height: 5px;
+  margin: 12px 0;
+  appearance: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, var(--green) 50%, #29322c 50%);
+  cursor: pointer;
+}
+
+.tax-slider::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  appearance: none;
+  border: 3px solid #07110c;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+.tax-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 3px solid #07110c;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 1px var(--green);
+}
+
+.slider-labels {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.fee-summary {
+  display: grid;
+  gap: 10px;
+  margin-top: 8px;
+  padding: 15px;
+  border: 1px solid #28342c;
+  border-radius: 11px;
+  background: #080c09;
+}
+
+.fee-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.fee-row strong {
+  color: #e9efeb;
+  font-size: 12px;
+  text-align: right;
+}
+
+.fee-row.total {
+  padding-top: 11px;
+  border-top: 1px solid #28342c;
+  color: #e9efeb;
+}
+
+.fee-row.total strong {
+  color: var(--green);
+  font-size: 15px;
+}
+
+.market-select {
+  position: relative;
+}
+
+.market-select::after {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  color: var(--green);
+  content: "⌄";
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.market-select select {
+  padding-right: 38px;
+  appearance: none;
+}
+
+.fixed-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #304338;
+  border-radius: 10px;
+  background: rgba(64,196,165,.055);
+  color: #aebbb2;
+  font-size: 11px;
+  line-height: 1.75;
+}
+
+.fixed-note strong {
+  color: var(--green);
+}
+
+.note-icon {
+  flex-shrink: 0;
+  color: var(--green);
+  font-size: 15px;
+}
+
+.form-divider {
+  height: 1px;
+  background: var(--border);
+}
+
+.form-actions {
+  display: grid;
+  gap: 12px;
+}
+
+.primary-button {
+  display: flex;
+  width: 100%;
+  min-height: 49px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 18px;
+  border: 1px solid var(--green);
+  border-radius: 10px;
+  background: var(--green);
+  color: #03120d;
+  font-size: 13px;
+  font-weight: 800;
+  transition: background .2s ease;
+}
+
+.primary-button:hover {
+  background: #6bd9bd;
+}
+
+.secondary-button {
+  min-height: 45px;
+  padding: 12px 16px;
+  border: 1px solid #303832;
+  border-radius: 10px;
+  background: transparent;
+  color: #d5ddd7;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.secondary-button:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.form-disclaimer {
+  margin: 0;
+  color: #768178;
+  font-size: 10px;
+  line-height: 1.8;
+  text-align: center;
+}
+
+/* LIVE PREVIEW */
+
+.preview-column {
+  position: sticky;
+  top: 105px;
+  display: grid;
+  gap: 17px;
+}
+
+.preview-card {
+  overflow: hidden;
+  border: 1px solid #303a33;
+  border-radius: var(--radius);
+  background:
+    radial-gradient(ellipse at 90% 0%, rgba(64,196,165,.09), transparent 48%),
+    #0b0e0c;
+}
+
+.preview-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.preview-card-top strong {
+  font-size: 13px;
+}
+
+.preview-live {
+  color: var(--green);
+  font-size: 10px;
+}
+
+.preview-content {
+  padding: 24px;
+}
+
+.preview-token {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.token-image-wrap {
+  display: grid;
+  width: 58px;
+  height: 58px;
+  flex-shrink: 0;
+  overflow: hidden;
+  place-items: center;
+  border: 1px solid #354239;
+  border-radius: 15px;
+  background: var(--green-dark);
+  color: var(--green);
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.token-image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.preview-token h3 {
+  overflow-wrap: anywhere;
+  margin-bottom: 3px;
+  font-size: 17px;
+}
+
+.preview-token p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.preview-fields {
+  display: grid;
+  gap: 0;
+}
+
+.preview-field {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 13px 0;
+  border-top: 1px solid #242b26;
+  font-size: 11px;
+}
+
+.preview-field span {
+  color: var(--muted);
+}
+
+.preview-field strong {
+  max-width: 62%;
+  overflow-wrap: anywhere;
+  color: #e5ece7;
+  text-align: right;
+}
+
+.preview-callout {
+  margin-top: 19px;
+  padding: 13px;
+  border: 1px solid #304338;
+  border-radius: 10px;
+  background: rgba(64,196,165,.055);
+  color: #aebbb2;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.preview-callout strong {
+  color: var(--green);
+}
+
+.breakdown-card {
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.breakdown-card h3 {
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.breakdown-card > p {
+  margin-bottom: 18px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.breakdown-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-top: 1px solid #252c28;
+  font-size: 11px;
+}
+
+.breakdown-row span {
+  color: #aeb7b0;
+}
+
+.breakdown-row strong {
+  color: var(--green);
+}
+
+/* WHAT A LAUNCH WILL DO */
+
+.steps-section {
+  background: #090a09;
+  border-top: 1px solid #111612;
+  border-bottom: 1px solid #111612;
+}
+
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 17px;
+}
+
+.step-card {
+  position: relative;
+  overflow: hidden;
+  padding: 27px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: linear-gradient(145deg, #0e110f, #080908);
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 35px;
+  margin-bottom: 22px;
+  padding: 0 10px;
+  border: 1px solid rgba(64,196,165,.3);
+  border-radius: 8px;
+  background: rgba(64,196,165,.08);
+  color: var(--green);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.step-card h3 {
+  margin-bottom: 12px;
+  font-size: 18px;
+  letter-spacing: -.3px;
+}
+
+.step-card p {
+  margin-bottom: 0;
+  color: #a1aaa3;
+  font-size: 13px;
+  line-height: 1.95;
+}
+
+.step-card p strong {
+  color: #e6ece8;
+}
+
+/* MARKETS */
+
+.markets-section {
+  background: #050605;
+}
+
+.market-panel {
+  overflow: hidden;
+}
+
+.market-panel-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 25px;
+  border-bottom: 1px solid var(--border);
+}
+
+.market-panel-heading h3 {
+  margin-bottom: 7px;
+  font-size: 17px;
+}
+
+.market-panel-heading p {
+  max-width: 700px;
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.market-count {
+  flex-shrink: 0;
+  padding: 7px 10px;
+  border: 1px solid #334239;
+  border-radius: 8px;
+  background: #101612;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.market-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 25px;
+}
+
+.market-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 7px 12px;
+  border: 1px solid #2b342d;
+  border-radius: 8px;
+  background: #0b0e0c;
+  color: #d2dad4;
+  font-family: monospace;
+  font-size: 12px;
+  transition: border-color .2s ease, color .2s ease, background .2s ease;
+}
+
+.market-chip:hover,
+.market-chip.selected {
+  border-color: var(--green);
+  background: rgba(64,196,165,.08);
+  color: var(--green);
+}
+
+.market-locked-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 25px 25px;
+  padding: 16px;
+  border: 1px solid #2e3c32;
+  border-radius: 11px;
+  background: #0b110d;
+  color: #adb8af;
+  font-size: 12px;
+  line-height: 1.85;
+}
+
+.market-locked-note strong {
+  color: var(--green);
+}
+
+/* WHAT YOU KEEP */
+
+.keep-section {
+  background:
+    radial-gradient(ellipse at 0% 100%, rgba(64,196,165,.07), transparent 45%),
+    #0b0d0c;
+  border-top: 1px solid var(--border);
+}
+
+.keep-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+  align-items: center;
+  gap: 60px;
+}
+
+.keep-copy h2 {
+  max-width: 600px;
+  margin-bottom: 20px;
+  font-size: clamp(34px, 4vw, 49px);
+  line-height: 1.1;
+  letter-spacing: -2px;
+}
+
+.keep-copy h2 span {
+  color: var(--green);
+}
+
+.keep-copy p {
+  max-width: 700px;
+  margin-bottom: 0;
+  color: #a7b0a9;
+  font-size: 14px;
+  line-height: 2;
+}
+
+.keep-points {
+  display: grid;
+  gap: 12px;
+}
+
+.keep-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 17px;
+  border: 1px solid #2b342e;
+  border-radius: 12px;
+  background: rgba(0,0,0,.18);
+}
+
+.keep-check {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  flex-shrink: 0;
+  place-items: center;
+  border-radius: 8px;
+  background: rgba(64,196,165,.12);
+  color: var(--green);
+  font-size: 14px;
+}
+
+.keep-point strong {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+}
+
+.keep-point p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+/* DISCLAIMER */
+
+.disclaimer-section {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  background: #050605;
+}
+
+.disclaimer-inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #879189;
+  font-size: 11px;
+  line-height: 1.9;
+}
+
+.disclaimer-inner strong {
+  flex-shrink: 0;
+  color: #c8d0ca;
+}
+
+/* FOOTER */
+
+.footer {
+  padding: 62px 0 22px;
+  border-top: 1px solid var(--border);
+  background: #0b0d0c;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 55px;
+  padding-bottom: 44px;
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 17px;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.footer-brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 9px;
+}
+
+.footer-description {
+  max-width: 330px;
+  margin-bottom: 19px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd3cd;
+  font-size: 12px;
+}
+
+.footer-social:hover {
+  color: var(--green);
+}
+
+.footer-column h4 {
+  margin: 7px 0 20px;
+  color: #7f8c82;
+  font-size: 10px;
+  letter-spacing: 1.8px;
+}
+
+.footer-column a {
+  display: block;
+  width: fit-content;
+  margin: 11px 0;
+  color: #c3cbc5;
+  font-size: 12px;
+  transition: color .2s ease;
+}
+
+.footer-column a:hover {
+  color: var(--green);
+}
+
+.footer-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #252c28;
+  color: #768178;
+  font-size: 10px;
+}
+
+.footer-bottom span:last-child {
+  text-align: right;
+}
+
+/* REVIEW MODAL */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  padding: 24px;
+  background: rgba(0,0,0,.8);
+  backdrop-filter: blur(8px);
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.review-modal {
+  width: min(540px, 100%);
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  padding: 27px;
+  border: 1px solid #354239;
+  border-radius: 18px;
+  background: #0d100e;
+  box-shadow: 0 30px 100px rgba(0,0,0,.6);
+}
+
+.modal-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-top h2 {
+  margin-bottom: 6px;
+  font-size: 23px;
+  letter-spacing: -.7px;
+}
+
+.modal-top p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.modal-close {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid #303832;
+  border-radius: 9px;
+  background: #111512;
+  color: #fff;
+  font-size: 19px;
+}
+
+.review-list {
+  display: grid;
+  gap: 0;
+  margin: 20px 0;
+  border-top: 1px solid var(--border);
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+
+.review-row span {
+  color: var(--muted);
+}
+
+.review-row strong {
+  max-width: 60%;
+  overflow-wrap: anywhere;
+  text-align: right;
+}
+
+.modal-warning {
+  margin-bottom: 20px;
+  padding: 14px;
+  border: 1px solid #3b3524;
+  border-radius: 10px;
+  background: #15130c;
+  color: #c8b98b;
+  font-size: 11px;
+  line-height: 1.85;
+}
+
+.modal-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 10px;
+}
+
+/* TOAST */
+
+.toast {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 4000;
+  width: min(380px, calc(100% - 32px));
+  padding: 16px 18px;
+  border: 1px solid #34453a;
+  border-radius: 12px;
+  background: #101612;
+  color: #e8eee9;
+  box-shadow: 0 15px 45px rgba(0,0,0,.4);
+  font-size: 12px;
+  line-height: 1.8;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast strong {
+  color: var(--green);
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1120px) {
+  .navbar {
+    gap: 18px;
+    padding-right: 3%;
+    padding-left: 3%;
+  }
+
+  .nav-links {
+    gap: 13px;
+    font-size: 12px;
+  }
+
+  .nav-actions {
+    gap: 7px;
+  }
+
+  .ca-button,
+  .connect-button {
+    padding: 0 10px;
+    font-size: 11px;
+  }
+
+  .hero-inner {
+    gap: 38px;
+  }
+}
+
+@media (max-width: 920px) {
+  .menu-toggle {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .navbar {
+    min-height: 75px;
+    padding: 12px 24px;
+  }
+
+  .mobile-panel {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: none;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    max-height: calc(100vh - 76px);
+    overflow-y: auto;
+    padding: 17px 22px 22px;
+    border-bottom: 1px solid var(--border);
+    background: #050605;
+    box-shadow: 0 24px 40px rgba(0,0,0,.45);
+  }
+
+  .mobile-panel.open {
+    display: flex;
+  }
+
+  .nav-links {
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .nav-links > a {
+    display: block;
+    padding: 13px 2px;
+    border-bottom: 1px solid #1d241f;
+    font-size: 14px;
+  }
+
+  .more-dropdown {
+    border-bottom: 1px solid #1d241f;
+  }
+
+  .more-toggle {
+    width: 100%;
+    justify-content: space-between;
+    padding: 14px 2px;
+    font-size: 14px;
+  }
+
+  .more-menu {
+    position: static;
+    margin: 0 0 12px;
+    padding: 5px;
+    border-radius: 10px;
+    background: #0b0e0c;
+    box-shadow: none;
+  }
+
+  .more-menu a {
+    padding: 11px 13px;
+    font-size: 13px;
+  }
+
+
+.nav-actions {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+  flex-direction: column;
+  gap: 10px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.nav-actions .ca-button {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #000;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.nav-actions .x-link {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #000;
+  color: #fff;
+  font-size: 19px;
+}
+
+.nav-actions .connect-button {
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  min-height: 45px;
+  height: 45px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 14px;
+  border: 1px solid var(--green);
+  border-radius: 9px;
+  background: var(--green);
+  color: #06110d;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .hero-visual {
+    max-width: 540px;
+  }
+
+  .launch-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .preview-column {
+    position: static;
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .keep-layout {
+    grid-template-columns: 1fr;
+    gap: 35px;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    width: calc(100% - 32px);
+  }
+
+  .navbar {
+    padding: 11px 16px;
+  }
+
+  .brand {
+    gap: 9px;
+    font-size: 20px;
+  }
+
+  .brand-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero {
+    padding: 57px 0 48px;
+  }
+
+  h1 {
+    font-size: clamp(42px, 12vw, 60px);
+    letter-spacing: -2.6px;
+  }
+
+  .hero-copy {
+    font-size: 14px;
+  }
+
+  .hero-visual {
+    padding: 19px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .section-heading {
+    margin-bottom: 27px;
+  }
+
+  .section-heading h2 {
+    font-size: 32px;
+    letter-spacing: -1px;
+  }
+
+  .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-body {
+    gap: 22px;
+    padding: 19px;
+  }
+
+  .panel-heading {
+    padding: 19px;
+  }
+
+  .preview-column {
+    grid-template-columns: 1fr;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .step-card {
+    padding: 22px;
+  }
+
+  .market-panel-heading {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .market-list {
+    gap: 8px;
+    padding: 18px;
+  }
+
+  .market-chip {
+    min-height: 34px;
+    padding: 6px 9px;
+    font-size: 11px;
+  }
+
+  .market-locked-note {
+    margin: 0 18px 18px;
+    padding: 13px;
+  }
+
+  .keep-copy h2 {
+    font-size: 36px;
+  }
+
+  .footer {
+    padding-top: 45px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px 22px;
+  }
+
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+
+  .footer-bottom {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-bottom span:last-child {
+    text-align: left;
+  }
+
+  .disclaimer-inner {
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .modal-backdrop {
+    align-items: flex-end;
+    padding: 10px;
+  }
+
+  .review-modal {
+    max-height: calc(100vh - 20px);
+    padding: 21px;
+    border-radius: 17px;
+  }
+
+  .modal-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .toast {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <a class="brand" href="index.html" aria-label="Credora Home">
+    <img src="images/Logo.jpg" alt="Credora Logo" class="brand-logo">
+    <span>Credora</span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    type="button"
+    aria-label="Buka menu"
+    aria-expanded="false"
+    aria-controls="mobilePanel">
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="mobile-panel" id="mobilePanel">
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="earn.html">Earn</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="swap.html">Swap</a>
+      <a href="stake.html">Stake</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="token.html">Token <small style="color:#40c4a5">SOON</small></a>
+      <a href="docs.html">Docs</a>
+
+      <div class="more-dropdown" id="moreDropdown">
+        <button
+          type="button"
+          class="more-toggle"
+          id="moreToggle"
+          aria-expanded="false">
+          More <span class="more-arrow">⌄</span>
+        </button>
+
+        <div class="more-menu" id="moreMenu" hidden>
+          <a href="stats.html">Stats</a>
+          <a href="activity.html">Activity</a>
+          <a href="builders.html">Builders</a>
+          <a href="launchpad.html">Launchpad</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="ca-button" id="caButton" type="button">CA: soon</button>
+      <a
+        class="x-link"
+        href="https://x.com"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Credora on X">𝕏</a>
+      <button class="connect-button" id="connectTop" type="button">Connect wallet</button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- HERO -->
+
+  <section class="hero">
+    <div class="container hero-inner">
+      <div>
+        <div class="eyebrow">
+          <span class="status-dot"></span>
+          CREDORA LAUNCHPAD
+        </div>
+
+        <h1>Launch a <span>Coin.</span></h1>
+
+        <p class="hero-copy">
+          Launch a coin designed to lend into a Cluby market for the rest
+          of its life. Choose its name, ticker, image, trading tax and
+          lending market before reviewing the launch details.
+        </p>
+
+        <div class="hero-tags">
+          <div class="hero-tag"><span>01</span> Configure your coin</div>
+          <div class="hero-tag"><span>02</span> Choose a market</div>
+          <div class="hero-tag"><span>03</span> Review launch details</div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="visual-top">
+          <div class="visual-brand">
+            <div class="visual-icon">
+  <img src="images/Logo.jpg" alt="Credora Logo"></div>
+            <div>
+                
+              <strong>Credora Launchpad</strong>
+              <small>Coin configuration</small>
+            </div>
+          </div>
+          <div class="soon-pill">PREVIEW</div>
+        </div>
+
+        <div class="visual-stat">
+          <small>Trading tax selected</small>
+          <strong><span id="heroTaxValue">5%</span> <span style="color:#e9efeb;font-size:16px">+ pair fee</span></strong>
+        </div>
+
+        <div class="visual-lines">
+          <div class="visual-line">
+            <span>Mint cost</span>
+            <strong>0.0005 ETH</strong>
+          </div>
+          <div class="visual-line">
+            <span>Pons pair fee</span>
+            <strong>1%</strong>
+          </div>
+          <div class="visual-line">
+            <span>Lending market</span>
+            <strong id="heroMarket">AAPL</strong>
+          </div>
+          <div class="visual-line">
+            <span>Market setting</span>
+            <strong>Fixed at registration</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LAUNCH FORM -->
+
+  <section class="section launch-section" id="launch-form">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-kicker">Configure your coin</span>
+        <h2>Make it yours.</h2>
+        <p>
+          Set the coin's identity, choose its trading tax and select the
+          market it will lend into. The lending market and trading tax
+          are fixed at launch and cannot be changed afterwards.
+        </p>
+      </div>
+
+      <div class="launch-layout">
+
+        <form class="panel form-panel" id="coinForm">
+          <div class="panel-heading">
+            <h3>Coin configuration</h3>
+            <p>Complete the details below to preview your coin.</p>
+          </div>
+
+          <div class="form-body">
+
+            <div class="form-field">
+              <label for="coinName">Coin name</label>
+              <input
+                class="text-input"
+                id="coinName"
+                name="coinName"
+                type="text"
+                placeholder="e.g. Credora Apple"
+                maxlength="40"
+                autocomplete="off"
+                required>
+              <p class="field-hint">
+                The full name people will see when viewing your coin.
+              </p>
+            </div>
+
+            <div class="field-grid">
+              <div class="form-field">
+                <label for="coinTicker">Ticker</label>
+                <input
+                  class="text-input"
+                  id="coinTicker"
+                  name="coinTicker"
+                  type="text"
+                  placeholder="e.g. CAPPLE"
+                  maxlength="12"
+                  pattern="[A-Za-z0-9-]{1,12}"
+                  title="Use 1–12 letters, numbers or hyphens."
+                  autocomplete="off"
+                  required>
+                <p class="field-hint">Up to 12 characters.</p>
+              </div>
+
+              <div class="form-field">
+                <label for="firstBuy">Optional first buy</label>
+                <input
+                  class="text-input"
+                  id="firstBuy"
+                  name="firstBuy"
+                  type="number"
+                  min="0"
+                  step="any"
+                  placeholder="0.00 ETH">
+                <p class="field-hint">Optional amount. This preview does not execute a buy.</p>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="coinImage">Coin image</label>
+
+              <label class="upload-box" id="uploadBox" for="coinImage">
+                <div class="upload-symbol">↑</div>
+
+                <img
+                  class="upload-preview"
+                  id="uploadPreview"
+                  alt="Coin image preview">
+
+                <div class="upload-default">
+                  <strong>Click to upload or drag an image here</strong>
+                  <br>
+                  <small>PNG, JPG, GIF or WebP</small>
+                </div>
+
+                <span class="upload-file-name" id="uploadFileName"></span>
+
+                <input
+                  id="coinImage"
+                  name="coinImage"
+                  type="file"
+                  accept="image/png,image/jpeg,image/gif,image/webp">
+              </label>
+
+              <p class="field-hint">
+                Choose an image to preview how your coin could look.
+                The image is not uploaded to a server by this frontend preview.
+              </p>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-field">
+              <div class="tax-header">
+                <label for="tradingTax">Trading tax</label>
+                <output class="tax-value" id="taxValue">5%</output>
+              </div>
+
+              <p class="field-hint">
+                Choose a tax between 0% and 10%. Pons fixes the chosen
+                tax at launch; nobody can change it afterwards.
+              </p>
+
+              <input
+                class="tax-slider"
+                id="tradingTax"
+                name="tradingTax"
+                type="range"
+                min="0"
+                max="10"
+                step="0.25"
+                value="5"
+                aria-label="Trading tax percentage">
+
+              <div class="slider-labels">
+                <span>0%</span>
+                <span>5%</span>
+                <span>10%</span>
+              </div>
+
+              <div class="fee-summary">
+                <div class="fee-row">
+                  <span>Your chosen trading tax</span>
+                  <strong id="chosenTaxSummary">5%</strong>
+                </div>
+
+                <div class="fee-row">
+                  <span>Pons pair fee</span>
+                  <strong>1%</strong>
+                </div>
+
+                <div class="fee-row total">
+                  <span>Total trading fees</span>
+                  <strong id="totalFeeSummary">6%</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-field">
+              <label for="lendsInto">Lends into</label>
+
+              <div class="market-select">
+                <select
+                  class="select-input"
+                  id="lendsInto"
+                  name="lendsInto"
+                  required>
+                  <option value="AAPL">AAPL</option>
+                  <option value="AMD">AMD</option>
+                  <option value="AMZN">AMZN</option>
+                  <option value="ASML">ASML</option>
+                  <option value="BAB">BAB</option>
+                  <option value="CASH">CASH</option>
+                  <option value="CAT">CAT</option>
+                  <option value="COST">COST</option>
+                  <option value="CRCL">CRCL</option>
+                  <option value="DELL">DELL</option>
+                  <option value="ETH">ETH</option>
+                  <option value="GME">GME</option>
+                  <option value="GOOGL">GOOGL</option>
+                  <option value="HIMS">HIMS</option>
+                  <option value="INTC">INTC</option>
+                  <option value="META">META</option>
+                  <option value="MSFT">MSFT</option>
+                  <option value="MSTR">MSTR</option>
+                  <option value="MUN">MUN</option>
+                  <option value="NFLX">NFLX</option>
+                  <option value="NVDA">NVDA</option>
+                  <option value="NVDA-SHORT">NVDA-SHORT</option>
+                  <option value="PLTR">PLTR</option>
+                  <option value="PON">PON</option>
+                  <option value="QQQ">QQQ</option>
+                  <option value="RDDT">RDDT</option>
+                  <option value="SGOV">SGOV</option>
+                  <option value="SLV">SLV</option>
+                  <option value="SNDK">SNDK</option>
+                  <option value="SPCX">SPCX</option>
+                  <option value="SPY">SPY</option>
+                  <option value="TSLA">TSLA</option>
+                  <option value="TSLA-SHORT">TSLA-SHORT</option>
+                  <option value="TSMU">TSMU</option>
+                  <option value="SAR">SAR</option>
+                  <option value="USO">USO</option>
+                </select>
+              </div>
+
+              <p class="field-hint">
+                Select the Cluby market this coin will lend into.
+              </p>
+
+              <div class="fixed-note">
+                <span class="note-icon">⌁</span>
+                <div>
+                  <strong>Fixed at registration.</strong>
+                  This market cannot be changed afterwards. The coin trades
+                  against whatever this market lends, so the tax it earns
+                  is the asset it supplies.
+                </div>
+              </div>
+            </div>
+
+            <div class="form-divider"></div>
+
+            <div class="form-actions">
+              <button class="primary-button" type="submit">
+                Review launch details <span aria-hidden="true">→</span>
+              </button>
+
+              <p class="form-disclaimer">
+                Frontend preview only. Connecting a wallet, minting a coin
+                and registering it require the actual protocol integration.
+              </p>
+            </div>
+
+          </div>
+        </form>
+
+        <!-- LIVE PREVIEW -->
+
+        <aside class="preview-column">
+          <div class="preview-card">
+            <div class="preview-card-top">
+              <strong>Live coin preview</strong>
+              <span class="preview-live">● LIVE PREVIEW</span>
+            </div>
+
+            <div class="preview-content">
+              <div class="preview-token">
+                <div class="token-image-wrap" id="tokenImageWrap">
+                  <span id="tokenImageLetter">C</span>
+                </div>
+
+                <div>
+                  <h3 id="previewName">Your coin name</h3>
+                  <p id="previewTicker">$TICKER</p>
+                </div>
+              </div>
+
+              <div class="preview-fields">
+                <div class="preview-field">
+                  <span>Lends into</span>
+                  <strong id="previewMarket">AAPL</strong>
+                </div>
+
+                <div class="preview-field">
+                  <span>Trading tax</span>
+                  <strong id="previewTax">5%</strong>
+                </div>
+
+                <div class="preview-field">
+                  <span>Pons pair fee</span>
+                  <strong>1%</strong>
+                </div>
+
+                <div class="preview-field">
+                  <span>Total trading fees</span>
+                  <strong id="previewTotalFee">6%</strong>
+                </div>
+
+                <div class="preview-field">
+                  <span>Mint cost</span>
+                  <strong>0.0005 ETH</strong>
+                </div>
+
+                <div class="preview-field">
+                  <span>First buy</span>
+                  <strong id="previewFirstBuy">Not selected</strong>
+                </div>
+              </div>
+
+              <div class="preview-callout">
+                <strong>Market locked.</strong>
+                Your selected market is fixed at registration and remains
+                the lending market for the coin's lifetime.
+              </div>
+            </div>
+          </div>
+
+          <div class="breakdown-card">
+            <h3>Tax split</h3>
+            <p>
+              The launchpad allocation described in the protocol information.
+              This breakdown is informational and does not execute any transaction.
+            </p>
+
+            <div class="breakdown-row">
+              <span>Supplied into the selected market</span>
+              <strong>35%</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Buyback and burn</span>
+              <strong>23.33%</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Developer</span>
+              <strong>11.67%</strong>
+            </div>
+
+            <div class="breakdown-row">
+              <span>Protocol</span>
+              <strong>30%</strong>
+            </div>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT A LAUNCH WILL DO -->
+
+  <section class="section steps-section" id="launch-process">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-kicker">The launch process</span>
+        <h2>What a launch will do</h2>
+        <p>
+          Two signatures: Pons mints the coin for 0.0005 ETH, then the
+          launchpad registers it. The second one is what makes it a Cluby
+          coin — until it lands, the coin exists and its tax has nowhere to go.
+        </p>
+      </div>
+
+      <div class="steps-grid">
+
+        <article class="step-card">
+          <div class="step-number">01</div>
+          <h3>1 · Pons mints the coin.</h3>
+          <p>
+            A fixed supply on a Pons curve, paired against USDG, with the
+            trading tax you choose below. The launch names a wallet this
+            protocol controls as the tax recipient — Pons fixes that at
+            launch and nobody, including us, can change it afterwards.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">02</div>
+          <h3>2 · The coin registers.</h3>
+          <p>
+            Permissionless and checked: the pair must belong to the coin,
+            must already be paying that wallet, and the market must be one
+            Cluby has listed whose loan token is what the coin trades against.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">03</div>
+          <h3>3 · The tax splits.</h3>
+          <p>
+            Every trade pays <strong>5%</strong>, fixed by Pons at launch and
+            changeable afterwards by nobody, plus Pons's own <strong>1%</strong>
+            pair fee — <strong>6% in all.</strong>
+            The selected tax in the form above is only a frontend preview
+            until the actual launch integration is connected.
+          </p>
+        </article>
+
+        <article class="step-card">
+          <div class="step-number">04</div>
+          <h3>4 · The interest burns it.</h3>
+          <p>
+            Each harvest takes only what the position earned, buys the coin
+            on its own curve and destroys it.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MARKETS A COIN CAN LEND INTO -->
+
+  <section class="section markets-section" id="markets">
+    <div class="container">
+      <div class="section-heading">
+        <span class="section-kicker">Available markets</span>
+        <h2>Markets a coin can lend into</h2>
+        <p>
+          Every market Cluby has actually created. A coin is named after
+          one of these and lends into it for the rest of its life — the
+          market is fixed at registration.
+        </p>
+      </div>
+
+      <div class="panel market-panel">
+        <div class="market-panel-heading">
+          <div>
+            <h3>Available lending markets</h3>
+            <p>
+              Choose a market in the configuration form above to update
+              the live preview. A market selection is permanent after registration.
+            </p>
+          </div>
+
+          <span class="market-count"><span id="marketCount">36</span> markets</span>
+        </div>
+
+        <div class="market-list" id="marketList">
+          <button type="button" class="market-chip selected" data-market="AAPL">AAPL</button>
+          <button type="button" class="market-chip" data-market="AMD">AMD</button>
+          <button type="button" class="market-chip" data-market="AMZN">AMZN</button>
+          <button type="button" class="market-chip" data-market="ASML">ASML</button>
+          <button type="button" class="market-chip" data-market="BAB">BAB</button>
+          <button type="button" class="market-chip" data-market="CASH">CASH</button>
+          <button type="button" class="market-chip" data-market="CAT">CAT</button>
+          <button type="button" class="market-chip" data-market="COST">COST</button>
+          <button type="button" class="market-chip" data-market="CRCL">CRCL</button>
+          <button type="button" class="market-chip" data-market="DELL">DELL</button>
+          <button type="button" class="market-chip" data-market="ETH">ETH</button>
+          <button type="button" class="market-chip" data-market="GME">GME</button>
+          <button type="button" class="market-chip" data-market="GOOGL">GOOGL</button>
+          <button type="button" class="market-chip" data-market="HIMS">HIMS</button>
+          <button type="button" class="market-chip" data-market="INTC">INTC</button>
+          <button type="button" class="market-chip" data-market="META">META</button>
+          <button type="button" class="market-chip" data-market="MSFT">MSFT</button>
+          <button type="button" class="market-chip" data-market="MSTR">MSTR</button>
+          <button type="button" class="market-chip" data-market="MUN">MUN</button>
+          <button type="button" class="market-chip" data-market="NFLX">NFLX</button>
+          <button type="button" class="market-chip" data-market="NVDA">NVDA</button>
+          <button type="button" class="market-chip" data-market="NVDA-SHORT">NVDA-SHORT</button>
+          <button type="button" class="market-chip" data-market="PLTR">PLTR</button>
+          <button type="button" class="market-chip" data-market="PON">PON</button>
+          <button type="button" class="market-chip" data-market="QQQ">QQQ</button>
+          <button type="button" class="market-chip" data-market="RDDT">RDDT</button>
+          <button type="button" class="market-chip" data-market="SGOV">SGOV</button>
+          <button type="button" class="market-chip" data-market="SLV">SLV</button>
+          <button type="button" class="market-chip" data-market="SNDK">SNDK</button>
+          <button type="button" class="market-chip" data-market="SPCX">SPCX</button>
+          <button type="button" class="market-chip" data-market="SPY">SPY</button>
+          <button type="button" class="market-chip" data-market="TSLA">TSLA</button>
+          <button type="button" class="market-chip" data-market="TSLA-SHORT">TSLA-SHORT</button>
+          <button type="button" class="market-chip" data-market="TSMU">TSMU</button>
+          <button type="button" class="market-chip" data-market="SAR">SAR</button>
+          <button type="button" class="market-chip" data-market="USO">USO</button>
+        </div>
+
+        <div class="market-locked-note">
+          <span class="note-icon">⌁</span>
+          <div>
+            <strong>Lends into — fixed at registration.</strong>
+            The coin trades against whatever this market lends, so the tax
+            it earns is the asset it supplies. Every market option above
+            is provided for the selection preview; the actual registration
+            must validate the market against the markets Cluby has listed.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT YOU KEEP -->
+
+  <section class="section keep-section" id="what-you-keep">
+    <div class="container keep-layout">
+      <div class="keep-copy">
+        <span class="section-kicker">Fair launch</span>
+        <h2>What <span>you keep</span></h2>
+        <p>
+          Nothing is allocated to whoever launches. There is no creator
+          share of the tax and no reserved supply — the launcher buys on
+          the same curve as everyone else, at the same price, in the same
+          block. What a launch gets you is a coin that lends.
+        </p>
+      </div>
+
+      <div class="keep-points">
+        <div class="keep-point">
+          <div class="keep-check">✓</div>
+          <div>
+            <strong>No creator tax share</strong>
+            <p>Launching a coin does not allocate a share of the trading tax to its creator.</p>
+          </div>
+        </div>
+
+        <div class="keep-point">
+          <div class="keep-check">✓</div>
+          <div>
+            <strong>No reserved supply</strong>
+            <p>There is no supply reserved specifically for the launcher.</p>
+          </div>
+        </div>
+
+        <div class="keep-point">
+          <div class="keep-check">✓</div>
+          <div>
+            <strong>Same curve for everyone</strong>
+            <p>The launcher buys on the same curve as everyone else, at the same price, in the same block.</p>
+          </div>
+        </div>
+
+        <div class="keep-point">
+          <div class="keep-check">✓</div>
+          <div>
+            <strong>A coin that lends</strong>
+            <p>The launch creates the opportunity for a coin to lend into its selected market after registration.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DISCLAIMER -->
+
+  <section class="disclaimer-section">
+    <div class="container disclaimer-inner">
+      <strong>Important</strong>
+      <span>
+        This page is a frontend preview. It does not connect to a wallet,
+        mint a token, register a coin, or submit blockchain transactions.
+        Market availability and protocol rules must be validated by the
+        actual integration before a real launch.
+      </span>
+    </div>
+  </section>
+
+</main>
+
+<!-- FOOTER -->
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div class="footer-about">
+        <a class="footer-brand" href="index.html">
+          <img src="images/Logo.jpg" alt="Credora Logo">
+          <span>Credora</span>
+        </a>
+
+        <p class="footer-description">
+          A lending-focused protocol experience built around transparent
+          markets, on-chain activity and a clearer way to explore decentralized finance.
+        </p>
+
+        <a
+          class="footer-social"
+          href="https://x.com/ClubyTech"
+          target="_blank"
+          rel="noreferrer">
+          <span style="font-size:18px">𝕏</span>
+          <span>@Credora</span>
+        </a>
+      </div>
+
+      <div class="footer-column">
+        <h4>PROTOCOL</h4>
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="stake.html">Stake</a>
+        <a href="stats.html">Stats</a>
+        <a href="portfolio.html">Portfolio</a>
+      </div>
+
+      <div class="footer-column">
+        <h4>LEARN</h4>
+        <a href="docs.html">Overview</a>
+        <a href="risk-framework.html">Risk framework</a>
+        <a href="withdrawals.html">Withdrawals</a>
+        <a href="builders.html">Builders</a>
+        <a href="launchpad.html">Launchpad</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 Credora. Frontend preview.</span>
+      <span>Not investment advice. Positions can be liquidated.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- REVIEW MODAL -->
+
+<div
+  class="modal-backdrop"
+  id="reviewBackdrop"
+  role="presentation"
+  aria-hidden="true">
+
+  <section
+    class="review-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="reviewTitle">
+
+    <div class="modal-top">
+      <div>
+        <h2 id="reviewTitle">Review your coin</h2>
+        <p>Check your selected details before proceeding.</p>
+      </div>
+
+      <button
+        class="modal-close"
+        id="closeReview"
+        type="button"
+        aria-label="Close review">×</button>
+    </div>
+
+    <div class="review-list">
+      <div class="review-row">
+        <span>Coin name</span>
+        <strong id="reviewName">—</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Ticker</span>
+        <strong id="reviewTicker">—</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Lends into</span>
+        <strong id="reviewMarket">—</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Trading tax</span>
+        <strong id="reviewTax">—</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Pons pair fee</span>
+        <strong>1%</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Total trading fees</span>
+        <strong id="reviewTotalFee">—</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Mint cost</span>
+        <strong>0.0005 ETH</strong>
+      </div>
+
+      <div class="review-row">
+        <span>Optional first buy</span>
+        <strong id="reviewFirstBuy">Not selected</strong>
+      </div>
+    </div>
+
+    <div class="modal-warning">
+      <strong>Frontend preview only.</strong>
+      This review does not sign a transaction or deploy a coin. The actual
+      launch requires wallet integration, Pons minting and successful
+      registration with the launchpad.
+    </div>
+
+    <div class="modal-actions">
+      <button class="secondary-button" id="editCoin" type="button">Edit details</button>
+      <button class="primary-button" id="previewLaunch" type="button">Preview confirmed</button>
+    </div>
+  </section>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* MOBILE NAVIGATION */
+
+const menuToggle = document.getElementById("menuToggle");
+const mobilePanel = document.getElementById("mobilePanel");
+const moreDropdown = document.getElementById("moreDropdown");
+const moreToggle = document.getElementById("moreToggle");
+const moreMenu = document.getElementById("moreMenu");
+
+function closeMobileMenu() {
+  if (!menuToggle || !mobilePanel) return;
+
+  mobilePanel.classList.remove("open");
+  menuToggle.classList.remove("active");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open menu");
+}
+
+function closeMoreMenu() {
+  if (!moreDropdown || !moreToggle || !moreMenu) return;
+
+  moreDropdown.classList.remove("is-open");
+  moreToggle.setAttribute("aria-expanded", "false");
+  moreMenu.hidden = true;
+}
+
+if (menuToggle && mobilePanel) {
+  menuToggle.addEventListener("click", () => {
+    const isOpen = mobilePanel.classList.toggle("open");
+
+    menuToggle.classList.toggle("active", isOpen);
+    menuToggle.setAttribute("aria-expanded", String(isOpen));
+    menuToggle.setAttribute("aria-label", isOpen ? "Close menu" : "Open menu");
+
+    if (!isOpen) closeMoreMenu();
+  });
+
+  mobilePanel.querySelectorAll(".nav-links > a").forEach(link => {
+    link.addEventListener("click", closeMobileMenu);
+  });
+}
+
+if (moreToggle && moreMenu && moreDropdown) {
+  moreToggle.addEventListener("click", event => {
+    event.stopPropagation();
+
+    const isOpen = !moreMenu.hidden;
+    moreMenu.hidden = isOpen;
+    moreDropdown.classList.toggle("is-open", !isOpen);
+    moreToggle.setAttribute("aria-expanded", String(!isOpen));
+  });
+
+  moreMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      closeMoreMenu();
+      closeMobileMenu();
+    });
+  });
+}
+
+document.addEventListener("click", event => {
+  if (moreDropdown && !moreDropdown.contains(event.target)) {
+    closeMoreMenu();
+  }
+});
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape") {
+    closeMobileMenu();
+    closeMoreMenu();
+    closeReviewModal();
+  }
+});
+
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 920) closeMobileMenu();
+});
+
+/* TOAST */
+
+const toast = document.getElementById("toast");
+let toastTimeout;
+
+function showToast(title, message) {
+  toast.innerHTML = "";
+
+  const strong = document.createElement("strong");
+  strong.textContent = title;
+
+  const text = document.createElement("span");
+  text.textContent = " " + message;
+
+  toast.appendChild(strong);
+  toast.appendChild(text);
+  toast.classList.add("visible");
+
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove("visible");
+  }, 4500);
+}
+
+/* WALLET PLACEHOLDER */
+
+function showWalletNotice() {
+  showToast(
+    "Wallet integration not connected.",
+    "Connect wallet is a frontend placeholder. No wallet connection or transaction has been initiated."
+  );
+}
+
+document.getElementById("connectTop").addEventListener("click", showWalletNotice);
+
+document.getElementById("caButton").addEventListener("click", () => {
+  showToast(
+    "Contract address not available.",
+    "The contract address has not been configured for this frontend preview."
+  );
+});
+
+/* FORM AND LIVE PREVIEW */
+
+const coinForm = document.getElementById("coinForm");
+const coinName = document.getElementById("coinName");
+const coinTicker = document.getElementById("coinTicker");
+const firstBuy = document.getElementById("firstBuy");
+const tradingTax = document.getElementById("tradingTax");
+const lendsInto = document.getElementById("lendsInto");
+const coinImage = document.getElementById("coinImage");
+const uploadBox = document.getElementById("uploadBox");
+const uploadPreview = document.getElementById("uploadPreview");
+const uploadFileName = document.getElementById("uploadFileName");
+const tokenImageWrap = document.getElementById("tokenImageWrap");
+const tokenImageLetter = document.getElementById("tokenImageLetter");
+
+let imageObjectUrl = null;
+
+function formatTax(value) {
+  return Number(value).toLocaleString("en-US", {
+    maximumFractionDigits: 2
+  }) + "%";
+}
+
+function updateTax() {
+  const tax = Number(tradingTax.value);
+  const total = tax + 1;
+
+  document.getElementById("taxValue").textContent = formatTax(tax);
+  document.getElementById("heroTaxValue").textContent = formatTax(tax);
+  document.getElementById("chosenTaxSummary").textContent = formatTax(tax);
+  document.getElementById("totalFeeSummary").textContent = formatTax(total);
+  document.getElementById("previewTax").textContent = formatTax(tax);
+  document.getElementById("previewTotalFee").textContent = formatTax(total);
+
+  const min = Number(tradingTax.min);
+  const max = Number(tradingTax.max);
+  const percentage = ((tax - min) / (max - min)) * 100;
+
+  tradingTax.style.background =
+    "linear-gradient(to right, var(--green) " +
+    percentage +
+    "%, #29322c " +
+    percentage +
+    "%)";
+}
+
+function updateCoinName() {
+  const name = coinName.value.trim() || "Your coin name";
+  document.getElementById("previewName").textContent = name;
+  document.getElementById("tokenImageLetter").textContent =
+    name.charAt(0).toUpperCase() || "C";
+}
+
+function updateTicker() {
+  const ticker = coinTicker.value.trim().toUpperCase();
+  document.getElementById("previewTicker").textContent =
+    ticker ? "$" + ticker : "$TICKER";
+}
+
+function updateMarket() {
+  const market = lendsInto.value;
+
+  document.getElementById("previewMarket").textContent = market;
+  document.getElementById("heroMarket").textContent = market;
+
+  document.querySelectorAll(".market-chip").forEach(chip => {
+    chip.classList.toggle("selected", chip.dataset.market === market);
+  });
+}
+
+function updateFirstBuy() {
+  const amount = firstBuy.value.trim();
+  const display = amount !== "" ? amount + " ETH" : "Not selected";
+  document.getElementById("previewFirstBuy").textContent = display;
+}
+
+coinName.addEventListener("input", updateCoinName);
+
+coinTicker.addEventListener("input", () => {
+  const start = coinTicker.selectionStart;
+  const end = coinTicker.selectionEnd;
+  coinTicker.value = coinTicker.value.toUpperCase();
+  try {
+    coinTicker.setSelectionRange(start, end);
+  } catch (error) {}
+  updateTicker();
+});
+
+firstBuy.addEventListener("input", updateFirstBuy);
+tradingTax.addEventListener("input", updateTax);
+lendsInto.addEventListener("change", updateMarket);
+
+/* IMAGE UPLOAD PREVIEW */
+
+function handleImage(file) {
+  if (!file) return;
+
+  const allowedTypes = [
+    "image/png",
+    "image/jpeg",
+    "image/gif",
+    "image/webp"
+  ];
+
+  if (!allowedTypes.includes(file.type)) {
+    showToast(
+      "Unsupported image.",
+      "Please choose a PNG, JPG, GIF or WebP image."
+    );
+    coinImage.value = "";
+    return;
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    showToast(
+      "Image is too large.",
+      "Please choose an image smaller than 5 MB."
+    );
+    coinImage.value = "";
+    return;
+  }
+
+  if (imageObjectUrl) {
+    URL.revokeObjectURL(imageObjectUrl);
+  }
+
+  imageObjectUrl = URL.createObjectURL(file);
+
+  uploadPreview.src = imageObjectUrl;
+  uploadPreview.classList.add("visible");
+  uploadBox.classList.add("has-image");
+  uploadFileName.textContent = file.name;
+
+  tokenImageWrap.innerHTML = "";
+
+  const image = document.createElement("img");
+  image.src = imageObjectUrl;
+  image.alt = "Selected coin image preview";
+
+  tokenImageWrap.appendChild(image);
+}
+
+coinImage.addEventListener("change", () => {
+  if (coinImage.files && coinImage.files[0]) {
+    handleImage(coinImage.files[0]);
+  }
+});
+
+["dragenter", "dragover"].forEach(eventName => {
+  uploadBox.addEventListener(eventName, event => {
+    event.preventDefault();
+    uploadBox.classList.add("dragging");
+  });
+});
+
+["dragleave", "drop"].forEach(eventName => {
+  uploadBox.addEventListener(eventName, event => {
+    event.preventDefault();
+    uploadBox.classList.remove("dragging");
+  });
+});
+
+uploadBox.addEventListener("drop", event => {
+  const file = event.dataTransfer.files && event.dataTransfer.files[0];
+  if (file) handleImage(file);
+});
+
+/* MARKET CHIPS */
+
+document.querySelectorAll(".market-chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    const market = chip.dataset.market;
+    const optionExists = Array.from(lendsInto.options).some(
+      option => option.value === market
+    );
+
+    if (!optionExists) return;
+
+    lendsInto.value = market;
+    updateMarket();
+
+    document.getElementById("launch-form").scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  });
+});
+
+/* REVIEW MODAL */
+
+const reviewBackdrop = document.getElementById("reviewBackdrop");
+const reviewModal = reviewBackdrop.querySelector(".review-modal");
+const closeReview = document.getElementById("closeReview");
+const editCoin = document.getElementById("editCoin");
+const previewLaunch = document.getElementById("previewLaunch");
+
+function openReviewModal() {
+  reviewBackdrop.classList.add("open");
+  reviewBackdrop.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+  closeReview.focus();
+}
+
+function closeReviewModal() {
+  if (!reviewBackdrop) return;
+
+  reviewBackdrop.classList.remove("open");
+  reviewBackdrop.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+function populateReview() {
+  const name = coinName.value.trim();
+  const ticker = coinTicker.value.trim().toUpperCase();
+  const tax = Number(tradingTax.value);
+
+  document.getElementById("reviewName").textContent = name;
+  document.getElementById("reviewTicker").textContent = "$" + ticker;
+  document.getElementById("reviewMarket").textContent = lendsInto.value;
+  document.getElementById("reviewTax").textContent = formatTax(tax);
+  document.getElementById("reviewTotalFee").textContent = formatTax(tax + 1);
+
+  const amount = firstBuy.value.trim();
+  document.getElementById("reviewFirstBuy").textContent =
+    amount !== "" ? amount + " ETH" : "Not selected";
+}
+
+coinForm.addEventListener("submit", event => {
+  event.preventDefault();
+
+  if (!coinForm.reportValidity()) return;
+
+  if (firstBuy.value !== "" && Number(firstBuy.value) < 0) {
+    firstBuy.setCustomValidity("The first buy amount cannot be negative.");
+    firstBuy.reportValidity();
+    firstBuy.setCustomValidity("");
+    return;
+  }
+
+  populateReview();
+  openReviewModal();
+});
+
+closeReview.addEventListener("click", closeReviewModal);
+editCoin.addEventListener("click", closeReviewModal);
+
+reviewBackdrop.addEventListener("click", event => {
+  if (event.target === reviewBackdrop) closeReviewModal();
+});
+
+reviewModal.addEventListener("click", event => {
+  event.stopPropagation();
+});
+
+previewLaunch.addEventListener("click", () => {
+  closeReviewModal();
+
+  showToast(
+    "Preview confirmed.",
+    "No coin was minted or registered. Actual launch requires the Pons and Cluby wallet and contract integration."
+  );
+});
+
+/* INITIAL STATE */
+
+updateTax();
+updateCoinName();
+updateTicker();
+updateMarket();
+updateFirstBuy();
+
+document.getElementById("marketCount").textContent =
+  document.querySelectorAll(".market-chip").length;
+</script>
+
+</body>
+</html>

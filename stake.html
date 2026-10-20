@@ -1,0 +1,940 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stake | Credora</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --bg: #000;
+      --hero-footer: #000000;
+      --panel: #0b0d0c;
+      --panel-hover: #101512;
+      --green: #40c4a5;
+      --text: #f5f7f6;
+      --muted: #929d97;
+      --border: #252c28;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, sans-serif;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button { font: inherit; }
+
+    /* NAVBAR*/
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      min-height: 76px;
+      padding: 0 5%;
+      background: var(--hero-footer);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+    }
+
+    .brand img {
+      width: 37px;
+      height: 37px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      font-size: 21px;
+      font-weight: 800;
+      letter-spacing: -.8px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 22px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 19px;
+    }
+
+    .nav-links > a,
+    .more-button {
+      color: #b7bcb8;
+      font-size: 12px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color .2s;
+    }
+
+    .nav-links > a:hover,
+    .nav-links > a.active,
+    .more-button:hover {
+      color: var(--green);
+    }
+
+    .soon {
+      color: var(--green);
+      font-size: 9px;
+      margin-left: 3px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .ca-button,
+    .wallet-button {
+      padding: 10px 13px;
+      border-radius: 9px;
+      font-size: 15px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .ca-button {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .wallet-button {
+      background: var(--green);
+      border: 1px solid var(--green);
+      color: #001a13;
+      cursor: pointer;
+    }
+
+    .x-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--text);
+  background: #000;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  font-size: 19px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+    .more-wrap { position: relative; }
+
+    .more-button {
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .more-menu {
+      display: none;
+      position: absolute;
+      top: 28px;
+      right: 0;
+      min-width: 150px;
+      padding: 8px;
+      background: #151816;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+    }
+
+    .more-menu a {
+  display: block;
+  padding: 7px 9px;
+  border-bottom: 1px solid var(--border);
+  border-radius: 0;
+  color: #b7bcb8;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.more-menu a:last-child {
+  border-bottom: none;
+}
+
+    .more-menu a:hover {
+      background: var(--panel-hover);
+      color: var(--green);
+    }
+
+    .more-wrap:hover .more-menu,
+    .more-wrap:focus-within .more-menu {
+      display: block;
+    }
+
+    .menu-toggle {
+      display: none;
+      width: 36px;
+      height: 36px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: transparent;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+.menu-toggle span {
+  width: 16px;
+  height: 1.5px;
+  background: var(--text);
+  transition: transform 0.25s ease;
+}
+
+.menu-toggle.is-open span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.menu-toggle.is-open span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+    /* PAGE CONTENT */
+
+    main {
+      max-width: 1160px;
+      width: 90%;
+      margin: 0 auto;
+    }
+
+    .stake-hero {
+      max-width: 800px;
+      padding: 66px 0 34px;
+    }
+
+    .stake-hero h1 {
+      font-size: clamp(32px, 4.3vw, 51px);
+      line-height: 1.12;
+      letter-spacing: -2px;
+      font-weight: 700;
+      margin-bottom: 19px;
+    }
+
+    .stake-hero p {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+
+    /* LARGE STAKING BOX */
+
+    .staking-panel {
+      padding: 30px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      margin-bottom: 58px;
+    }
+
+    .staking-heading { margin-bottom: 25px; }
+
+    .staking-heading h2 {
+      font-size: 25px;
+      line-height: 1.3;
+      letter-spacing: -.6px;
+      margin-bottom: 8px;
+    }
+
+    .staking-heading p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .staking-overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    /* SMALL CONTRACT BOX */
+
+    .contract-box {
+      min-width: 0;
+      padding: 23px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #080a09;
+    }
+
+    .small-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .contract-box p {
+      color: #c0c8c3;
+      font-size: 13px;
+      line-height: 1.85;
+      overflow-wrap: anywhere;
+    }
+
+    .contract-box a {
+      display: inline-block;
+      color: var(--green);
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .contract-box a:hover { text-decoration: underline; }
+
+    /* METRICS TO THE RIGHT */
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric-box {
+      min-width: 0;
+      padding: 19px 13px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: #080a09;
+    }
+
+    .metric-label {
+      display: block;
+      min-height: 35px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.6;
+      margin-bottom: 13px;
+    }
+
+    .metric-box strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 600;
+      letter-spacing: -.5px;
+    }
+
+    /* ROUNDED ACTION BOXES */
+
+    .staking-actions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .action-button {
+      min-height: 49px;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #111512;
+      color: var(--text);
+      font-weight: 600;
+      cursor: not-allowed;
+      opacity: .7;
+    }
+
+    .action-button.primary {
+      background: var(--green);
+      border-color: var(--green);
+      color: #001b13;
+    }
+
+    .staking-note {
+      margin-top: 21px;
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* TWO COLUMNS UNDER STAKING BOX */
+
+    .details-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 55px;
+      margin-bottom: 75px;
+    }
+
+    .details-section h2 {
+      font-size: 23px;
+      letter-spacing: -.6px;
+      line-height: 1.35;
+      margin-bottom: 24px;
+    }
+
+    .fee-list { border-top: 1px solid var(--border); }
+
+    .fee-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      padding: 17px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+    }
+
+    .fee-row span { color: #c4ccc7; }
+
+    .fee-row strong {
+      color: var(--green);
+      font-size: 15px;
+      white-space: nowrap;
+    }
+
+    .details-description {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.95;
+      margin-top: 22px;
+    }
+
+    .rebates-section p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.95;
+      margin-bottom: 18px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      background: var(--hero-footer);
+      border-top: 1px solid rgba(255,255,255,.06);
+      padding: 48px 5% 25px;
+    }
+
+    .footer-main {
+      max-width: 1160px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.7fr 1fr 1fr;
+      gap: 60px;
+    }
+
+    .footer-brand {
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 13px;
+    }
+
+    .footer-about p {
+      max-width: 390px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.9;
+      margin-bottom: 17px;
+    }
+
+    .footer-social {
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .footer-column h3 {
+      font-size: 12px;
+      margin-bottom: 15px;
+    }
+
+    .footer-column a {
+      display: block;
+      width: fit-content;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 9px;
+      transition: color .2s;
+    }
+
+    .footer-column a:hover { color: var(--green); }
+
+    .footer-bottom {
+      max-width: 1160px;
+      margin: 40px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .footer-warning { color: #a8b0ab; }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1100px) {
+      .nav-links { gap: 12px; }
+      .nav-right { gap: 14px; }
+
+      .nav-links > a,
+      .more-button { font-size: 11px; }
+
+      .ca-button { display: none; }
+    }
+
+    @media (max-width: 850px) {
+      .navbar { min-height: 70px; }
+
+      .menu-toggle { display: flex; }
+
+      .nav-right {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        padding: 20px 5% 24px;
+        background: var(--hero-footer);
+        border-bottom: 1px solid var(--border);
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .nav-right.open { display: flex; }
+
+      .nav-links {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 0;
+      }
+
+        .nav-links > a {
+        display: block;
+        padding: 9px 0;
+        font-size: 15px;
+        font-weight: 600;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .more-button {
+        display: block;
+        width: 100%;
+        padding: 9px 0;
+        font-size: 13px;
+        font-weight: 600;
+        text-align: left;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .more-menu {
+        position: static;
+        margin: 0 0 8px;
+      }
+
+      .more-wrap:hover .more-menu { display: block; }
+
+      
+      .nav-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        width: 100%;
+        padding-top: 14px;
+        border-top: 1px solid var(--border);
+      }
+
+      .nav-actions .ca-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 42px;
+        padding: 0 12px;
+        color: var(--muted);
+        background: #000;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        font-size: 11px;
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .nav-actions .x-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 42px;
+        padding: 0;
+        color: var(--text);
+        background: #000;
+        border: 1px solid var(--border);
+        border-radius: 9px;
+        font-size: 19px;
+      }
+
+      .nav-actions .wallet-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 45px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        color: #06110d;
+        background: #40c4a5;
+        border: 1px solid #40c4a5;
+        border-radius: 9px;
+        font-size: 12px;
+        font-weight: 800;
+        line-height: 1.4;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+
+      .staking-overview { grid-template-columns: 1fr; }
+      .details-grid { gap: 40px; }
+      .footer-main { gap: 35px; }
+    }
+
+    @media (max-width: 600px) {
+      main { width: 90%; }
+
+      .stake-hero { padding: 48px 0 28px; }
+
+      .stake-hero h1 {
+        font-size: 34px;
+        letter-spacing: -1.3px;
+      }
+
+      .stake-hero p { font-size: 13px; }
+
+      .staking-panel {
+        padding: 19px;
+        border-radius: 15px;
+        margin-bottom: 45px;
+      }
+
+      .staking-heading h2 { font-size: 23px; }
+
+      .contract-box { padding: 18px; }
+
+      .metrics { gap: 8px; }
+
+      .metric-box { padding: 14px 9px; }
+
+      .metric-label {
+        font-size: 10px;
+        min-height: 34px;
+      }
+
+      .metric-box strong { font-size: 18px; }
+
+      .staking-actions { gap: 8px; }
+
+      .action-button {
+        padding: 12px 5px;
+        font-size: 12px;
+      }
+
+      .details-grid {
+        grid-template-columns: 1fr;
+        gap: 43px;
+        margin-bottom: 50px;
+      }
+
+      .details-section h2 { font-size: 22px; }
+
+      footer { padding: 38px 5% 22px; }
+
+      .footer-main {
+        grid-template-columns: 1fr 1fr;
+        gap: 30px 20px;
+      }
+
+      .footer-about { grid-column: 1 / -1; }
+
+      .footer-bottom {
+        margin-top: 28px;
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="index.html" class="brand">
+      <img src="images/Logo.jpg" alt="Credora logo">
+      <span>Credora</span>
+    </a>
+
+    <button class="menu-toggle" id="menuToggle"
+      aria-label="Open navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-right" id="navRight">
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="swap.html">Swap</a>
+        <a href="stake.html" class="active">Stake</a>
+        <a href="portfolio.html">Portfolio</a>
+        <a href="token.html">Token <span class="soon">SOON</span></a>
+        <a href="docs.html">Docs</a>
+
+        <div class="more-wrap">
+          <button class="more-button" type="button">
+            More <i class="fa-solid fa-chevron-down" style="font-size:9px"></i>
+          </button>
+          <div class="more-menu">
+            <a href="stats.html">Stats</a>
+            <a href="activity.html">Activity</a>
+            <a href="builders.html">Builders</a>
+            <a href="launchpad.html">Launchpad</a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="ca-button" type="button">CA: soon</button>
+        <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="x-link">𝕏</a>
+        <button class="wallet-button" id="connectWallet" type="button">
+          Connect wallet
+        </button>
+      </div>
+    </div>
+  </header>
+  <main>
+    <section class="stake-hero">
+      <h1>Stake the token, get paid in USDG.</h1>
+      <p>
+        Rewards stream by the second out of fees the protocol actually collected.
+        No lock, no emissions schedule, nothing minted to pay you.
+      </p>
+    </section>
+    <section class="staking-panel">
+
+      <div class="staking-heading">
+        <h2>Staking</h2>
+        <p>
+          Deposit the token, claim USDG whenever you like.
+          Withdrawals are immediate.
+        </p>
+      </div>
+
+      <div class="staking-overview">
+        <div class="contract-box">
+          <div class="small-label">Contract address</div>
+          <p>
+            There is no token yet, so there is no address yet.
+            It appears here the moment the owner publishes one.
+          </p>
+          <a href="token.html">
+            What it will be for
+            <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+        <div class="metrics">
+          <div class="metric-box">
+            <span class="metric-label">Reward APR</span>
+            <strong>—</strong>
+          </div>
+
+          <div class="metric-box">
+            <span class="metric-label">Staked</span>
+            <strong>—</strong>
+          </div>
+
+          <div class="metric-box">
+            <span class="metric-label">Your claimable</span>
+            <strong>—</strong>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="staking-actions">
+        <button class="action-button primary" type="button" disabled>Stake</button>
+        <button class="action-button" type="button" disabled>Unstake</button>
+        <button class="action-button" type="button" disabled>Claim</button>
+      </div>
+
+      <p class="staking-note">
+        The staking contract is deployed after the first markets have run a full
+        fee cycle — paying rewards before there are fees to pay them from is how
+        protocols end up printing.
+      </p>
+
+    </section>
+
+    <section class="details-grid">
+
+      <div class="details-section">
+        <h2>Where the rewards come from</h2>
+
+        <div class="fee-list">
+          <div class="fee-row">
+            <span>Performance fee on vault interest</span>
+            <strong>10%</strong>
+          </div>
+
+          <div class="fee-row">
+            <span>Of that fee, to stakers</span>
+            <strong>75%</strong>
+          </div>
+
+          <div class="fee-row">
+            <span>Of that fee, to treasury</span>
+            <strong>25%</strong>
+          </div>
+
+          <div class="fee-row">
+            <span>Token trading fee routed to stakers</span>
+            <strong>5%</strong>
+          </div>
+        </div>
+
+        <p class="details-description">
+          A keeper converts the vault's fee shares to USDG once a day and tops
+          the reward stream up. If the protocol earns nothing in a day,
+          nothing is added — the rate falls to zero rather than being faked.
+        </p>
+      </div>
+
+      <div class="details-section rebates-section">
+        <h2>Borrower rebates</h2>
+
+        <p>
+          Borrowers get 10% of the interest they paid back through a weekly
+          Merkle epoch. You claim it yourself; unclaimed amounts roll into the
+          next epoch. It is paid out of the treasury, so it is a cost we chose,
+          not a promise the protocol has to inflate to keep.
+        </p>
+
+        <p>
+          Epoch roots are published by the keeper. The claim contract is the
+          standard Merkle distributor — the same shape that has been audited
+          in the wild for years.
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+    <div class="footer-about">
+      <a class="brand" href="index.html">
+        <img src="images/Logo.jpg" alt="Credora Logo" class="brand-logo">
+        <span>Credora</span>
+      </a>
+      <p class="footer-description">
+        A curation layer on Morpho Blue: isolated markets that let
+        tokenized stocks back a USDG loan. Credora holds no user funds —
+        deposits and collateral live in Morpho.
+      </p>
+      <a class="social" href="https://x.com/ClubyTech" target="_blank" rel="noreferrer">
+        𝕏 &nbsp; @Credora
+      </a>
+    </div>
+
+      <div class="footer-column">
+        <h3>Protocol</h3>
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="stake.html">Stake</a>
+        <a href="stats.html">Stats</a>
+        <a href="portfolio.html">Portfolio</a>
+      </div>
+
+      <!-- MENU LEARN DI FOOTER -->
+      <div class="footer-column">
+        <h3>Learn</h3>
+        <a href="docs.html">Overview</a>
+        <a href="docs.html#risk">Risk framework</a>
+        <a href="docs.html#withdrawals">Withdrawals</a>
+        <a href="docs.html#flash-loans">Flash loans</a>
+        <a href="builders.html">Builders</a>
+        <a href="launchpad.html">Launchpad</a>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>Chain ID · 4663</span>
+      <span>Markets are immutable once created.</span>
+      <span class="footer-warning">
+        Not investment advice. Positions can be liquidated.
+      </span>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+const navRight = document.getElementById('navRight');
+
+menuToggle.addEventListener('click', function () {
+  const isOpen = navRight.classList.toggle('open');
+
+  menuToggle.classList.toggle('is-open', isOpen);
+  menuToggle.setAttribute('aria-expanded', String(isOpen));
+  menuToggle.setAttribute(
+    'aria-label',
+    isOpen ? 'Close navigation menu' : 'Open navigation menu'
+  );
+});
+    document.getElementById('connectWallet').addEventListener('click', function () {
+      alert('Wallet connection has not been integrated yet.');
+    });
+  </script>
+
+</body>
+</html>

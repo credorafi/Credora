@@ -1,0 +1,1815 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn | Credora</title>
+<style>
+  
+:root {
+  --bg: #000000;
+  --hero-footer: #000000;
+  --panel: #0b0d0c;
+  --panel-hover: #101512;
+  --green: #40c4a5;
+  --green-dark: #173d32;
+  --text: #f5f7f6;
+  --muted: #929d97;
+  --border: #252c28;
+  --orange: #f0b36a;
+}
+
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* NAVBAR */
+
+.navbar {
+  min-height: 76px;
+  padding: 14px 5.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--hero-footer);
+  border-bottom: 1px solid #302e2b;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 23px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  display: none;
+  place-items: center;
+  background: var(--green-dark);
+  border: 1px solid var(--green);
+  color: var(--green);
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: #e4e8e5;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--green);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ca-button,
+.connect-button {
+  border-radius: 30px;
+  padding: 11px 18px;
+  white-space: nowrap;
+}
+
+.ca-button {
+  border: 1px solid var(--green);
+  color: var(--green);
+  background: transparent;
+  font-size: 12px;
+}
+
+.connect-button {
+  border: 0;
+  background: var(--green);
+  color: #001b14;
+  font-weight: 600;
+}
+
+.x-link {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 18px;
+  transition: 0.2s ease;
+}
+
+.x-link:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.menu-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: white;
+  border-radius: 9px;
+  padding: 8px 12px;
+  font-size: 20px;
+}
+/* HERO */
+.hero {
+  background: var(--hero-footer);
+  padding: 72px 24px 68px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero h1 {
+  max-width: 850px;
+  margin: 0 auto 18px;
+  color: var(--text);
+  font-size: clamp(32px, 4.2vw, 54px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -1.8px;
+}
+
+.hero p {
+  max-width: 730px;
+  margin: 0 auto;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* MAIN CONTENT */
+.content {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 42px 5% 80px;
+  background: var(--bg);
+}
+
+/* OVERVIEW CARDS */
+.overview {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-bottom: 54px;
+}
+
+.info-card {
+  min-width: 0;
+  padding: 26px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.info-card:hover {
+  background: var(--panel-hover);
+  border-color: #34483f;
+}
+
+.card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.card-heading h2 {
+  color: var(--text);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 9px;
+  border: 1px solid #353a37;
+  border-radius: 6px;
+  background: #171a18;
+  color: #c0c7c3;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.pill.green {
+  color: var(--green);
+  background: #10271f;
+  border-color: #245342;
+}
+
+.pill.orange {
+  color: var(--orange);
+  background: #2b2115;
+  border-color: #57402a;
+}
+
+.big-number {
+  margin-bottom: 3px;
+  color: var(--text);
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.info-card > p {
+  margin-top: 22px;
+  font-size: 13px;
+  line-height: 1.85;
+}
+
+/* SECTION TITLES */
+.section-title,
+.lower-section h2 {
+  margin-bottom: 22px;
+  color: var(--text);
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}
+
+/* VAULT LIST */
+.vault-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.vault-card {
+  min-width: 0;
+  padding: 26px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.vault-card:hover {
+  background: var(--panel-hover);
+  border-color: #34483f;
+}
+
+.vault-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 2fr) repeat(4, minmax(100px, 0.8fr));
+  gap: 22px;
+  align-items: start;
+}
+
+.vault-main {
+  min-width: 0;
+}
+
+.vault-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.vault-title h3 {
+  width: 100%;
+  margin-bottom: 3px;
+  color: var(--text);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.vault-description {
+  margin-bottom: 16px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.asset-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.asset {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 9px;
+  color: #c8d5ce;
+  background: #121916;
+  border: 1px solid #293b32;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.contract {
+  overflow-wrap: anywhere;
+  color: #76847c;
+  font-family: Consolas, monospace;
+  font-size: 10px;
+  line-height: 1.8;
+}
+
+/* VAULT METRICS */
+.metric-label {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.metric-value {
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+/* VAULT ACTIONS */
+.vault-actions {
+  margin-top: 26px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.action-tabs {
+  display: flex;
+  gap: 5px;
+  width: fit-content;
+  padding: 4px;
+  margin-bottom: 18px;
+  background: #050706;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+}
+
+.action-tabs button {
+  padding: 8px 18px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.action-tabs button:hover {
+  color: var(--text);
+}
+
+.action-tabs button.selected {
+  color: var(--green);
+  background: #10271f;
+  border-color: #245342;
+}
+
+.deposit-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 14px;
+}
+
+.deposit-field {
+  flex: 1;
+  min-width: 0;
+}
+
+.deposit-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #c5cec9;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.deposit-field input {
+  width: 100%;
+  min-height: 44px;
+  padding: 11px 13px;
+  color: var(--text);
+  background: #050706;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.deposit-field input::placeholder {
+  color: #66716b;
+}
+
+.deposit-field input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgb(64 196 165 / 10%);
+}
+
+.deposit-field input::-webkit-inner-spin-button,
+.deposit-field input::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.disabled-action {
+  display: block;
+  width: 100%;
+  margin-top: 22px;
+  padding: 13px 16px;
+  color: #747d77;
+  background: #151715;
+  border: 1px solid #292e2a;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: not-allowed;
+  opacity: 0.9;
+}
+
+/* LOWER SECTIONS */
+.lower-section {
+  margin-top: 60px;
+  padding: 28px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.lower-section h2 {
+  margin-bottom: 12px;
+}
+
+.lower-section p {
+  max-width: 900px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+}
+
+/* FOOTER */
+footer {
+  background: var(--hero-footer);
+  border-top: 1px solid var(--border);
+}
+
+.footer-inner {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 54px 5%;
+  display: grid;
+  grid-template-columns: minmax(240px, 2fr) repeat(2, minmax(140px, 1fr));
+  gap: 60px;
+}
+
+.footer-about {
+  max-width: 400px;
+}
+
+.footer-description {
+  margin: 20px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.9;
+}
+
+.social {
+  display: inline-flex;
+  align-items: center;
+  color: var(--green);
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.social:hover {
+  color: #72e5c8;
+}
+
+.footer-label {
+  margin-bottom: 18px;
+  color: #e0e6e2;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  width: fit-content;
+  color: var(--muted);
+  font-size: 12px;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: var(--green);
+}
+
+/* TABLET */
+@media (max-width: 1100px) {
+  .nav-inner {
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .nav-links {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 16px 22px;
+  }
+
+  .nav-right {
+    margin-left: auto;
+  }
+
+  .vault-layout {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .vault-main {
+    grid-column: 1 / -1;
+    padding-bottom: 8px;
+  }
+
+  .footer-inner {
+    gap: 35px;
+  }
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+  .nav-inner {
+    padding: 14px 5%;
+    gap: 14px;
+  }
+
+  .brand {
+    font-size: 18px;
+  }
+
+  .brand-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  .nav-right {
+    gap: 7px;
+  }
+
+  .ca-button {
+    padding: 8px 9px;
+    font-size: 10px;
+  }
+
+  .x-link {
+    width: 32px;
+    height: 32px;
+  }
+
+  .connect {
+    padding: 9px 11px;
+    font-size: 11px;
+  }
+
+  .nav-links {
+    gap: 13px 18px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  .hero {
+    padding: 52px 6% 48px;
+  }
+
+  .hero h1 {
+    font-size: clamp(30px, 8vw, 42px);
+    letter-spacing: -1px;
+  }
+
+  .hero p {
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .content {
+    padding: 28px 5% 55px;
+  }
+
+  .overview {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+
+  .info-card,
+  .vault-card {
+    padding: 20px;
+    border-radius: 13px;
+  }
+
+  .card-heading {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .card-heading h2 {
+    font-size: 17px;
+  }
+
+  .big-number {
+    font-size: 32px;
+  }
+
+  .section-title,
+  .lower-section h2 {
+    font-size: 22px;
+  }
+
+  .vault-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 22px 16px;
+  }
+
+  .vault-main {
+    grid-column: 1 / -1;
+  }
+
+  .vault-title h3 {
+    font-size: 17px;
+  }
+
+  .metric-label {
+    font-size: 10px;
+  }
+
+  .metric-value {
+    font-size: 15px;
+  }
+
+  .deposit-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .deposit-row > .connect {
+    width: 100%;
+    min-height: 43px;
+  }
+
+  .lower-section {
+    margin-top: 35px;
+    padding: 21px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 35px 22px;
+    padding: 40px 5%;
+  }
+
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 380px) {
+  .nav-right {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+  }
+
+  .pill {
+    font-size: 9px;
+    padding: 4px 7px;
+  }
+
+  .vault-layout {
+    gap: 18px 12px;
+  }
+
+  .metric-value {
+    font-size: 14px;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-about {
+    grid-column: auto;
+  }
+}
+
+/* MORE DROPDOWN */
+.nav-links .more-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-links .more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  background: transparent;
+  border: none;
+  color: #a8afab;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.nav-links .more-toggle:hover {
+  color: #40c4a5;
+}
+
+.nav-links .more-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.nav-links .more-dropdown.open .more-arrow {
+  transform: rotate(180deg);
+}
+.nav-links .more-menu[hidden] {
+  display: none !important;
+}
+
+.nav-links .more-dropdown .more-menu:not([hidden]) {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 180px;
+  padding: 7px;
+  background: #1a1918;
+  border: 1px solid #252c28;
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+  z-index: 99999;
+}
+
+.nav-links .more-dropdown .more-menu a {
+  display: block !important;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 11px 12px;
+  color: #f5f7f6;
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: 6px;
+}
+
+.nav-links .more-dropdown .more-menu a:hover {
+  color: #40c4a5;
+  background: #101512;
+}
+
+@media (max-width: 700px) {
+  .nav-links .more-dropdown .more-menu:not([hidden]) {
+    left: 0;
+    right: auto;
+  }
+}
+
+
+.navbar {
+  flex-wrap: nowrap;
+}
+
+.brand {
+  flex-shrink: 0;
+}
+
+.nav-links {
+  flex: 1;
+  min-width: 0;
+  gap: 20px;
+}
+
+.nav-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.ca-button,
+.connect-button,
+.x-link {
+  flex-shrink: 0;
+}
+
+@media (max-width: 1100px) {
+  .nav-links {
+    gap: 12px;
+  }
+
+  .nav-links a {
+    font-size: 12px;
+  }
+
+  .ca-button,
+  .connect-button {
+    padding: 9px 12px;
+  }
+}
+
+.navbar {
+  flex-wrap: nowrap;
+}
+
+.nav-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 0;
+}
+
+.nav-inner .brand {
+  flex-shrink: 0;
+}
+
+.nav-inner .nav-links {
+  order: 0;
+  width: auto;
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.nav-inner .nav-links a {
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.nav-inner .nav-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  gap: 10px;
+  flex-shrink: 0;
+  margin-left: 0;
+  width: auto;
+}
+
+.nav-inner .ca-button,
+.nav-inner .x-link,
+.nav-inner .connect-button {
+  flex-shrink: 0;
+}
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  .nav-inner {
+    gap: 14px;
+  }
+
+  .nav-inner .nav-links {
+    order: 0;
+    width: auto;
+    flex-wrap: nowrap;
+    gap: 11px;
+  }
+
+  .nav-inner .nav-links a {
+    font-size: 11px;
+  }
+
+  .nav-inner .nav-right {
+    margin-left: 0;
+    width: auto;
+    gap: 7px;
+  }
+
+  .nav-inner .ca-button {
+    padding: 9px 10px;
+  }
+
+  .nav-inner .connect-button {
+    padding: 9px 11px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    padding: 14px 5%;
+  }
+
+  .nav-inner {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .nav-inner .nav-links {
+    order: 3;
+    width: 100%;
+    flex: 0 0 100%;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 13px 18px;
+  }
+
+  .nav-inner .nav-right {
+    margin-left: auto;
+    width: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: 66px;
+    padding: 12px 5%;
+  }
+
+  .nav-inner {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 10px;
+  }
+
+  .nav-inner .brand {
+    flex-shrink: 0;
+    font-size: 19px;
+  }
+
+  .nav-inner .brand-logo {
+    width: 32px;
+    height: 32px;
+  }
+
+  /* Garis dua di kanan atas */
+  .navbar > .menu-toggle {
+  display: flex;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  color: var(--green);
+  font-size: 25px;
+  line-height: 1;
+  text-align: center;
+}
+
+  .nav-inner .nav-links,
+  .nav-inner .nav-right {
+    display: none !important;
+  }
+
+  .navbar.mobile-menu-open .nav-inner {
+    flex-wrap: wrap;
+  }
+
+  .navbar.mobile-menu-open .nav-inner .nav-links {
+    display: flex !important;
+    order: 3;
+    position: static;
+    width: 100%;
+    flex: 0 0 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 10px 0 0;
+  }
+
+  .navbar.mobile-menu-open .nav-inner .nav-links > a {
+    display: block;
+    width: 100%;
+    padding: 11px 4px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+  }
+
+  .navbar.mobile-menu-open .nav-inner .nav-links > a.active {
+    color: var(--green);
+  }
+
+  .navbar.mobile-menu-open .more-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .navbar.mobile-menu-open .more-toggle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 4px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .navbar.mobile-menu-open .more-dropdown .more-menu:not([hidden]) {
+    position: static;
+    display: flex !important;
+    flex-direction: column;
+    width: 100%;
+    padding: 5px 0 5px 14px;
+    background: #101512;
+    border: 0;
+    box-shadow: none;
+  }
+
+  
+@media (max-width: 850px) {
+  .navbar.mobile-menu-open .nav-inner .nav-right {
+    display: flex !important;
+    order: 4;
+    position: static;
+    width: 100%;
+    flex: 0 0 100%;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin: 0;
+    padding: 14px 0 5px;
+    border-top: 1px solid #252c28;
+    box-sizing: border-box;
+  }
+
+  .navbar.mobile-menu-open .nav-right .ca-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0 12px;
+    border: 1px solid #252c28;
+    border-radius: 9px;
+    background: #000000;
+    color: #929d97;
+    font-size: 11px;
+    font-weight: 400;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+
+  .navbar.mobile-menu-open .nav-right .x-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    padding: 0;
+    border: 1px solid #252c28;
+    border-radius: 9px;
+    background: #000000;
+    color: #f4f7f5;
+    font-size: 19px;
+    box-sizing: border-box;
+  }
+
+  .navbar.mobile-menu-open .nav-right .connect-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    padding: 0 16px;
+    border: 1px solid #40c4a5;
+    border-radius: 9px;
+    background: #40c4a5;
+    color: #06110d;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 850px) {
+  .navbar {
+    position: relative;
+    z-index: 1000;
+    position: sticky;
+top: 0;
+  }
+
+  .navbar .nav-inner {
+    min-height: 70px;
+    padding: 12px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
+  .navbar .brand {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .navbar .brand-logo {
+    width: 33px;
+    height: 33px;
+  }
+
+  .navbar .menu-toggle {
+    display: flex !important;
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    margin-left: auto;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .navbar .menu-toggle span {
+    display: block;
+    width: 19px;
+    height: 2px;
+    background: var(--text);
+    border-radius: 2px;
+    transition: transform .2s ease;
+  }
+
+.navbar > .menu-toggle {
+  position: absolute;
+  top: 14px;
+  right: 5%;
+  z-index: 1002;
+
+  display: flex !important;
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+.navbar > .menu-toggle span {
+  display: block;
+  width: 19px;
+  height: 2px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-radius: 2px;
+  transition: transform 0.25s ease;
+}
+
+.navbar > .menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.navbar > .menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+  .navbar .mobile-panel {
+    display: none;
+    position: absolute;
+    top: 14%;
+    left: 0;
+    right: 5;
+    width: 100%;
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
+    padding: 17px 5% 22px;
+    background: var(--surface, #1a1918);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, .35);
+    align-items: stretch;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .navbar .mobile-panel.open {
+    display: flex !important;
+  }
+
+  .navbar .mobile-panel .nav-links {
+    display: flex;
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .navbar .mobile-panel .nav-links > a,
+  .navbar .mobile-panel .more-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 3px;
+    color: #a8afab;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #292e2a;
+    font-size: 13px;
+    text-align: left;
+  }
+
+  .navbar .mobile-panel .nav-links > a.active,
+  .navbar .mobile-panel .nav-links > a:hover,
+  .navbar .mobile-panel .more-toggle:hover {
+    color: var(--green);
+  }
+
+  .navbar .mobile-panel .more-dropdown {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .navbar .mobile-panel .more-menu[hidden] {
+    display: none !important;
+  }
+
+  .navbar .mobile-panel .more-menu:not([hidden]) {
+    position: static;
+    display: flex !important;
+    width: 100%;
+    flex-direction: column;
+    margin: 5px 0 10px;
+    padding: 7px;
+    background: var(--panel, #0b0d0c);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    box-shadow: none;
+  }
+
+  .navbar .mobile-panel .more-menu a {
+    display: block;
+    padding: 11px 12px;
+    color: var(--text);
+    font-size: 13px;
+  }
+
+  .navbar .mobile-panel .nav-right {
+    display: grid;
+    width: 100%;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    align-items: center;
+    gap: 8px;
+  }
+
+  .navbar .mobile-panel .ca-button {
+    padding: 9px 7px;
+    font-size: 11px;
+  }
+
+  .navbar .mobile-panel .x-link {
+    display: flex;
+    width: 34px;
+    height: 34px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .navbar .mobile-panel .connect,
+  .navbar .mobile-panel .connect-button {
+    display: inline-flex;
+    width: 100%;
+    justify-content: center;
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar .nav-inner {
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+
+  .navbar .mobile-panel {
+    padding-right: 4%;
+    padding-left: 4%;
+  }
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="nav-inner">
+    <a class="brand" href="index.html">
+      <img src="Images/Logo.jpg" alt="Credora Logo" class="brand-logo">
+      <span>Credora</span>
+    </a>
+
+    
+<nav class="nav-links">
+  <a href="index.html">Home</a>
+  <a class="active" href="earn.html">Earn</a>
+  <a href="borrow.html">Borrow</a>
+  <a href="swap.html">Swap</a>
+  <a href="stake.html">Stake</a>
+  <a href="portfolio.html">Portfolio</a>
+  <a href="token.html">Token <span style="color:#40c4a5;font-size:10px">SOON</span></a>
+  <a href="docs.html">Docs</a>
+
+  
+<div class="more-dropdown">
+  <button
+    type="button"
+    class="more-toggle"
+    aria-expanded="false"
+    onclick="toggleMoreMenu(this)"
+  >
+    More <span class="more-arrow">⌄</span>
+  </button>
+
+  <div class="more-menu" hidden>
+    <a href="stats.html">Stats</a>
+    <a href="activity.html">Activity</a>
+    <a href="builders.html">Builders</a>
+    <a href="launchpad.html">Launchpad</a>
+  </div>
+</div>
+
+</nav>
+
+
+    <div class="nav-right">
+      <button class="ca-button">CA: soon</button>
+      <a class="x-link" href="https://x.com" target="_blank" rel="noreferrer">𝕏</a>
+      <button class="connect-button" id="connectTop">Connect wallet</button>
+    </div>
+  </div>
+
+<button
+  class="menu-toggle"
+  id="mobileMenuToggle"
+  type="button"
+  aria-label="Buka menu"
+  aria-expanded="false"
+>
+  <span></span>
+  <span></span>
+</button>
+
+</header>
+
+<section class="hero">
+  <h1>Lend into the book you choose.</h1>
+  <p>
+    Each vault is an ERC-4626 share: you deposit an asset, it lends
+    into a fixed list of markets under caps, and you withdraw whatever
+    is not borrowed at that moment. Risk is the list of markets,
+    and the list is public.
+  </p>
+</section>
+
+<main class="content">
+
+  <section class="overview">
+    <article class="info-card">
+      <div class="card-heading">
+        <h2>The exit is not locked</h2>
+        <span class="pill green">NO LOCKUP</span>
+      </div>
+      <div class="big-number">$0.00</div>
+      <div class="muted">withdrawable this second, out of $0.00 supplied</div>
+      <p class="muted">
+        There is no lock, no notice period and no epoch. What limits a
+        withdrawal is only how much of the pool is borrowed at that
+        moment — the rest is yours on demand, and the rate climbs steeply
+        as the pool empties, which is what pulls borrowers into repaying.
+        Everything above is read from the vault, not from a policy we wrote down.
+      </p>
+    </article>
+
+    <article class="info-card">
+      <div class="card-heading">
+        <h2>Demand already at the door</h2>
+        <span class="pill">INDEXER OFFLINE</span>
+      </div>
+      <div class="big-number">—</div>
+      <div class="muted">unavailable right now</div>
+      <p class="muted">
+        A borrower does not have to wait for liquidity to arrive before
+        acting. Posting collateral needs no liquidity at all, so they can
+        be in position first and borrow in the same second the money appears.
+        That is what this number is: demand that has already paid the cost
+        of showing up.
+      </p>
+    </article>
+  </section>
+
+  <h2 class="section-title">Vaults</h2>
+
+  <section class="vault-list">
+
+    <article class="vault-card">
+      <div class="vault-layout">
+        <div class="vault-main">
+          <div class="vault-title">
+            <h3>Credora Core USDG</h3>
+            <span class="pill green">LIVE</span>
+            <span class="pill">CORE</span>
+          </div>
+          <p class="vault-description">
+            Chainlink-priced collateral only. The conservative book:
+            megacaps, an index ETF and ETH.
+          </p>
+          <div class="asset-list">
+            <span class="asset">NVDA · 62.5%</span>
+            <span class="asset">SPY · 62.5%</span>
+            <span class="asset">AAPL · 62.5%</span>
+            <span class="asset">TSLA · 62.5%</span>
+            <span class="asset">ETH · 77.0%</span>
+          </div>
+          <div class="contract">
+            0x97e813828B0250dCa5c05FF2567dfD616E5b3C61 · no timelock yet
+          </div>
+        </div>
+
+        <div>
+          <div class="metric-label">APY</div>
+          <div class="metric-value">—</div>
+        </div>
+        <div>
+          <div class="metric-label">Total assets</div>
+          <div class="metric-value">$0.00</div>
+        </div>
+        <div>
+          <div class="metric-label">Withdrawable now</div>
+          <div class="metric-value">$0.00</div>
+        </div>
+        <div>
+          <div class="metric-label">Performance fee</div>
+          <div class="metric-value">0% · 90d</div>
+        </div>
+      </div>
+
+      <div class="vault-actions">
+        <div class="action-tabs">
+          <button class="selected" onclick="selectAction(this)">Deposit</button>
+          <button onclick="selectAction(this)">Withdraw</button>
+        </div>
+        <div class="deposit-row">
+          <div class="deposit-field">
+            <label>USDG</label>
+            <input type="number" min="0" placeholder="0.00">
+          </div>
+          <button class="connect" onclick="alert('Wallet connection is not configured yet.')">Connect wallet</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="vault-card">
+      <div class="vault-layout">
+        <div class="vault-main">
+          <div class="vault-title">
+            <h3>Credora Frontier USDG</h3>
+            <span class="pill orange">NOT DEPLOYED</span>
+            <span class="pill">FRONTIER</span>
+          </div>
+          <p class="vault-description">
+            Long-tail collateral priced by TWAP. Higher rate, thinner exit,
+            smaller caps.
+          </p>
+          <div class="asset-list">
+            <span class="asset">HIMS · 38.5%</span>
+          </div>
+        </div>
+        <div><div class="metric-label">APY</div><div class="metric-value">—</div></div>
+        <div><div class="metric-label">Total assets</div><div class="metric-value">$0.00</div></div>
+        <div><div class="metric-label">Withdrawable now</div><div class="metric-value">$0.00</div></div>
+        <div><div class="metric-label">Performance fee</div><div class="metric-value">0% · 90d</div></div>
+      </div>
+      <button class="disabled-action" disabled>Opens when the vault is deployed</button>
+    </article>
+
+    <article class="vault-card">
+      <div class="vault-layout">
+        <div class="vault-main">
+          <div class="vault-title">
+            <h3>Credora ETH</h3>
+            <span class="pill orange">NOT DEPLOYED</span>
+            <span class="pill">ETH</span>
+          </div>
+          <p class="vault-description">
+            Lend WETH against stock collateral. Opens once the USDG book
+            has depth.
+          </p>
+          <p class="muted">Market list opens with the vault.</p>
+        </div>
+        <div><div class="metric-label">APY</div><div class="metric-value">—</div></div>
+        <div><div class="metric-label">Total assets</div><div class="metric-value">$0.00</div></div>
+        <div><div class="metric-label">Withdrawable now</div><div class="metric-value">$0.00</div></div>
+        <div><div class="metric-label">Performance fee</div><div class="metric-value">0% · 90d</div></div>
+      </div>
+      <button class="disabled-action" disabled>Opens when the vault is deployed</button>
+    </article>
+
+    <article class="vault-card">
+      <div class="vault-layout">
+        <div class="vault-main">
+          <div class="vault-title">
+            <h3>Credora NVDA Lending</h3>
+            <span class="pill orange">NOT DEPLOYED</span>
+            <span class="pill">STOCK LENDING</span>
+          </div>
+          <p class="vault-description">
+            Lend your NVDA to short sellers and earn the borrow rate
+            while keeping the exposure.
+          </p>
+          <div class="asset-list">
+            <span class="asset">NVDA-SHORT · 62.5%</span>
+          </div>
+        </div>
+        <div><div class="metric-label">APY</div><div class="metric-value">—</div></div>
+        <div><div class="metric-label">Total assets</div><div class="metric-value">$0.00</div></div>
+        <div><div class="metric-label">Withdrawable now</div><div class="metric-value">$0.00</div></div>
+        <div><div class="metric-label">Performance fee</div><div class="metric-value">0% · 90d</div></div>
+      </div>
+      <button class="disabled-action" disabled>Opens when the vault is deployed</button>
+    </article>
+
+  </section>
+
+  <section class="lower-section">
+    <h2>Partner vaults</h2>
+    <p>
+      A project that wants its own token to be borrowable can have a vault
+      of its own: one market, a cap it sets, and liquidity it deposits.
+      The borrow demand is then its users', and the rate is theirs to keep.
+      Ask for one and it is a deployment, not a negotiation.
+    </p>
+  </section>
+
+  <section class="lower-section">
+    <h2>Where the yield comes from</h2>
+    <p>
+      Borrowers pay a rate set by Morpho's adaptive curve, which climbs
+      as a market is used up and falls when it sits idle. Suppliers receive
+      that interest in proportion to how much of the pool is lent out.
+      Nothing is subsidised — there is no emission propping the number up,
+      which is also why it will look modest early on.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-about">
+      <a class="brand" href="index.html">
+        <img src="images/Logo.jpg" alt="Credora Logo" class="brand-logo">
+        <span>Credora</span>
+      </a>
+      <p class="footer-description">
+        A curation layer on Morpho Blue: isolated markets that let
+        tokenized stocks back a USDG loan. Credora holds no user funds —
+        deposits and collateral live in Morpho.
+      </p>
+      <a class="social" href="https://x.com/" target="_blank" rel="noreferrer">
+        𝕏 &nbsp; @Credora
+      </a>
+    </div>
+
+    <div>
+      <div class="footer-label">PROTOCOL</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="stake.html">Stake</a>
+        <a href="stats.html">Stats</a>
+        <a href="portfolio.html">Portfolio</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-label">LEARN</div>
+      <div class="footer-links">
+        <a href="docs.html">Overview</a>
+        <a href="docs.html">Risk framework</a>
+        <a href="docs.html">Withdrawals</a>
+        <a href="docs.html">Flash loans</a>
+        <a href="builders.html">Builders</a>
+        <a href="launchpad.html">Launchpad</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<script>
+function toggleMoreMenu(button) {
+  const dropdown = button.closest(".more-dropdown");
+  const menu = dropdown.querySelector(".more-menu");
+  const willOpen = menu.hidden;
+
+  document.querySelectorAll(".more-dropdown").forEach(function (item) {
+    item.classList.remove("open");
+
+    const itemMenu = item.querySelector(".more-menu");
+    const itemButton = item.querySelector(".more-toggle");
+
+    if (itemMenu) itemMenu.hidden = true;
+    if (itemButton) itemButton.setAttribute("aria-expanded", "false");
+  });
+
+  if (willOpen) {
+    menu.hidden = false;
+    dropdown.classList.add("open");
+    button.setAttribute("aria-expanded", "true");
+  }
+}
+
+document.addEventListener("click", function (event) {
+  if (!event.target.closest(".more-dropdown")) {
+    document.querySelectorAll(".more-dropdown").forEach(function (item) {
+      item.classList.remove("open");
+
+      const menu = item.querySelector(".more-menu");
+      const button = item.querySelector(".more-toggle");
+
+      if (menu) menu.hidden = true;
+      if (button) button.setAttribute("aria-expanded", "false");
+    });
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    document.querySelectorAll(".more-dropdown").forEach(function (item) {
+      item.classList.remove("open");
+
+      const menu = item.querySelector(".more-menu");
+      const button = item.querySelector(".more-toggle");
+
+      if (menu) menu.hidden = true;
+      if (button) button.setAttribute("aria-expanded", "false");
+    });
+  }
+});
+
+const mobileNavbar = document.querySelector(".navbar");
+const mobileMenuToggle = document.getElementById("mobileMenuToggle");
+
+if (mobileNavbar && mobileMenuToggle) {
+  mobileMenuToggle.addEventListener("click", function () {
+    const isOpen = mobileNavbar.classList.toggle("mobile-menu-open");
+
+    mobileMenuToggle.setAttribute("aria-expanded", String(isOpen));
+    mobileMenuToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Tutup menu" : "Buka menu"
+    );
+  });
+
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      mobileNavbar.classList.remove("mobile-menu-open");
+      mobileMenuToggle.setAttribute("aria-expanded", "false");
+      mobileMenuToggle.setAttribute("aria-label", "Buka menu");
+    }
+  });
+}
+
+
+</script>
+
+</body>
+</html>

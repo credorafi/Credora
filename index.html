@@ -1,0 +1,1587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Credora — Your stocks stay yours</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #050606;
+  --green: #000000;
+  --mint: #40c5a5;
+  --white: #ffffff;
+  --muted: #ffffff;
+  --line: #29312e;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--white);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  cursor: pointer;
+}
+
+.container {
+  width: min(1190px, calc(100% - 48px));
+  margin: auto;
+}
+
+/* NAVBAR */
+.site-header {
+  position: sticky;
+  top: 12px;
+  z-index: 100;
+  width: min(1152px, calc(100% - 40px));
+  margin: 12px auto 0;
+}
+
+.navbar {
+  min-height: 72px;
+  padding: 12px 20px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 50px;
+  background: #101413;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 22px;
+  box-shadow: 0 12px 35px rgba(0,0,0,.35);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.brand img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+  color: #b8ccc5;
+  font-size: 14px;
+}
+
+.nav-links > a:hover,
+.more-btn:hover {
+  color: #40c4a5;
+}
+
+.token-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.soon {
+  font-size: 9px;
+  padding: 4px 7px;
+  border-radius: 8px;
+  background: #183a30;
+  color: #62dabb;
+}
+
+.more-wrap {
+  position: relative;
+}
+
+.more-btn {
+  background: transparent;
+  border: 0;
+  color: #b8ccc5;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.more-menu {
+  display: none;
+  position: absolute;
+  top: 35px;
+  right: -20px;
+  min-width: 165px;
+  padding: 8px;
+  border: 1px solid #303b36;
+  border-radius: 15px;
+  background: #101413;
+  box-shadow: 0 15px 30px #0008;
+}
+
+.more-menu.show {
+  display: block;
+}
+
+.more-menu a {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  color: #c2d7cf;
+  font-size: 13px;
+}
+
+.more-menu a:hover {
+  background: #26332d;
+  color: white;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.ca-btn {
+  border: 1px solid #39463f;
+  background: transparent;
+  color: #a9c6bb;
+  border-radius: 30px;
+  padding: 10px 14px;
+  font: 11px monospace;
+}
+
+.x-link {
+  color: #d0e1da;
+  font-size: 19px;
+}
+
+.connect-btn,
+.primary-btn,
+.secondary-btn {
+  border-radius: 30px;
+  padding: 13px 22px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  transition: .2s;
+}
+
+.connect-btn,
+.primary-btn {
+  background: var(--mint);
+  color: #00261d;
+}
+
+.connect-btn:hover,
+.primary-btn:hover {
+  background: #73dfc3;
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  border-color: #477064;
+  background: transparent;
+  color: white;
+}
+
+.secondary-btn:hover {
+  background: #18251f;
+}
+
+.mobile-menu-btn {
+  display: none;
+  color: white;
+  border: 0;
+  background: transparent;
+  font-size: 25px;
+}
+
+/* HERO */
+.hero {
+  position: relative;
+  overflow: hidden;
+  min-height: 540px;
+  padding: 26px 24px 0;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at 50% 70%, #14251f 0%, #0b100e 43%, #050606 76%);
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 43% 0 0;
+  opacity: .35;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 2%,
+    #315b4a 2.2% 3.1%,
+    transparent 3.3% 4.6%
+  );
+  mask-image: linear-gradient(to top, black, transparent);
+  pointer-events: none;
+}
+
+.hero-label {
+  position: relative;
+  display: inline-block;
+  margin-top: 0;
+  padding: 10px 17px;
+  border: 1px solid #394d43;
+  border-radius: 30px;
+  color: #c0d3cb;
+  font: 10px monospace;
+  letter-spacing: 1px;
+}
+
+.hero h1 {
+  position: relative;
+  margin: 29px auto 20px;
+  max-width: 1050px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 6.4vw, 82px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -2.8px;
+}
+
+.hero-description {
+  position: relative;
+  max-width: 610px;
+  margin: auto;
+  color: #c0d0ca;
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.hero-buttons {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 36px;
+}
+
+.stats-panel {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  max-width: 1105px;
+  margin: 45px auto 0;
+  border: 1px solid #29312e;
+  border-radius: 18px 18px 0 0;
+  background: #101413;
+  color: #ffffff;
+  text-align: left;
+  box-shadow: 0 -5px 30px #0004;
+}
+
+.stat-item {
+  padding: 25px 30px;
+  border-right: 1px solid #29312e;
+}
+
+.stat-item:last-child {
+  border-right: 0;
+}
+
+.stat-item span,
+.stat-item small {
+  display: block;
+  color: #9aafa5;
+}
+
+.stat-item span {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+}
+
+.stat-item strong {
+  display: block;
+  margin: 6px 0 3px;
+  font: 600 29px monospace;
+}
+
+.stat-item small {
+  font-size: 12px;
+}
+
+/* INTRO */
+.intro-section {
+  padding: 100px 24px;
+  background: #0a0d0c;
+  color: #ffffff;
+  text-align: center;
+}
+
+.intro-section h2,
+.markets-heading h2,
+.info-section h2,
+.final-cta h2 {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(33px, 4vw, 49px);
+  font-weight: 500;
+  letter-spacing: -1.4px;
+}
+
+.intro-section > p {
+  max-width: 750px;
+  margin: 20px auto 35px;
+  color: #a3b5ac;
+  line-height: 1.7;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1190px;
+  margin: auto;
+  text-align: left;
+}
+
+.feature-card {
+  padding: 32px;
+  border: 1px solid #29312e;
+  border-radius: 27px;
+  background: #101413;
+}
+
+.feature-card > span {
+  color: #9aafa5;
+  font: 10px monospace;
+  letter-spacing: 1.3px;
+}
+
+.feature-card h3 {
+  margin: 20px 0;
+  color: #40c5a5;
+  font: 600 35px monospace;
+}
+
+.feature-card h3 small {
+  color: #9aafa5;
+  font: 12px monospace;
+}
+
+.feature-card h4 {
+  margin-bottom: 14px;
+  font: 600 25px Georgia, serif;
+}
+
+.feature-card p {
+  color: #a3b5ac;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+/* MARKETS */
+.markets-section {
+  padding: 90px 0 85px;
+  background: #080a09;
+  color: #ffffff;
+}
+
+.markets-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 25px;
+  margin-bottom: 28px;
+}
+
+.markets-heading p {
+  margin-top: 15px;
+  color: #a3b5ac;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.feed-status {
+  color: #a3b5ac;
+  font: 11px monospace;
+  white-space: nowrap;
+}
+
+.markets-table-wrap {
+  overflow-x: auto;
+  border: 1px solid #29312e;
+  border-radius: 24px;
+  background: #101413;
+}
+
+.markets-table {
+  width: 100%;
+  min-width: 1050px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.markets-table th {
+  padding: 20px 17px;
+  color: #9aafa5;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  border-bottom: 1px solid #29312e;
+}
+
+.markets-table td {
+  padding: 16px 17px;
+  border-bottom: 1px solid #242b27;
+  white-space: nowrap;
+}
+
+.markets-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.markets-table tbody tr:hover {
+  background: #171d1a;
+}
+
+.market-asset {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  min-width: 170px;
+}
+
+.market-icon {
+  display: grid;
+  place-items: center;
+  width: 37px;
+  height: 37px;
+  flex-shrink: 0;
+  overflow: hidden;
+  border: 1px solid #303a34;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #111111;
+  font-weight: 700;
+}
+
+.market-icon img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+  object-fit: contain;
+}
+
+.market-icon .ticker-fallback {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: #111111;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.market-symbol {
+  font-size: 14px;
+}
+
+.market-type {
+  margin-top: 4px;
+  color: #9aafa5;
+  font-size: 11px;
+}
+
+.market-action {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 75px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 24px;
+  background: #40c5a5;
+  color: #00261d;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+.market-action:hover {
+  background: #73dfc3;
+}
+
+.market-action.details {
+  border: 1px solid #39463f;
+  background: transparent;
+  color: #c0d3cb;
+}
+
+.market-action.blocked {
+  background: #3b2927;
+  color: #e0a49b;
+  cursor: not-allowed;
+}
+
+.markets-count {
+  margin-top: 15px;
+  color: #9aafa5;
+  font-size: 12px;
+}
+
+.markets-more {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.markets-more-btn {
+  display: inline-flex;
+  justify-content: center;
+  padding: 14px 25px;
+  border-radius: 30px;
+  background: #40c5a5;
+  color: #00261d;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* INFO */
+.info-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 65px;
+  padding: 100px max(6%, calc((100% - 1190px)/2));
+  background: #0d100f;
+}
+
+.info-section h2 {
+  max-width: 500px;
+}
+
+.info-section > div:first-child p {
+  max-width: 540px;
+  margin-top: 23px;
+  color: #a3b5ac;
+  line-height: 1.8;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.info-grid article {
+  min-height: 145px;
+  padding: 25px;
+  border: 1px solid #29312e;
+  border-radius: 27px;
+  background: #101413;
+}
+
+.info-grid span {
+  color: #9aafa5;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+.info-grid h3 {
+  margin-top: 17px;
+  font-size: 18px;
+}
+
+/* CTA */
+.final-cta {
+  padding: 85px 24px;
+  background: #080a09;
+  color: #ffffff;
+  text-align: center;
+  border-top: 1px solid #242b27;
+}
+
+.final-cta p {
+  max-width: 650px;
+  margin: 18px auto 0;
+  color: #a3b5ac;
+  line-height: 1.7;
+}
+
+.final-cta .secondary-btn {
+  color: #ffffff;
+  border-color: #39463f;
+}
+
+/* FOOTER */
+.site-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  padding: 75px max(6%, calc((100% - 1190px)/2));
+  background: #050606;
+  border-top: 1px solid #242b27;
+}
+
+.footer-brand {
+  margin-bottom: 20px;
+}
+
+.site-footer > div:first-child p {
+  max-width: 380px;
+  color: #a8c0b5;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.footer-links {
+  display: flex;
+  gap: 85px;
+}
+
+.footer-links div {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.footer-links span {
+  margin-bottom: 6px;
+  color: #9bb9ac;
+  font-size: 10px;
+  letter-spacing: 1.3px;
+}
+
+.footer-links a {
+  color: #e0eae5;
+  font-size: 14px;
+}
+
+.footer-links a:hover {
+  color: var(--mint);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1050px) {
+  .navbar {
+    gap: 14px;
+  }
+
+  .nav-links {
+    gap: 15px;
+  }
+
+  .nav-actions {
+    gap: 9px;
+  }
+
+  .ca-btn,
+  .x-link {
+    display: none;
+  }
+}
+
+@media (max-width: 780px) {
+  .site-header {
+    width: calc(100% - 24px);
+    top: 8px;
+    margin-top: 8px;
+  }
+
+  .navbar {
+    min-height: 62px;
+    padding: 12px 18px;
+  }
+
+  .mobile-menu-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: auto;
+  padding: 5px;
+  color: #fff;
+  border: 0;
+  background: transparent;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+.mobile-menu-btn svg {
+  display: block;
+  overflow: visible;
+}
+
+.mobile-menu-btn .menu-line {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.mobile-menu-btn.is-open .line-top {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.mobile-menu-btn.is-open .line-bottom {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+  
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    right: 0;
+    padding: 18px;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid #303b36;
+    border-radius: 20px;
+    background: #101413;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.35);
+  }
+
+  .nav-links.mobile-show {
+    display: flex;
+  }
+
+  .nav-links > a,
+  .nav-links .more-btn {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 13px 8px;
+    box-sizing: border-box;
+  }
+
+
+
+.nav-links .nav-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  min-width: 0;
+  margin: 15px 0 0;
+  padding-top: 15px;
+  border-top: 1px solid #303b36;
+}
+
+.nav-links .ca-btn {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 36px;
+  padding: 0 12px;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.nav-links .x-link {
+  display: inline-flex;
+  flex: 0 0 40px;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  height: 40px;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.nav-links .connect-btn {
+  display: inline-flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  height: 40px;
+  padding: 0 12px;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+  .nav-links > a,
+  .more-btn {
+    padding: 13px 8px;
+  }
+
+  .more-menu {
+    position: static;
+    margin: 5px 0 10px;
+  }
+
+  .nav-actions {
+    margin-left: auto;
+  }
+
+  .connect-btn {
+    padding: 11px 15px;
+    font-size: 12px;
+  }
+
+  .hero {
+    padding-top: 35px;
+  }
+
+  .hero h1 {
+    letter-spacing: -1.5px;
+  }
+
+  .stats-panel {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-item {
+    padding: 20px;
+    border-bottom: 1px solid #29312e;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .markets-section {
+    padding: 65px 0;
+  }
+
+  .markets-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .container {
+    width: calc(100% - 30px);
+  }
+
+  .info-section {
+    grid-template-columns: 1fr;
+    padding: 65px 25px;
+    gap: 35px;
+  }
+
+  .site-footer {
+    flex-direction: column;
+    padding: 55px 25px;
+  }
+
+  .footer-links {
+    gap: 55px;
+  }
+}
+
+@media (max-width: 420px) {
+  .brand {
+    font-size: 17px;
+  }
+
+  .brand img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .connect-btn {
+    padding: 10px 12px;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+  }
+
+  .hero-description {
+    font-size: 14px;
+  }
+
+  .stat-item {
+    padding: 15px;
+  }
+
+  .stat-item strong {
+    font-size: 23px;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+/* HOME */
+@media screen and (max-width: 780px) {
+  .navbar {
+    position: relative;
+  }
+
+  .nav-links.mobile-show {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 0 !important;
+
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100vw !important;
+    max-height: calc(100vh - 70px) !important;
+    overflow-y: auto !important;
+
+    margin-left: calc((100% - 100vw) / 2) !important;
+    padding: 18px 5% 24px !important;
+
+    background: #000 !important;
+    border-left: none !important;
+    border-right: none !important;
+    border-top: none !important;
+    border-bottom: 1px solid #252c28 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    z-index: 10000 !important;
+    box-sizing: border-box !important;
+  }
+  .nav-links.mobile-show > a {
+    display: block !important;
+    width: 100% !important;
+    padding: 11px 4px !important;
+    border-top: 1px solid #252c28 !important;
+    white-space: normal !important;
+  }
+
+  .nav-links.mobile-show .more-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    border-top: 1px solid #252c28 !important;
+  }
+
+  .nav-links.mobile-show .more-btn {
+    display: flex !important;
+    justify-content: space-between !important;
+    width: 100% !important;
+    padding: 11px 4px !important;
+    border: 0 !important;
+    background: transparent !important;
+    color: #e4e8e5 !important;
+  }
+
+  .nav-links.mobile-show .more-menu.show {
+    display: flex !important;
+    flex-direction: column !important;
+    position: static !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 8px 12px !important;
+    padding: 7px !important;
+    background: #1a1918 !important;
+    border: 1px solid #252c28 !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-links.mobile-show .more-menu a {
+    display: block !important;
+    width: 100% !important;
+    padding: 11px 12px !important;
+    color: #f5f7f6 !important;
+    white-space: normal !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .site-header {
+    border-radius: 0 !important;
+  }
+
+  .navbar {
+    border-radius: 0 !important;
+    background: #000 !important;
+    border: none !important;
+    border-bottom: 1px solid #302e2b !important;
+    box-shadow: none !important;
+  }
+
+  .nav-links.mobile-show {
+    top: 100% !important;
+    border-radius: 0 !important;
+    border-top: none !important;
+    background: #000 !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .mobile-menu-btn {
+    border: 1px solid #252c28 !important;
+    border-radius: 9px !important;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    background: transparent;
+    box-shadow: none;
+  }
+}
+
+/* HOME */
+@media screen and (max-width: 780px) {
+  .nav-links.mobile-show > a {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1.6 !important;
+    padding: 13px 4px !important;
+  }
+
+  .nav-links.mobile-show .more-btn {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    line-height: 1.6 !important;
+    padding: 13px 4px !important;
+  }
+
+  .nav-links.mobile-show .more-menu a {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    line-height: 1.6 !important;
+    padding: 12px !important;
+  }
+}
+
+
+@media (max-width: 780px) {
+  .nav-links.mobile-show .nav-actions {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding-top: 14px !important;
+    border-top: 1px solid #252c28 !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-links.mobile-show .ca-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 42px !important;
+    padding: 0 12px !important;
+    border: 1px solid #252c28 !important;
+    border-radius: 9px !important;
+    background: #000 !important;
+    color: #929d97 !important;
+    font: 11px monospace !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-links.mobile-show .x-link {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 42px !important;
+    padding: 0 !important;
+    border: 1px solid #252c28 !important;
+    border-radius: 9px !important;
+    background: #000 !important;
+    color: #f4f7f5 !important;
+    font-size: 19px !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-links.mobile-show .connect-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 45px !important;
+    padding: 0 16px !important;
+    border: 1px solid #40c4a5 !important;
+    border-radius: 9px !important;
+    background: #40c4a5 !important;
+    color: #06110d !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="site-header">
+  <nav class="navbar">
+    <a href="index.html" class="brand">
+      <img src="images/Logo.jpg" alt="Credora">
+      <span>Credora</span>
+    </a>
+
+    <div class="nav-links" id="navLinks">
+      <a href="earn.html">Earn</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="swap.html">Swap</a>
+      <a href="stake.html">Stake</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="token.html" class="token-link">Token <span class="soon">SOON</span></a>
+      <a href="docs.html">Docs</a>
+
+      <div class="more-wrap">
+        <button class="more-btn" id="moreBtn">
+          More <span>⌄</span>
+        </button>
+        <div class="more-menu" id="moreMenu">
+          <a href="stats.html">Stats</a>
+          <a href="activity.html">Activity</a>
+          <a href="builders.html">Builders</a>
+          <a href="launchpad.html">Launchpad</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav-actions">
+      <button class="ca-btn" id="copyCA">CA: soon</button>
+      <a href="https://x.com" target="_blank" rel="noopener noreferrer" class="x-link">𝕏</a>
+      <button class="connect-btn" id="connectWallet">Connect wallet</button>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn"
+        aria-label="Open menu" aria-expanded="false">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+       xmlns="http://www.w3.org/2000/svg">
+    <path class="menu-line line-top" d="M4 8H20"
+          stroke="white" stroke-width="2" stroke-linecap="round"/>
+    <path class="menu-line line-bottom" d="M4 16H20"
+          stroke="white" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+</button>
+  </nav>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-label">CURATED ON MORPHO BLUE</div>
+    <h1>Your stocks stay yours.<br>The liquidity is new.</h1>
+
+    <p class="hero-description">
+      Post tokenized NVDA, SPY, AAPL or ETH as collateral and borrow
+      USDG against it. Isolated markets, Chainlink pricing, and no
+      performance fee while we are small.
+    </p>
+
+    <div class="hero-buttons">
+      <a href="borrow.html" class="primary-btn">Borrow against stocks</a>
+      <a href="earn.html" class="secondary-btn">Earn on USDG</a>
+    </div>
+
+    <div class="stats-panel">
+      <div class="stat-item">
+        <span>MARKETS</span><strong>35/43</strong><small>live / planned</small>
+      </div>
+      <div class="stat-item">
+        <span>SUPPLIED</span><strong>$0.00</strong><small>USDG in Morpho</small>
+      </div>
+      <div class="stat-item">
+        <span>BORROWED</span><strong>$0.00</strong><small>against stock collateral</small>
+      </div>
+      <div class="stat-item">
+        <span>PERFORMANCE FEE</span><strong>0%</strong><small>for the first markets</small>
+      </div>
+    </div>
+  </section>
+
+  <section class="intro-section">
+    <h2>A loan against stock, without selling the stock.</h2>
+    <p>
+      Credora curates isolated markets on Morpho Blue. Deposits earn from
+      borrowers, borrowers keep their exposure, and every position is priced
+      by the same oracle feed the market uses.
+    </p>
+
+    <div class="feature-grid">
+      <article class="feature-card">
+        <span>01 — SUPPLY</span>
+        <h3>0% <small>fee on your yield</small></h3>
+        <h4>Lend USDG</h4>
+        <p>Deposit into the vault and review the terms before supplying assets.</p>
+      </article>
+
+      <article class="feature-card">
+        <span>02 — COLLATERALISE</span>
+        <h3>41 <small>markets listed</small></h3>
+        <h4>Post your shares</h4>
+        <p>Explore supported collateral assets and their market parameters.</p>
+      </article>
+
+      <article class="feature-card">
+        <span>03 — BORROW</span>
+        <h3>57.5% <small>of collateral value</small></h3>
+        <h4>Take USDG out</h4>
+        <p>Review collateral limits, liquidation risks and repayment terms.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="markets-section" id="markets">
+    <div class="container">
+      <div class="markets-heading">
+        <div>
+          <h2>Markets</h2>
+          <p>Isolated and immutable: LLTV and oracle are fixed when a market is created and can never be edited.</p>
+        </div>
+        <span class="feed-status">0 of 43 feeds answering</span>
+      </div>
+
+      <div class="markets-table-wrap">
+        <table class="markets-table">
+          <thead>
+            <tr>
+              <th>Collateral</th>
+              <th>Price</th>
+              <th>Liq. LTV</th>
+              <th>Available</th>
+              <th>Borrow APR</th>
+              <th>Utilization</th>
+              <th>Cap</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="marketsBody"></tbody>
+        </table>
+      </div>
+
+      <p class="markets-count" id="marketsCount">41 markets</p>
+      <div class="markets-more">
+        <a href="borrow.html" class="markets-more-btn">See all markets →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="info-section">
+    <div>
+      <h2>We did not write a lending protocol.</h2>
+      <p>
+        Deposits, collateral, interest and liquidations are managed by the
+        underlying protocol. Understand the risks before interacting with
+        any lending market.
+      </p>
+    </div>
+
+    <div class="info-grid">
+      <article><span>LIQUIDATION LTV</span><h3>Market dependent</h3></article>
+      <article><span>SUPPLY CAPS</span><h3>Market dependent</h3></article>
+      <article><span>ORACLES</span><h3>Review price feeds</h3></article>
+      <article><span>VAULT FEE</span><h3>Check current terms</h3></article>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <h2>Start small, on purpose.</h2>
+    <p>Explore the documentation to understand the markets, risks and available features.</p>
+    <div class="hero-buttons">
+      <a href="docs.html" class="primary-btn">Read the docs</a>
+      <a href="earn.html" class="secondary-btn">Open the vault</a>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div>
+    <a href="index.html" class="brand footer-brand">
+      <img src="images/Logo.jpg" alt="Credora">
+      <span>Credora</span>
+    </a>
+    <p>A curation layer on Morpho Blue: isolated markets that let
+       tokenized stocks back a USDG loan. Cluby holds no user
+       funds — deposits and collateral live in Morpho.</p>
+  </div>
+
+  <a
+  href="https://x.com/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="cluby-x-link"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width="16"
+    height="16"
+    fill="currentColor"
+    aria-hidden="true"
+  >
+    <path d="M18.901 1.153h3.308l-7.227 8.26 8.502 11.434h-6.657l-5.214-6.817-5.967 6.817H2.336l7.73-8.835L1.91 1.153h6.826l4.713 6.231 5.452-6.231Zm-1.161 17.679h1.833L7.12 3.062H5.153L17.74 18.832Z"/>
+  </svg>
+  <span>@Credora</span>
+</a>
+
+  <div class="footer-links">
+    <div>
+      <span>PROTOCOL</span>
+      <a href="earn.html">Earn</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="stake.html">Stake</a>
+    </div>
+    <div>
+      <span>LEARN</span>
+      <a href="docs.html">Overview</a>
+      <a href="docs.html#risks">Risk framework</a>
+      <a href="docs.html#withdrawals">Withdrawals</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+const marketData = [
+  ["NVDA","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["SPY","ETF","Chainlink",62.5,2000,"borrow"],
+  ["AAPL","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["TSLA","Stocks","Chainlink",62.5,1000,"borrow"],
+  ["WETH","Crypto","Chainlink",77,5000,"borrow"],
+  ["HIMS","Stocks","TWAP",38.5,500,"borrow"],
+  ["SPCX","Pre-IPO","Chainlink",38.5,2000,"borrow"],
+  ["PONS","Onchain-native","TWAP",38.5,5000,"borrow"],
+  ["CASHCAT","Onchain-native","TWAP",38.5,1000,"borrow"],
+  ["INDEX","Onchain-native","TWAP",38.5,500,"blocked"],
+  ["MSFT","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["GOOGL","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["AMZN","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["META","Stocks","Chainlink",62.5,1000,"borrow"],
+  ["QQQ","ETF","Chainlink",62.5,2000,"borrow"],
+  ["SGOV","T-bills","Chainlink",86,2000,"borrow"],
+  ["BABA","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["GME","Stocks","Chainlink",62.5,5000,"borrow"],
+  ["DELL","Stocks","Chainlink",62.5,5000,"borrow"],
+  ["PLTR","Stocks","Chainlink",38.5,500,"borrow"],
+  ["SNDK","Stocks","Chainlink",62.5,1000,"borrow"],
+  ["AMD","Stocks","Chainlink",62.5,1000,"borrow"],
+  ["MU","Stocks","Chainlink",62.5,10000,"borrow"],
+  ["INTC","Stocks","Chainlink",38.5,500,"borrow"],
+  ["TSM","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["CRCL","Stocks","Chainlink",62.5,25000,"borrow"],
+  ["ASML","Stocks","Chainlink",38.5,500,"borrow"],
+  ["USO","ETF","Chainlink",62.5,5000,"borrow"],
+  ["SLV","ETF","Chainlink",62.5,5000,"borrow"],
+  ["USAR","Stocks","Chainlink",38.5,250,"borrow"],
+  ["MSTR","Stocks","Chainlink",62.5,2000,"borrow"],
+  ["AMC","Stocks","TWAP",38.5,10000,"details"],
+  ["TTWO","Stocks","TWAP",38.5,1000,"details"],
+  ["RDDT","Stocks","TWAP",38.5,5000,"borrow"],
+  ["DJT","Stocks","TWAP",38.5,2000,"details"],
+  ["GLD","ETF","TWAP",38.5,25000,"details"],
+  ["COST","Stocks","TWAP",38.5,2000,"borrow"],
+  ["NFLX","Stocks","TWAP",38.5,1000,"borrow"],
+  ["MRNA","Stocks","TWAP",38.5,500,"details"],
+  ["RIVN","Stocks","TWAP",38.5,1000,"details"],
+  ["RBLX","Stocks","TWAP",38.5,1000,"borrow"]
+];
+
+const tickerLogos = {
+  NVDA: "nvidia",
+  SPY: "spdr",
+  AAPL: "apple",
+  TSLA: "tesla",
+  WETH: "ethereum",
+  HIMS: "hims",
+  MSFT: "microsoft",
+  GOOGL: "google",
+  AMZN: "amazon",
+  META: "meta",
+  QQQ: "invesco",
+  SGOV: "ishares",
+  BABA: "alibabadotcom",
+  GME: "gamestop",
+  DELL: "dell",
+  PLTR: "palantir",
+  SNDK: "sandisk",
+  AMD: "amd",
+  MU: "micron",
+  INTC: "intel",
+  TSM: "tsmc",
+  CRCL: "circle",
+  ASML: "asml",
+  USO: "usc",
+  SLV: "ishares",
+  MSTR: "strategy",
+  AMC: "amc",
+  TTWO: "take-two-interactive-software",
+  RDDT: "reddit",
+  DJT: "truthsocial",
+  GLD: "spdr",
+  COST: "costco",
+  NFLX: "netflix",
+  MRNA: "moderna",
+  RIVN: "rivian",
+  RBLX: "roblox"
+};
+
+function getTickerLogo(symbol) {
+  const slug = tickerLogos[symbol];
+
+  if (!slug) {
+    return `<span class="ticker-fallback" style="display:flex">${symbol.slice(0,1)}</span>`;
+  }
+
+  return `
+    <img
+      src="https://cdn.simpleicons.org/${slug}"
+      alt="${symbol} logo"
+      onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+    >
+    <span class="ticker-fallback">${symbol.slice(0,1)}</span>
+  `;
+}
+
+const marketsBody = document.getElementById("marketsBody");
+
+function formatCap(value) {
+  if (value >= 10000) {
+    return "$" + (value / 1000).toFixed(value % 1000 === 0 ? 0 : 1) + "K";
+  }
+  return "$" + value.toLocaleString("en-US");
+}
+
+marketsBody.innerHTML = marketData.map(m => {
+  const [symbol, type, oracle, ltv, cap, status] = m;
+  const label = status === "blocked" ? "Blocked" :
+                status === "details" ? "Details" : "Borrow";
+
+  return `
+    <tr>
+      <td>
+        <div class="market-asset">
+          <div class="market-icon">
+            ${getTickerLogo(symbol)}
+          </div>
+          <div>
+            <div class="market-symbol">${symbol} / USDG</div>
+            <div class="market-type">${type} · ${oracle}</div>
+          </div>
+        </div>
+      </td>
+      <td>—</td>
+      <td>${ltv.toFixed(1)}%</td>
+      <td>${status === "details" || status === "blocked" ? "—" : "$0.00"}</td>
+      <td>—</td>
+      <td>${status === "details" || status === "blocked" ? "—" : "0.0%"}</td>
+      <td>${formatCap(cap)}</td>
+      <td>
+        <button class="market-action ${status}"
+          data-status="${status}" data-symbol="${symbol}"
+          ${status === "blocked" ? "disabled" : ""}>
+          ${label}
+        </button>
+      </td>
+    </tr>`;
+}).join("");
+
+document.getElementById("marketsCount").textContent =
+  `${marketData.length} markets`;
+
+document.getElementById("moreBtn").addEventListener("click", () => {
+  document.getElementById("moreMenu").classList.toggle("show");
+});
+
+document.addEventListener("click", event => {
+  if (!event.target.closest(".more-wrap")) {
+    document.getElementById("moreMenu").classList.remove("show");
+  }
+});
+
+const navLinks = document.getElementById("navLinks");
+const navActions = document.querySelector(".nav-actions");
+const navbar = document.querySelector(".navbar");
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+
+const originalActionsParent = navActions.parentElement;
+const originalActionsNext = navActions.nextElementSibling;
+
+function moveNavActions() {
+  if (window.innerWidth <= 780) {
+    navLinks.appendChild(navActions);
+  } else {
+    originalActionsParent.insertBefore(navActions, originalActionsNext);
+  }
+}
+
+moveNavActions();
+window.addEventListener("resize", moveNavActions);
+
+mobileMenuBtn.addEventListener("click", () => {
+  const isOpen = navLinks.classList.toggle("mobile-show");
+
+  mobileMenuBtn.classList.toggle("is-open", isOpen);
+  mobileMenuBtn.setAttribute("aria-expanded", isOpen);
+  mobileMenuBtn.setAttribute(
+    "aria-label",
+    isOpen ? "Close menu" : "Open menu"
+  );
+});
+
+document.getElementById("copyCA").addEventListener("click", () => {
+  alert("Contract address belum ditambahkan.");
+});
+
+document.getElementById("connectWallet").addEventListener("click", () => {
+  alert("Wallet belum terhubung. Integrasi wallet akan dibuat setelah konfigurasi jaringan dan kontrak siap.");
+});
+
+marketsBody.addEventListener("click", event => {
+  const button = event.target.closest(".market-action");
+  if (!button || button.disabled) return;
+
+  const symbol = button.dataset.symbol;
+  const status = button.dataset.status;
+  const params = new URLSearchParams({asset: symbol});
+
+  if (status === "details") params.set("view", "details");
+
+  window.location.href = "borrow.html?" + params.toString();
+});
+</script>
+
+</body>
+</html>

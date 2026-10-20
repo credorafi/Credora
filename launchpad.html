@@ -1,0 +1,1521 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Launchpad | Credora</title>
+
+<style>
+:root {
+  --bg: #000000;
+  --hero-footer: #000000;
+  --panel: #0b0d0c;
+  --panel-hover: #101512;
+  --green: #40c4a5;
+  --green-dark: #002b20;
+  --text: #f5f7f6;
+  --muted: #929d97;
+  --border: #252c28;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+a { color: inherit; text-decoration: none; }
+
+/* NAVBAR */
+
+.navbar {
+  min-height: 76px;
+  padding: 14px 5.5%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  background: var(--hero-footer);
+  border-bottom: 1px solid #302e2b;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 23px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.brand img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+}
+
+.mobile-panel {
+  display: contents;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+}
+
+.nav-links > a,
+.more-toggle {
+  color: #e4e8e5;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.soon-label {
+      margin-left: 2px;
+      padding: 1px 5px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 0.4px;
+    }
+
+.nav-links > a:hover,
+.nav-links > a.active,
+.more-toggle:hover {
+  color: var(--green);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ca-button,
+.connect-button {
+  border-radius: 30px;
+  padding: 11px 18px;
+  white-space: nowrap;
+}
+
+.ca-button {
+  border: 1px solid var(--green);
+  color: var(--green);
+  background: transparent;
+  font-size: 12px;
+}
+
+.connect-button {
+  border: 0;
+  background: var(--green);
+  color: #001b14;
+  font-weight: 600;
+}
+
+.connect-button:hover,
+.primary-button:hover {
+  filter: brightness(1.1);
+}
+
+.x-link {
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 18px;
+  transition: 0.2s ease;
+}
+
+.x-link:hover {
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* TWO-SPAN HAMBURGER */
+
+.menu-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: transparent;
+  flex-shrink: 0;
+  z-index: 1003;
+}
+
+.menu-toggle span {
+  display: block;
+  width: 19px;
+  height: 2px;
+  background: #fff;
+  border-radius: 3px;
+  transform-origin: center;
+  transition: transform 0.25s ease;
+}
+
+.menu-toggle[aria-expanded="true"] span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
+/* MORE DROPDOWN */
+
+.more-dropdown {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.more-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.more-arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.more-dropdown.open .more-arrow {
+  transform: rotate(180deg);
+}
+
+.more-menu[hidden] {
+  display: none !important;
+}
+
+.more-menu:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  min-width: 180px;
+  padding: 7px;
+  background: var(--hero-footer);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.5);
+  z-index: 99999;
+}
+
+.more-menu a {
+  display: block;
+  width: 100%;
+  padding: 11px 12px;
+  color: var(--text);
+  font-size: 13px;
+  white-space: nowrap;
+  border-radius: 6px;
+}
+
+.more-menu a:hover {
+  color: var(--green);
+  background: var(--panel-hover);
+}
+
+/* HERO */
+
+.hero {
+  background: var(--hero-footer);
+  padding: 52px 5.5% 55px;
+}
+
+.hero-inner {
+  max-width: 1450px;
+  margin: auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 35px;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+h1 {
+  font-size: clamp(32px, 4vw, 52px);
+  letter-spacing: -1.7px;
+  line-height: 1.12;
+  margin-bottom: 18px;
+}
+
+.intro {
+  color: #c2c4c1;
+  max-width: 720px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.hero-note {
+  max-width: 290px;
+  color: #b4b4b0;
+  font-size: 12px;
+  border-left: 2px solid var(--green);
+  padding-left: 14px;
+}
+
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 24px;
+  padding: 13px 20px;
+  border: 0;
+  border-radius: 9px;
+  background: var(--green);
+  color: #001b14;
+  font-weight: 700;
+  transition: .2s ease;
+}
+
+/* MAIN */
+
+main {
+  max-width: 1450px;
+  margin: auto;
+  padding: 38px 5.5% 85px;
+}
+
+/* STATS */
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 55px;
+}
+
+.stat-card {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  border-radius: 15px;
+  padding: 21px;
+  min-width: 0;
+}
+
+.stat-label {
+  color: var(--muted);
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-size: 27px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+}
+
+.stat-foot {
+  color: var(--green);
+  font-size: 11px;
+  margin-top: 7px;
+}
+
+/* COINS */
+
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 20px;
+  margin-bottom: 22px;
+}
+
+h2 {
+  font-size: 27px;
+  letter-spacing: -.6px;
+  margin-bottom: 6px;
+}
+
+.section-desc {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.market-count {
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 8px 13px;
+  color: var(--muted);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.market-tools {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  flex: 1;
+  min-width: 0;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 13px 15px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  color: white;
+}
+
+.search-box input:focus {
+  border-color: var(--green);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.filter-btn {
+  background: var(--panel);
+  color: #aeb8b1;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  padding: 11px 14px;
+  font-size: 12px;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--green-dark);
+  color: var(--green);
+  border-color: var(--green);
+}
+
+/* TABLE */
+
+.market-table-wrap {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--panel);
+}
+
+.table-scroll {
+  overflow-x: auto;
+}
+
+.market-table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 680px;
+  text-align: left;
+}
+
+.market-table th {
+  background: #101310;
+  color: var(--muted);
+  padding: 15px 17px;
+  font-size: 11px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.market-table td {
+  padding: 16px 17px;
+  border-top: 1px solid #202622;
+  font-size: 12px;
+}
+
+.market-table tbody tr:hover {
+  background: #101612;
+}
+
+.asset-cell {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.asset-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #13251d;
+  border: 1px solid #2a4a3b;
+  display: grid;
+  place-items: center;
+  color: var(--green);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.asset-name {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.asset-type {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.live-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  border: 1px solid #235e49;
+  background: #092219;
+  color: var(--green);
+  border-radius: 20px;
+  font-size: 10px;
+}
+
+.select-button {
+  border: 1px solid var(--green);
+  background: var(--green);
+  color: #001a12;
+  border-radius: 8px;
+  padding: 8px 13px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--muted);
+  padding: 35px;
+  display: none;
+}
+
+.market-note {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 15px;
+}
+
+/* LAUNCH INFORMATION */
+
+.launch-layout {
+  display: grid;
+  grid-template-columns: 1.1fr .9fr;
+  gap: 20px;
+  margin-top: 65px;
+  scroll-margin-top: 100px;
+}
+
+.info-panel,
+.launch-panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 25px;
+  min-width: 0;
+}
+
+.panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.panel-top h2 {
+  font-size: 22px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.info-item {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.info-item span {
+  color: var(--muted);
+  display: block;
+  font-size: 11px;
+  margin-bottom: 7px;
+}
+
+.info-item strong {
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.risk-note {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+  margin-top: 20px;
+}
+
+.launch-panel p {
+  color: #aeb9b2;
+  line-height: 1.9;
+}
+
+.launch-panel .primary-button {
+  margin-top: 22px;
+}
+
+/* EXPLANATION */
+
+.explainer {
+  margin-top: 65px;
+  padding: 30px;
+  border: 1px solid var(--border);
+  border-radius: 15px;
+  background: var(--panel);
+}
+
+.explainer p {
+  max-width: 850px;
+  color: #aeb9b2;
+  line-height: 1.9;
+}
+
+/* FOOTER - THREE COLUMNS */
+
+.footer {
+  background: var(--hero-footer);
+  border-top: 1px solid #302e2b;
+  padding: 55px 5.5% 30px;
+}
+
+.footer-grid {
+  max-width: 1450px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 55px;
+}
+
+.footer-about p {
+  color: #c2c4c1;
+  max-width: 420px;
+  margin-top: 20px;
+  line-height: 1.9;
+}
+
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--border);
+  border-radius: 30px;
+  padding: 11px 18px;
+  margin-top: 22px;
+  color: #e4e8e5;
+  transition: .2s ease;
+}
+
+.footer-social:hover {
+  border-color: var(--green);
+  color: var(--green);
+}
+
+.footer-title {
+  color: #b3c7be;
+  font-size: 11px;
+  letter-spacing: 1.8px;
+  margin-bottom: 25px;
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: #e0e0dc;
+}
+
+.footer-links a:hover {
+  color: var(--green);
+}
+
+.footer-bottom {
+  max-width: 1450px;
+  margin: 45px auto 0;
+  padding-top: 25px;
+  border-top: 1px solid #383532;
+  color: #b0b0aa;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.chain-label {
+  display: inline-block;
+  border: 1px solid #3b4942;
+  border-radius: 30px;
+  padding: 6px 13px;
+  color: #b7ccc3;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+.footer-bottom p {
+  line-height: 1.8;
+}
+
+.footer-risk {
+  width: 100%;
+  font-family: monospace;
+  overflow-wrap: anywhere;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 1100px) {
+  .navbar {
+    gap: 16px;
+  }
+
+  .nav-links {
+    gap: 15px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+  .navbar {
+    min-height: 70px;
+    padding: 0 5%;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    flex-wrap: nowrap;
+    gap: 0;
+  }
+
+  .navbar > .brand {
+    flex-shrink: 0;
+    font-size: 20px;
+  }
+
+  .navbar .brand img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .navbar .menu-toggle {
+    display: flex;
+    margin-left: auto;
+  }
+
+  .navbar .mobile-panel {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: calc(100dvh - 70px);
+    overflow-y: auto;
+    padding: 18px 5% 24px;
+    background: var(--hero-footer);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 12px 25px rgba(0,0,0,.35);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 20px;
+  }
+
+  .navbar .mobile-panel.open {
+    display: flex;
+  }
+
+  .navbar .mobile-panel .nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 0;
+    width: 100%;
+  }
+
+  .navbar .mobile-panel .nav-links > a {
+    display: block;
+    width: 100%;
+    padding: 11px 4px;
+    border-top: 1px solid var(--border);
+    white-space: normal;
+  }
+
+  .navbar .mobile-panel .more-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    border-top: 1px solid var(--border);
+  }
+
+  .navbar .mobile-panel .more-toggle {
+    width: 100%;
+    padding: 11px 4px;
+    justify-content: space-between;
+  }
+
+  .navbar .mobile-panel .more-menu:not([hidden]) {
+    position: static;
+    min-width: 0;
+    margin: 0 0 8px 12px;
+    box-shadow: none;
+  }
+
+  .soon-label {
+    color: #00e5a0;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+}
+
+
+/* MOBILE CTA — MATCH PORTFOLIO */
+@media (max-width: 760px) {
+  .navbar .mobile-panel .nav-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* CA */
+  .navbar .mobile-panel .ca-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 0 12px;
+    color: var(--muted);
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* X / TWITTER */
+  .navbar .mobile-panel .x-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 42px;
+    height: 42px;
+    padding: 0;
+    color: var(--text);
+    background: #000;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 19px;
+    flex-shrink: 0;
+  }
+
+  /* CONNECT WALLET */
+  .navbar .mobile-panel .connect-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-width: 0;
+    min-height: 45px;
+    height: 45px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    color: #06110d;
+    background: #40c4a5;
+    border: 1px solid #40c4a5;
+    border-radius: 9px;
+    font-size: 12px;
+    font-weight: 800;
+    line-height: 1.4;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .navbar .mobile-panel .ca-button:hover,
+  .navbar .mobile-panel .x-link:hover {
+    background: var(--panel-hover);
+    border-color: var(--border);
+  }
+
+  .navbar .mobile-panel .connect-button:hover {
+    background: #5bd6b8;
+    border-color: #5bd6b8;
+  }
+}
+
+  .hero {
+    padding: 35px 5%;
+  }
+
+  .hero-inner {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .hero-note {
+    max-width: 100%;
+  }
+
+  main {
+    padding: 30px 5% 60px;
+  }
+
+  .stats-grid {
+    gap: 10px;
+    margin-bottom: 45px;
+  }
+
+  .stat-card {
+    padding: 15px;
+  }
+
+  .stat-value {
+    font-size: 22px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .market-tools {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .filter-btn {
+    padding: 10px 5px;
+  }
+
+  .launch-layout {
+    grid-template-columns: 1fr;
+    margin-top: 45px;
+  }
+
+  .info-panel,
+  .launch-panel {
+    padding: 18px;
+  }
+
+  .info-grid {
+    gap: 8px;
+  }
+
+  .info-item {
+    padding: 12px;
+  }
+
+  .info-item strong {
+    font-size: 15px;
+  }
+
+  .explainer {
+    padding: 22px;
+    margin-top: 45px;
+  }
+
+  .footer {
+    padding: 40px 5% 25px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  .footer-about {
+    grid-column: 1 / -1;
+  }
+
+  .footer-title {
+    margin-bottom: 20px;
+  }
+
+  .footer-links {
+    gap: 15px;
+  }
+
+  .footer-bottom {
+    margin-top: 35px;
+  }
+}
+
+@media (max-width: 390px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat-value {
+    font-size: 20px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+  }
+}
+
+/* DESKTOP PANEL LAYOUT */
+
+@media (min-width: 761px) {
+  .navbar .mobile-panel {
+    display: contents;
+  }
+
+  .navbar .menu-toggle {
+    display: none;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+  <a class="brand" href="index.html">
+    <img src="images/Logo.jpg" alt="Credora Logo">
+    <span>Credora</span>
+  </a>
+
+  <button
+    class="menu-toggle"
+    id="menuToggle"
+    type="button"
+    aria-label="Buka menu"
+    aria-expanded="false"
+    aria-controls="mobilePanel"
+  >
+    <span></span>
+    <span></span>
+  </button>
+
+  <div class="mobile-panel" id="mobilePanel">
+    <nav class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="earn.html">Earn</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="swap.html">Swap</a>
+      <a href="stake.html">Stake</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a class="nav-link" href="token.html">Token <span class="soon-label">SOON</span></a>
+      <a class="nav-link" href="docs.html">Docs</a>
+      <div class="more-dropdown" id="moreDropdown">
+        <button
+          type="button"
+          class="more-toggle"
+          id="moreToggle"
+          aria-expanded="false"
+        >
+          More <span class="more-arrow">⌄</span>
+        </button>
+
+        <div class="more-menu" id="moreMenu" hidden>
+          <a href="stats.html">Stats</a>
+          <a href="activity.html">Activity</a>
+          <a href="builders.html">Builders</a>
+          <a href="launchpad.html" class="active">Launchpad</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="ca-button" type="button">CA: soon</button>
+
+      <a
+        class="x-link"
+        href="https://x.com/"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Credora on X"
+      >𝕏</a>
+
+      <button class="connect-button" id="connectTop" type="button">
+        Connect wallet
+      </button>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow">Credora launchpad</div>
+
+      <h1>Discover new tokens.<br>
+        <span style="color:var(--green)">Launch your own.</span>
+      </h1>
+
+      <p class="intro">
+        Explore the CREDORA launchpad to discover projects and create your
+        own token. Review the token details and selected market before launch.
+      </p>
+
+      <a class="primary-button" href="launchpad-new.html">
+        Launch a Coin&nbsp; →
+      </a>
+    </div>
+
+    <div class="hero-note">
+      Review token information and market selection carefully.
+      Market selection is fixed at registration and cannot be changed afterward.
+    </div>
+  </div>
+</section>
+
+<main>
+  <section class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Tokens launched</div>
+      <div class="stat-value" id="tokenCount">—</div>
+      <div class="stat-foot">Launchpad catalogue</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Total volume</div>
+      <div class="stat-value">—</div>
+      <div class="stat-foot">Live data not connected</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Markets available</div>
+      <div class="stat-value">43</div>
+      <div class="stat-foot">Market selector catalogue</div>
+    </div>
+
+    <div class="stat-card">
+      <div class="stat-label">Launch fee</div>
+      <div class="stat-value">—</div>
+      <div class="stat-foot">Confirm before deployment</div>
+    </div>
+  </section>
+
+  <section id="coins">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">Explore the launchpad</div>
+        <h2>Launched coins</h2>
+        <p class="section-desc">
+          Search and explore tokens in the CREDORA launchpad.
+        </p>
+      </div>
+
+      <div class="market-count" id="coinCount">0 coins</div>
+    </div>
+
+    <div class="market-tools">
+      <div class="search-box">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Search token name or ticker..."
+          aria-label="Search launched coins"
+        >
+      </div>
+
+      <div class="filters" id="filters">
+        <button class="filter-btn active" data-filter="All" type="button">
+          All
+        </button>
+        <button class="filter-btn" data-filter="Stocks" type="button">
+          Stocks
+        </button>
+        <button class="filter-btn" data-filter="ETF" type="button">
+          ETFs
+        </button>
+        <button class="filter-btn" data-filter="Crypto" type="button">
+          Crypto
+        </button>
+      </div>
+    </div>
+
+    <div class="market-table-wrap">
+      <div class="table-scroll">
+        <table class="market-table">
+          <thead>
+            <tr>
+              <th>TOKEN</th>
+              <th>MARKET</th>
+              <th>STATUS</th>
+              <th>PRICE</th>
+              <th>VOLUME</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="coinRows"></tbody>
+        </table>
+      </div>
+
+      <div class="empty-state" id="emptyState">
+        No matching coins found.
+      </div>
+    </div>
+
+    <p class="market-note">
+      Token listings and market values will require a connected data source.
+      This page currently uses frontend placeholder data.
+    </p>
+  </section>
+
+  <section class="launch-layout" id="launchInfo">
+    <div class="info-panel">
+      <div class="panel-top">
+        <div>
+          <div class="eyebrow">Launchpad information</div>
+          <h2>Before you launch</h2>
+        </div>
+        <span class="live-tag">Important</span>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span>Token details</span>
+          <strong>Name and ticker</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Token image</span>
+          <strong>Upload your image</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Market selection</span>
+          <strong>Fixed at registration</strong>
+        </div>
+
+        <div class="info-item">
+          <span>Trading tax</span>
+          <strong>Set before launch</strong>
+        </div>
+      </div>
+
+      <p class="risk-note">
+        The selected market is fixed when a token is registered. Review the
+        token configuration carefully before confirming the launch.
+      </p>
+    </div>
+
+    <div class="launch-panel">
+      <div class="eyebrow">Create a token</div>
+      <h2>Ready to launch?</h2>
+
+      <p>
+        Prepare your token name, ticker, image, optional first buy, trading
+        tax, and market selection on the token creation page.
+      </p>
+
+      <a class="primary-button" href="launchpad-new.html">
+        Launch a Coin&nbsp; →
+      </a>
+
+      <p class="risk-note">
+        The token creation page is separate. Actual on-chain deployment
+        requires blockchain and smart-contract integration.
+      </p>
+    </div>
+  </section>
+
+  <section class="explainer" id="markets">
+    <div class="eyebrow">Market selection</div>
+    <h2>Markets are immutable once created.</h2>
+
+    <p>
+      A token's selected market determines the asset it is associated with.
+      That market is fixed during registration and cannot be changed later.
+      Check the available markets and your configuration before launching.
+    </p>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div class="footer-about">
+      <a class="brand" href="index.html">
+        <img src="images/Logo.jpg" alt="Credora Logo">
+        <span>Credora</span>
+      </a>
+
+      <p>
+        Discover tokenized markets and launch projects through the CREDORA
+        launchpad. Review token information, market selection, and associated
+        risks before taking action.
+      </p>
+
+      <a
+        class="footer-social"
+        href="https://x.com/"
+        target="_blank"
+        rel="noreferrer"
+      >
+        <span>𝕏</span>
+        <span>@Credora</span>
+      </a>
+    </div>
+
+    <div>
+      <div class="footer-title">PROTOCOL</div>
+
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="earn.html">Earn</a>
+        <a href="borrow.html">Borrow</a>
+        <a href="stake.html">Stake</a>
+        <a href="stats.html">Stats</a>
+        <a href="portfolio.html">Portfolio</a>
+      </div>
+    </div>
+
+    <div>
+      <div class="footer-title">LEARN</div>
+
+      <div class="footer-links">
+        <a href="docs.html">Overview</a>
+        <a href="docs.html">Risk framework</a>
+        <a href="docs.html">Withdrawals</a>
+        <a href="builders.html">Builders</a>
+        <a href="launchpad.html">Launchpad</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div>
+      <div class="chain-label">CHAIN ID · 4663</div>
+      <p>Markets are immutable once created.</p>
+    </div>
+
+    <p class="footer-risk">
+      Not investment advice. Digital assets involve risk.
+      Positions can be liquidated.
+    </p>
+
+    <p>© 2026 Credora.</p>
+  </div>
+</footer>
+
+<script>
+/* MOBILE HAMBURGER: TWO SPANS BECOME A CROSS */
+
+const menuToggle = document.getElementById("menuToggle");
+const mobilePanel = document.getElementById("mobilePanel");
+
+function closeMobileMenu() {
+  mobilePanel.classList.remove("open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open menu");
+}
+
+menuToggle.addEventListener("click", function () {
+  const isOpen = mobilePanel.classList.toggle("open");
+
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute(
+    "aria-label",
+    isOpen ? "Close menu" : "Open menu"
+  );
+});
+
+/* CLOSE MENU WHEN A NAVIGATION LINK IS CLICKED */
+
+mobilePanel.querySelectorAll(".nav-links > a").forEach(function (link) {
+  link.addEventListener("click", closeMobileMenu);
+});
+
+window.addEventListener("resize", function () {
+  if (window.innerWidth > 760) {
+    closeMobileMenu();
+  }
+});
+
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Escape") {
+    closeMobileMenu();
+    closeMoreMenu();
+  }
+});
+
+/* MORE: EXACTLY FOUR SUBMENUS */
+
+const moreDropdown = document.getElementById("moreDropdown");
+const moreToggle = document.getElementById("moreToggle");
+const moreMenu = document.getElementById("moreMenu");
+
+function closeMoreMenu() {
+  moreMenu.hidden = true;
+  moreToggle.setAttribute("aria-expanded", "false");
+  moreDropdown.classList.remove("open");
+}
+
+moreToggle.addEventListener("click", function (event) {
+  event.stopPropagation();
+
+  const shouldOpen = moreMenu.hidden;
+
+  moreMenu.hidden = !shouldOpen;
+  moreToggle.setAttribute("aria-expanded", String(shouldOpen));
+  moreDropdown.classList.toggle("open", shouldOpen);
+});
+
+document.addEventListener("click", function (event) {
+  if (!moreDropdown.contains(event.target)) {
+    closeMoreMenu();
+  }
+});
+
+/* FRONTEND PLACEHOLDER COIN DATA */
+
+const coins = [];
+
+let activeFilter = "All";
+
+const coinRows = document.getElementById("coinRows");
+const searchInput = document.getElementById("searchInput");
+const emptyState = document.getElementById("emptyState");
+
+function renderCoins() {
+  const query = searchInput.value.trim().toUpperCase();
+
+  const filteredCoins = coins.filter(function (coin) {
+    const matchesSearch =
+      coin.name.toUpperCase().includes(query) ||
+      coin.ticker.toUpperCase().includes(query);
+
+    const matchesFilter =
+      activeFilter === "All" || coin.type === activeFilter;
+
+    return matchesSearch && matchesFilter;
+  });
+
+  coinRows.innerHTML = filteredCoins.map(function (coin) {
+    return `
+      <tr>
+        <td>
+          <div class="asset-cell">
+            <div class="asset-icon">${coin.ticker.charAt(0)}</div>
+            <div>
+              <div class="asset-name">${coin.name} (${coin.ticker})</div>
+              <div class="asset-type">CREDORA token</div>
+            </div>
+          </div>
+        </td>
+        <td>${coin.market}</td>
+        <td><span class="live-tag">${coin.status}</span></td>
+        <td>${coin.price || "—"}</td>
+        <td>${coin.volume || "—"}</td>
+        <td>
+          <a class="select-button" href="launchpad-new.html">View</a>
+        </td>
+      </tr>
+    `;
+  }).join("");
+
+  emptyState.style.display = filteredCoins.length ? "none" : "block";
+
+  document.getElementById("coinCount").textContent =
+    filteredCoins.length + (filteredCoins.length === 1 ? " coin" : " coins");
+
+  document.getElementById("tokenCount").textContent = coins.length;
+}
+
+searchInput.addEventListener("input", renderCoins);
+
+document.getElementById("filters").addEventListener("click", function (event) {
+  const button = event.target.closest("[data-filter]");
+  if (!button) return;
+
+  activeFilter = button.dataset.filter;
+
+  document.querySelectorAll(".filter-btn").forEach(function (item) {
+    item.classList.toggle("active", item === button);
+  });
+
+  renderCoins();
+});
+
+/* WALLET PLACEHOLDER */
+
+function connectWalletNotice() {
+  alert(
+    "Wallet connection has not been integrated yet. " +
+    "Blockchain and wallet integration is required."
+  );
+}
+
+document.getElementById("connectTop").addEventListener(
+  "click",
+  connectWalletNotice
+);
+
+renderCoins();
+</script>
+
+</body>
+</html>

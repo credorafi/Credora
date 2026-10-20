@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#000000">
+<title>Stats | Credora</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+:root {
+  --bg:#000;
+  --panel:#0b0d0c;
+  --panel2:#111512;
+  --mint:#40c4a5;
+  --mint-light:#72e2c4;
+  --text:#f4f7f5;
+  --muted:#929d97;
+  --border:#252c28;
+  --yellow:#f1c76c;
+  --red:#ff7777;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{background:var(--bg);color:var(--text);font:13px/1.75 Inter,sans-serif}
+body.menu-open{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{cursor:pointer}
+.page{width:min(1120px,90%);margin:auto}
+
+/* NAVIGATION — SAME STRUCTURE AS TOKEN PAGE */
+.navbar{
+  min-height:78px;padding:0 5%;display:flex;align-items:center;
+  justify-content:space-between;gap:25px;border-bottom:1px solid var(--border);
+  position:relative;z-index:2000;background:#000
+}
+.brand{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;white-space:nowrap}
+.brand img{width:35px;height:35px;object-fit:contain;border-radius:8px}
+.nav-right{display:flex;align-items:center;gap:22px}
+.nav-links{display:flex;align-items:center;gap:17px}
+.nav-links>a,.more-button{font-size:11px;font-weight:600;color:var(--muted);white-space:nowrap}
+.nav-links>a:hover,.nav-links>a.active,.more-button:hover{color:var(--text)}
+.nav-links>a.active{color:var(--mint)}
+.soon{font-size:8px;color:var(--mint);border:1px solid #31584d;border-radius:4px;padding:1px 4px}
+.more-wrap{position:relative}
+.more-button{background:none;border:0;display:flex;align-items:center;gap:7px}
+.more-menu{
+  display:none;position:absolute;top:27px;right:0;width:155px;padding:8px;
+  background:var(--panel2);border:1px solid var(--border);border-radius:9px;z-index:30
+}
+.more-wrap.open .more-menu{display:block}
+.more-menu a{display:block;padding:9px;color:var(--muted);font-size:11px;border-radius:6px}
+.more-menu a:hover,.more-menu a.active{color:var(--mint);background:#172019}
+.nav-actions{display:flex;align-items:center;gap:8px}
+.ca-button,.x-link,.wallet-button{
+  min-height:38px;border:1px solid var(--border);border-radius:9px;
+  display:inline-flex;align-items:center;justify-content:center;white-space:nowrap
+}
+.ca-button{background:var(--panel);color:var(--muted);padding:0 11px;font-size:10px}
+.x-link{width:38px;background:var(--panel);font-size:18px}
+.x-link:hover{color:var(--mint);border-color:var(--mint)}
+.wallet-button{background:var(--mint);color:#06110d;border-color:var(--mint);padding:0 15px;font-size:11px;font-weight:800}
+.menu-toggle{
+  display:none;width:39px;height:39px;background:var(--panel);border:1px solid var(--border);
+  border-radius:9px;flex-direction:column;justify-content:center;align-items:center;gap:6px;
+  flex-shrink:0;position:relative;z-index:2200
+}
+.menu-toggle span{display:block;width:17px;height:2px;background:var(--text);border-radius:2px;transition:transform .25s}
+.menu-toggle.is-open span:first-child{transform:translateY(4px) rotate(45deg)}
+.menu-toggle.is-open span:last-child{transform:translateY(-4px) rotate(-45deg)}
+
+/* PAGE */
+.hero{padding:65px 0 38px;border-bottom:1px solid var(--border)}
+.eyebrow{color:var(--mint);font-size:10px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;margin-bottom:13px}
+h1{font-size:clamp(38px,6vw,65px);line-height:1.08;letter-spacing:-2.7px;font-weight:800}
+h1 span{color:var(--mint)}
+.hero-description{max-width:720px;margin-top:18px;color:#a2aba6;font-size:13px;line-height:2}
+.hero-tag{display:inline-flex;margin-top:17px;padding:5px 10px;border:1px solid #31584d;border-radius:6px;color:var(--mint);font-size:10px;font-weight:700}
+.section{padding:42px 0;border-bottom:1px solid var(--border)}
+.section-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;margin-bottom:20px}
+.section-heading h2{font-size:clamp(22px,3vw,30px);letter-spacing:-.8px;line-height:1.3}
+.section-heading p{margin-top:7px;color:var(--muted);font-size:11px;line-height:1.9}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border:1px solid #31584d;border-radius:6px;color:var(--mint);font-size:9px;white-space:nowrap}
+.grid{display:grid;gap:12px}
+.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid-5{grid-template-columns:repeat(5,minmax(0,1fr))}
+.card{min-width:0;padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+.card-label{color:var(--muted);font-size:10px;font-weight:600}
+.card-value{font-size:clamp(20px,2.5vw,29px);line-height:1.35;font-weight:800;letter-spacing:-.8px;margin:12px 0 6px;overflow-wrap:anywhere}
+.card p{color:var(--muted);font-size:10px;line-height:1.9}
+.mint{color:var(--mint)}
+.small-note{margin-top:15px;color:var(--muted);font-size:10px;line-height:1.9}
+.stat-foot{color:var(--muted);font-size:9px;margin-top:6px}
+.search-row{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.search-wrap{position:relative;flex:1;max-width:390px}
+.search-wrap i{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:11px}
+.search-input{
+  width:100%;height:40px;padding:0 12px 0 34px;border:1px solid var(--border);
+  border-radius:8px;background:#050605;color:var(--text);outline:none;font-size:11px
+}
+.search-input:focus{border-color:var(--mint)}
+.search-input::placeholder{color:#737d76}
+.result-count{margin-left:auto;color:var(--muted);font-size:10px;white-space:nowrap}
+.table-wrap{width:100%;overflow-x:auto;border:1px solid var(--border);border-radius:9px;scrollbar-width:thin;scrollbar-color:#354039 transparent}
+table{width:100%;min-width:660px;border-collapse:collapse;text-align:left;white-space:nowrap}
+thead th{padding:12px 14px;background:#101311;border-bottom:1px solid var(--border);color:var(--muted);font-size:9px;font-weight:700;letter-spacing:.5px}
+tbody td{padding:12px 14px;border-bottom:1px solid #1d231f;font-size:10px}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#111512}
+.asset-name{font-weight:700}
+.asset-type{display:block;color:var(--muted);font-size:9px}
+.address{display:inline-block;max-width:155px;overflow:hidden;text-overflow:ellipsis;vertical-align:bottom;color:var(--mint-light);font:10px monospace}
+.source-label{color:#c6d0ca}
+.empty-row{text-align:center;padding:22px;color:var(--muted);white-space:normal}
+.notice{display:flex;align-items:flex-start;gap:10px;margin-top:15px;padding:13px 15px;background:#19160f;border:1px solid #393326;border-radius:9px;color:#c5b68f;font-size:10px;line-height:1.8}
+.notice strong{color:var(--yellow);white-space:nowrap}
+.risk-card{padding:17px;background:var(--panel);border:1px solid var(--border);border-radius:11px}
+.risk-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.risk-name{font-size:11px;font-weight:700}
+.risk-value{font-size:17px;font-weight:800;color:var(--mint-light);white-space:nowrap}
+.risk-bar{height:5px;margin-top:13px;background:#252c28;border-radius:5px;overflow:hidden}
+.risk-fill{height:100%;border-radius:5px;background:var(--mint)}
+.risk-card:nth-child(2) .risk-fill,.risk-card:nth-child(4) .risk-fill{background:#8dcdb9}
+.risk-card:nth-child(3) .risk-fill,.risk-card:nth-child(5) .risk-fill{background:var(--yellow)}
+.risk-card:nth-child(6) .risk-fill{background:var(--red)}
+.risk-caption{margin-top:8px;color:var(--muted);font-size:9px}
+.short-card{padding:18px;background:var(--panel);border:1px solid var(--border);border-radius:11px}
+.short-top{display:flex;align-items:center;gap:10px}
+.ticker-icon{width:35px;height:35px;display:grid;place-items:center;border-radius:9px;background:#17221b;border:1px solid #2d4033;color:var(--mint);font-weight:800}
+.short-name{font-size:12px;font-weight:700}
+.short-ticker{font-size:10px;color:var(--muted)}
+.short-value{margin-top:16px;font-size:25px;font-weight:800;letter-spacing:-.7px}
+.short-caption{margin-top:4px;color:var(--muted);font-size:10px}
+.explanation{margin-top:15px;color:var(--muted);font-size:11px;line-height:1.9}
+.footer{background:#050605}
+.footer-inner{width:min(1120px,90%);margin:auto;padding:30px 0 20px}
+.footer-top{display:flex;justify-content:space-between;gap:35px;padding-bottom:25px}
+.footer-description{max-width:320px;margin-top:12px;color:var(--muted);font-size:10px;line-height:1.9}
+.footer-x{display:inline-flex;margin-top:12px;width:35px;height:35px;align-items:center;justify-content:center;border:1px solid var(--border);border-radius:8px}
+.footer-links{display:grid;grid-template-columns:repeat(2,minmax(100px,1fr));gap:35px}
+.footer-links h3{font-size:11px;margin-bottom:10px}
+.footer-links a{display:block;margin-top:7px;color:var(--muted);font-size:10px}
+.footer-links a:hover,.footer-x:hover{color:var(--mint)}
+.footer-bottom{padding-top:15px;border-top:1px solid var(--border);display:flex;justify-content:space-between;gap:12px;color:#69736c;font-size:9px}
+
+@media(max-width:1100px){
+  .nav-right{gap:13px}.nav-links{gap:10px}
+  .nav-links>a,.more-button{font-size:10px}
+}
+@media(max-width:850px){
+  .navbar{min-height:70px;padding:0 5%}
+  .menu-toggle{display:flex}
+  .nav-right{
+    display:none;position:absolute;top:70px;left:0;right:0;
+    padding:17px 5% 24px;background:#080a08;border-bottom:1px solid var(--border);
+    align-items:stretch;flex-direction:column;gap:15px;
+    max-height:calc(100dvh - 70px);overflow-y:auto;z-index:2100
+  }
+  .nav-right.open{display:flex!important}
+  .nav-links{display:flex;flex-direction:column;align-items:stretch;gap:0;width:100%}
+  .nav-links>a,.more-button{
+    display:flex;align-items:center;justify-content:space-between;width:100%;
+    min-height:45px;padding:10px 0;border-bottom:1px solid #171c19;font-size:15px
+  }
+  .more-wrap{width:100%}
+  .more-menu{position:static;width:100%;margin-top:5px}
+  .nav-actions{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding-top:14px;border-top:1px solid var(--border)}
+  .ca-button{display:flex;width:100%;min-height:42px}
+  .x-link{width:100%;min-height:42px}
+  .wallet-button{width:100%;min-height:45px}
+  .grid-5{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .risk-card{padding:14px}
+}
+@media(max-width:600px){
+  .page{width:90%}
+  .hero{padding:48px 0 32px}
+  h1{font-size:clamp(38px,10vw,52px);letter-spacing:-1.8px}
+  .hero-description{font-size:12px}
+  .section{padding:32px 0}
+  .section-heading{flex-direction:column;gap:10px}
+  .grid-2,.grid-3{grid-template-columns:1fr}
+  .grid-5{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+  .card{padding:15px}
+  .card-value{font-size:23px}
+  .search-row{align-items:stretch;flex-direction:column}
+  .search-wrap{max-width:none}
+  .result-count{margin-left:0}
+  .risk-card{padding:13px}
+  .risk-value{font-size:15px}
+  .short-value{font-size:22px}
+  .footer-top{flex-direction:column;gap:24px}
+  .footer-links{gap:25px}
+  .footer-bottom{flex-direction:column}
+}
+@media(max-width:350px){
+  .grid-5{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="brand" aria-label="Credora home">
+    <img src="images/Logo.jpg" alt="Credora logo">
+    <span>Credora</span>
+  </a>
+
+  <button class="menu-toggle" id="menuToggle" type="button"
+    aria-label="Open navigation menu" aria-expanded="false" aria-controls="navRight">
+    <span></span><span></span>
+  </button>
+
+  <div class="nav-right" id="navRight">
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html">Home</a>
+      <a href="earn.html">Earn</a>
+      <a href="borrow.html">Borrow</a>
+      <a href="swap.html">Swap</a>
+      <a href="stake.html">Stake</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="token.html">Token <span class="soon">SOON</span></a>
+      <a href="docs.html">Docs</a>
+      <div class="more-wrap" id="moreWrap">
+        <button class="more-button" id="moreButton" type="button" aria-expanded="false">
+          More <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="more-menu" id="moreMenu">
+          <a href="stats.html" class="active">Stats</a>
+          <a href="activity.html">Activity</a>
+          <a href="builders.html">Builders</a>
+          <a href="launchpad.html">Launchpad</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="ca-button" type="button" data-ca>CA: Coming Soon</button>
+      <a href="https://x.com/" class="x-link" target="_blank" rel="noopener noreferrer" aria-label="Credora on X">𝕏</a>
+      <button class="wallet-button" id="connectWallet" type="button">Connect Wallet</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="page hero">
+    <div class="eyebrow">CREDORA · PROTOCOL ANALYTICS</div>
+    <h1>Everything,<br><span>measured.</span></h1>
+    <span class="hero-tag">DATA PREVIEW</span>
+    <p class="hero-description">
+      Protocol-wide metrics, oracle feeds, risk tiers and short interest in one place.
+      Live figures will appear after the relevant data providers and protocol connections are configured.
+    </p>
+  </section>
+
+  <section class="page section" id="overview">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">AT A GLANCE</div>
+        <h2>Protocol Overview</h2>
+        <p>Core lending and market metrics. Figures are placeholders, not live protocol data.</p>
+      </div>
+      <span class="pill"><i class="fa-regular fa-clock"></i> Awaiting live data</span>
+    </div>
+
+    <div class="grid grid-5">
+      <article class="card"><div class="card-label">Supplied</div><div class="card-value">$0.00</div><p class="stat-foot">Placeholder · not live</p></article>
+      <article class="card"><div class="card-label">Borrowed</div><div class="card-value">$0.00</div><p class="stat-foot">Placeholder · not live</p></article>
+      <article class="card"><div class="card-label">Idle Liquidity</div><div class="card-value">$0.00</div><p class="stat-foot">Placeholder · not live</p></article>
+      <article class="card"><div class="card-label">Utilization</div><div class="card-value">0.0%</div><p class="stat-foot">Placeholder · not live</p></article>
+      <article class="card"><div class="card-label">Short Interest</div><div class="card-value">$0.00</div><p class="stat-foot">Placeholder · not live</p></article>
+    </div>
+  </section>
+
+  <section class="page section" id="oracle">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">MARKET DATA</div>
+        <h2>Oracle Feeds</h2>
+        <p>Search assets, check feed sources and inspect listed feed addresses.</p>
+      </div>
+      <span class="pill">Feed directory</span>
+    </div>
+
+    <div class="search-row">
+      <div class="search-wrap">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input id="feedSearch" class="search-input" type="search"
+          placeholder="Search asset, source or address..." aria-label="Search oracle feeds">
+      </div>
+      <span class="result-count" id="resultCount">Loading feeds…</span>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>ASSET</th><th>PRICE</th><th>LAST MOVEMENT</th><th>SOURCE</th><th>FEED ADDRESS</th></tr></thead>
+        <tbody id="feedRows"></tbody>
+      </table>
+    </div>
+
+    <div class="notice">
+      <strong><i class="fa-solid fa-circle-info"></i> NOTE</strong>
+      <span>Prices, timestamps and feed availability are not connected to live data. Listed addresses are reference examples and have not been verified for Credora. Do not use them to send funds or interact with contracts.</span>
+    </div>
+  </section>
+
+  <section class="page section" id="risk">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">COLLATERAL CONFIGURATION</div>
+        <h2>Risk Tiers</h2>
+        <p>Reference loan-to-value tiers. These are not confirmed Credora risk parameters.</p>
+      </div>
+      <span class="pill">Configuration preview</span>
+    </div>
+
+    <div class="grid grid-3">
+      <article class="risk-card"><div class="risk-top"><span class="risk-name">TBills</span><span class="risk-value">86.0%</span></div><div class="risk-bar"><div class="risk-fill" style="width:86%"></div></div><p class="risk-caption">Reference LTV · not confirmed</p></article>
+      <article class="risk-card"><div class="risk-top"><span class="risk-name">ETH</span><span class="risk-value">77.0%</span></div><div class="risk-bar"><div class="risk-fill" style="width:77%"></div></div><p class="risk-caption">Reference LTV · not confirmed</p></article>
+      <article class="risk-card"><div class="risk-top"><span class="risk-name">Megacap TWAP</span><span class="risk-value">62.5%</span></div><div class="risk-bar"><div class="risk-fill" style="width:62.5%"></div></div><p class="risk-caption">Reference LTV · not confirmed</p></article>
+      <article class="risk-card"><div class="risk-top"><span class="risk-name">Short</span><span class="risk-value">62.5%</span></div><div class="risk-bar"><div class="risk-fill" style="width:62.5%"></div></div><p class="risk-caption">Reference LTV · not confirmed</p></article>
+      <article class="risk-card"><div class="risk-top"><span class="risk-name">Stock</span><span class="risk-value">62.5%</span></div><div class="risk-bar"><div class="risk-fill" style="width:62.5%"></div></div><p class="risk-caption">Reference LTV · not confirmed</p></article>
+      <article class="risk-card"><div class="risk-top"><span class="risk-name">Long Tail</span><span class="risk-value">38.5%</span></div><div class="risk-bar"><div class="risk-fill" style="width:38.5%"></div></div><p class="risk-caption">Reference LTV · not confirmed</p></article>
+    </div>
+  </section>
+
+  <section class="page section" id="short-interest">
+    <div class="section-heading">
+      <div>
+        <div class="eyebrow">EQUITY EXPOSURE</div>
+        <h2>Short Interest</h2>
+        <p>Borrowed-share exposure for selected assets. Values are not live.</p>
+      </div>
+      <span class="pill">Preview</span>
+    </div>
+
+    <div class="grid grid-2">
+      <article class="short-card">
+        <div class="short-top"><span class="ticker-icon">N</span><div><div class="short-name">NVIDIA</div><div class="short-ticker">NVDA</div></div></div>
+        <div class="short-value">$0.00</div><p class="short-caption">Placeholder · not live</p>
+      </article>
+      <article class="short-card">
+        <div class="short-top"><span class="ticker-icon">T</span><div><div class="short-name">Tesla</div><div class="short-ticker">TSLA</div></div></div>
+        <div class="short-value">$0.00</div><p class="short-caption">Placeholder · not live</p>
+      </article>
+    </div>
+
+    <p class="explanation">Borrowed shares are shares lent by one party and sold by another. Borrowed-share data can help indicate how much of a stock's float is used for short selling. Live values require a connected data provider.</p>
+  </section>
+
+  <section class="page section" id="market-note">
+    <div class="notice" style="margin-top:0">
+      <strong><i class="fa-solid fa-chart-line"></i> MARKET NOTE</strong>
+      <span>Stock feeds generally update while the underlying market is open. Weekend gaps can be expected. Accurate timestamps and price movements require a live market-data connection.</span>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="brand"><img src="images/Logo.jpg" alt="Credora logo"><span>Credora</span></a>
+        <p class="footer-description">Credora protocol analytics and market information. Live data integrations are not yet configured on this preview page.</p>
+        <a href="https://x.com/" target="_blank" rel="noopener noreferrer" class="footer-x" aria-label="Credora on X">𝕏</a>
+      </div>
+      <div class="footer-links">
+        <div><h3>Protocol</h3><a href="index.html">Home</a><a href="earn.html">Earn</a><a href="borrow.html">Borrow</a><a href="swap.html">Swap</a><a href="stake.html">Stake</a><a href="portfolio.html">Portfolio</a></div>
+        <div><h3>Explore</h3><a href="stats.html">Stats</a><a href="activity.html">Activity</a><a href="builders.html">Builders</a><a href="launchpad.html">Launchpad</a><a href="docs.html">Documentation</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom"><span>© <span id="year"></span> Credora. All rights reserved.</span><span>Digital assets involve risk. Not investment advice.</span></div>
+  </div>
+</footer>
+
+<script>
+/* ORACLE FEEDS */
+const feeds = [
+ ["NVDA","Inverse feed","0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15"],
+ ["SPY","Chainlink","0x319724394D3A0e3669269846abE664Cd621f9f6A"],
+ ["AAPL","Chainlink","0x6B22A786bAa607d76728168703a39Ea9C99f2cD0"],
+ ["TSLA","Inverse feed","0x4A1166a659A55625345e9515b32adECea5547C38"],
+ ["WETH","Chainlink","0x78F3556b67E17Df817D51Ef5a990cDaF09E8d3A9"],
+ ["HIMS","Uniswap v3 TWAP","—"],
+ ["SPCX","Chainlink","0xB265810950ba6c5C0Ff821c9963014a56fD8Bffb"],
+ ["PONS","Uniswap v3 TWAP","—"],
+ ["CASHCAT","Uniswap v3 TWAP","—"],
+ ["INDEX","Uniswap v3 TWAP","—"],
+ ["MSFT","Chainlink","0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E"],
+ ["GOOGL","Chainlink","0xF6f373a037c30F0e5010d854385cA89185AE638b"],
+ ["AMZN","Chainlink","0xD5a1508ceD74c084eBf3cBe853e2C968fB2a651C"],
+ ["META","Chainlink","0x7C38C00C30BEe9378381E7B6135d7283356D71b1"],
+ ["QQQ","Chainlink","0x80901d846d5D7B030F26B480776EE3b29374C2ae"],
+ ["SGOV","Chainlink","0xa0DF4ee0fFf975306345875E3548Fcc519577A11"],
+ ["BABA","Chainlink","0x62Cc8F9b5f56a33c9C8A60c8B92779f523c4E984"],
+ ["GME","Chainlink","0x27C71df6A64fB476468EdF256CF72c038baB5B67"],
+ ["DELL","Chainlink","0x1C6c8cADBe02E19129c39dDB92281cE4c0bf206b"],
+ ["PLTR","Chainlink","0x820ABedFF239034956B7A9d2F0a331f9F075eB4c"],
+ ["SNDK","Chainlink","0xfb133Fa4B7b385802B693a293606682Df47109A3"],
+ ["AMD","Chainlink","0x943A29E7ae51A4798823ca9eEd2ed533B2A22C72"],
+ ["MU","Chainlink","0x425EEFdCf05ed6526C3cE61Af99429A228a6d596"],
+ ["INTC","Chainlink","0x3f390C5C24628Ac7C489515402235FeAD71D1913"],
+ ["TSM","Chainlink","0x874cF94aa8eC88Fd9560094dD065f2fB3E41Fc2F"],
+ ["CRCL","Chainlink","0x6652eDf64bA3731C4F2D3ce821A0Fb1f1f6b482a"],
+ ["ASML","Chainlink","0xB4106147E8cce40b7d46124090d373A71b70f87D"],
+ ["USO","Chainlink","0x75a9c76Ef439e2C7c2E5a34Ab105EcFe3766431c"],
+ ["SLV","Chainlink","0x209b73908e92Ae021826eD79609845451Ecba2ce"],
+ ["USAR","Chainlink","0xA994d3684e8400A6c8078226925779FdeE682DD9"],
+ ["MSTR","Chainlink","0x396118bdFB181e6240E74D243F266B061c0edc3D"],
+ ["AMC","Uniswap v3 TWAP","—"],
+ ["TTWO","Uniswap v3 TWAP","—"],
+ ["RDDT","Uniswap v3 TWAP","—"],
+ ["DJT","Uniswap v3 TWAP","—"],
+ ["GLD","Uniswap v3 TWAP","—"],
+ ["COST","Uniswap v3 TWAP","—"],
+ ["NFLX","Uniswap v3 TWAP","—"],
+ ["MRNA","Uniswap v3 TWAP","—"],
+ ["RIVN","Uniswap v3 TWAP","—"],
+ ["RBLX","Uniswap v3 TWAP","—"]
+];
+
+const feedRows = document.getElementById("feedRows");
+const feedSearch = document.getElementById("feedSearch");
+const resultCount = document.getElementById("resultCount");
+
+function renderFeeds(query = "") {
+  const normalized = query.trim().toLowerCase();
+  const filtered = feeds.filter(([asset, source, address]) =>
+    (asset + " " + source + " " + address).toLowerCase().includes(normalized)
+  );
+
+  feedRows.replaceChildren();
+
+  if (!filtered.length) {
+    const row = document.createElement("tr");
+    const cell = document.createElement("td");
+    cell.colSpan = 5;
+    cell.className = "empty-row";
+    cell.textContent = "No matching oracle feeds found.";
+    row.appendChild(cell);
+    feedRows.appendChild(row);
+  } else {
+    filtered.forEach(([asset, source, address]) => {
+      const row = document.createElement("tr");
+
+      const assetCell = document.createElement("td");
+      const assetName = document.createElement("span");
+      assetName.className = "asset-name";
+      assetName.textContent = asset;
+      assetCell.appendChild(assetName);
+
+      const priceCell = document.createElement("td");
+      priceCell.textContent = "—";
+
+      const movementCell = document.createElement("td");
+      movementCell.textContent = "—";
+
+      const sourceCell = document.createElement("td");
+      const sourceLabel = document.createElement("span");
+      sourceLabel.className = "source-label";
+      sourceLabel.textContent = source;
+      sourceCell.appendChild(sourceLabel);
+
+      const addressCell = document.createElement("td");
+      if (address === "—") {
+        addressCell.textContent = "—";
+      } else {
+        const addressLabel = document.createElement("span");
+        addressLabel.className = "address";
+        addressLabel.title = address;
+        addressLabel.textContent = address;
+        addressCell.appendChild(addressLabel);
+      }
+
+      [assetCell, priceCell, movementCell, sourceCell, addressCell]
+        .forEach(cell => row.appendChild(cell));
+
+      feedRows.appendChild(row);
+    });
+  }
+
+  resultCount.textContent = filtered.length + " of " + feeds.length + " feeds";
+}
+
+feedSearch.addEventListener("input", event => renderFeeds(event.target.value));
+renderFeeds();
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* MOBILE MENU — SAME BEHAVIOUR AS TOKEN PAGE */
+const menuToggle = document.getElementById("menuToggle");
+const navRight = document.getElementById("navRight");
+const moreButton = document.getElementById("moreButton");
+const moreWrap = document.getElementById("moreWrap");
+
+function closeMobileMenu() {
+  navRight.classList.remove("open");
+  menuToggle.classList.remove("is-open");
+  menuToggle.setAttribute("aria-expanded", "false");
+  menuToggle.setAttribute("aria-label", "Open navigation menu");
+  document.body.classList.remove("menu-open");
+}
+
+menuToggle.addEventListener("click", function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  const isOpen = navRight.classList.toggle("open");
+  menuToggle.classList.toggle("is-open", isOpen);
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+  menuToggle.setAttribute(
+    "aria-label",
+    isOpen ? "Close navigation menu" : "Open navigation menu"
+  );
+  document.body.classList.toggle("menu-open", isOpen);
+});
+
+moreButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const isOpen = moreWrap.classList.toggle("open");
+  moreButton.setAttribute("aria-expanded", String(isOpen));
+});
+
+document.addEventListener("click", function(event) {
+  if (!moreWrap.contains(event.target)) {
+    moreWrap.classList.remove("open");
+    moreButton.setAttribute("aria-expanded", "false");
+  }
+});
+
+navRight.querySelectorAll("a").forEach(function(link) {
+  link.addEventListener("click", function() {
+    if (window.innerWidth <= 850) closeMobileMenu();
+  });
+});
+
+document.addEventListener("keydown", function(event) {
+  if (event.key === "Escape") {
+    closeMobileMenu();
+    moreWrap.classList.remove("open");
+    moreButton.setAttribute("aria-expanded", "false");
+  }
+});
+
+window.addEventListener("resize", function() {
+  if (window.innerWidth > 850) closeMobileMenu();
+});
+
+document.querySelectorAll("[data-ca]").forEach(button => {
+  button.addEventListener("click", function() {
+    alert("Credora contract address is coming soon.");
+  });
+});
+
+document.getElementById("connectWallet").addEventListener("click", function() {
+  alert("Wallet connection has not been integrated yet.");
+});
+</script>
+</body>
+</html>
